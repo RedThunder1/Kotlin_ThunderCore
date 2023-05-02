@@ -9,8 +9,10 @@ import org.bukkit.plugin.java.JavaPlugin
 import thunderCore.managers.ThunderManager
 import thunderCore.managers.rankManager.FakePlayer
 import thunderCore.managers.rankManager.RankManager
+import thunderCore.utilities.AnnouncementMessages
+import thunderCore.utilities.Time
 
-object ThunderCore  : JavaPlugin() {
+object ThunderCore: JavaPlugin() {
 
     private var console = server.consoleSender
     private val thunderName: TextComponent = Component.text().build()
@@ -66,9 +68,8 @@ object ThunderCore  : JavaPlugin() {
     }
 
     private fun loadRunnables() {
-
-
-
+        val scheduler = server.scheduler
+        scheduler.runTaskTimer(this, AnnouncementMessages(), 0, Time.TEN_MIN)
         greenMsg("Runnables LOADED!")
     }
 
