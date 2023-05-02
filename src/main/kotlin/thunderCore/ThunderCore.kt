@@ -6,11 +6,13 @@ import net.kyori.adventure.text.format.NamedTextColor
 import net.kyori.adventure.text.format.TextDecoration
 import org.bukkit.entity.Player
 import org.bukkit.plugin.java.JavaPlugin
+import thunderCore.commands.PartyCommand
 import thunderCore.managers.ThunderManager
 import thunderCore.managers.rankManager.FakePlayer
 import thunderCore.managers.rankManager.RankManager
 import thunderCore.utilities.AnnouncementMessages
 import thunderCore.utilities.Time
+import kotlin.collections.ArrayList
 
 object ThunderCore: JavaPlugin() {
 
@@ -26,9 +28,7 @@ object ThunderCore: JavaPlugin() {
 
 
     private lateinit var plugin: ThunderCore
-    fun get(): ThunderCore {
-        return plugin
-    }
+    fun get(): ThunderCore { return plugin }
 
     private val managers: ArrayList<ThunderManager> = ArrayList()
 
@@ -81,33 +81,32 @@ object ThunderCore: JavaPlugin() {
     }
 
     private fun loadCommands() {
-        /*
-        val banAlias = arrayOf("ipban")
-        val muteAlias = arrayOf("unmute")
-        val lobbyAlias = arrayOf("hub")
-        val worldCreateAlias = arrayOf("wc")
-        val worldDeleteAlias = arrayOf("wd")
-        val worldTPAlias = arrayOf("wtp")
-        Objects.requireNonNull<PluginCommand?>(getCommand("lobby")).setExecutor(LobbyCommand())
-        Objects.requireNonNull(getCommand("lobby")).setAliases(List.of(*lobbyAlias))
-        Objects.requireNonNull<PluginCommand?>(getCommand("ban")).setExecutor(BanCommand())
-        Objects.requireNonNull(getCommand("ban")).setAliases(List.of(*banAlias))
-        Objects.requireNonNull<PluginCommand?>(getCommand("mutechat")).setExecutor(MuteChatCommand())
-        Objects.requireNonNull<PluginCommand?>(getCommand("vanish")).setExecutor(VanishCommand())
-        Objects.requireNonNull<PluginCommand?>(getCommand("build")).setExecutor(BuildCommand())
-        Objects.requireNonNull<PluginCommand?>(getCommand("mute")).setExecutor(MuteCommand())
-        Objects.requireNonNull(getCommand("mute")).setAliases(List.of(*muteAlias))
-        Objects.requireNonNull<PluginCommand?>(getCommand("getvanished")).setExecutor(GetVanishedCommand())
-        Objects.requireNonNull<PluginCommand?>(getCommand("party")).setExecutor(PartyCommand())
-        Objects.requireNonNull<PluginCommand?>(getCommand("worldcreate")).setExecutor(CreateWorldCommand())
-        Objects.requireNonNull(getCommand("worldcreate")).setAliases(List.of(*worldCreateAlias))
-        Objects.requireNonNull<PluginCommand?>(getCommand("worlddelete")).setExecutor(DeleteWorldCommand())
-        Objects.requireNonNull(getCommand("worlddelete")).setAliases(List.of(*worldDeleteAlias))
-        Objects.requireNonNull<PluginCommand?>(getCommand("worldtp")).setExecutor(TpWorldCommand())
-        Objects.requireNonNull(getCommand("worldtp")).setAliases(List.of(*worldTPAlias))
-        Objects.requireNonNull<PluginCommand?>(getCommand("setrank")).setExecutor(SetRankCommand())
-        Objects.requireNonNull<PluginCommand?>(getCommand("sudo")).setExecutor(SudoCommand())
-         */
+        //val banAlias = arrayOf("ipban")
+        //val muteAlias = arrayOf("unmute")
+        //val lobbyAlias = arrayOf("hub")
+        //val worldCreateAlias = arrayOf("wc")
+        //val worldDeleteAlias = arrayOf("wd")
+        //val worldTPAlias = arrayOf("wtp")
+        //Objects.requireNonNull<PluginCommand?>(getCommand("lobby")).setExecutor(LobbyCommand())
+        //Objects.requireNonNull(getCommand("lobby")).setAliases(List.of(*lobbyAlias))
+        //Objects.requireNonNull<PluginCommand?>(getCommand("ban")).setExecutor(BanCommand())
+        //Objects.requireNonNull(getCommand("ban")).setAliases(List.of(*banAlias))
+        //Objects.requireNonNull<PluginCommand?>(getCommand("mutechat")).setExecutor(MuteChatCommand())
+        //Objects.requireNonNull<PluginCommand?>(getCommand("vanish")).setExecutor(VanishCommand())
+        //Objects.requireNonNull<PluginCommand?>(getCommand("build")).setExecutor(BuildCommand())
+        //Objects.requireNonNull<PluginCommand?>(getCommand("mute")).setExecutor(MuteCommand())
+        //getCommand("mute")!!.setAliases(List.of(*muteAlias))
+        //getCommand("getvanished")!!.setExecutor(GetVanishedCommand())
+        getCommand("party")!!.setExecutor(PartyCommand())
+        //Objects.requireNonNull<PluginCommand?>(getCommand("worldcreate")).setExecutor(CreateWorldCommand())
+        //Objects.requireNonNull(getCommand("worldcreate")).setAliases(List.of(*worldCreateAlias))
+        //Objects.requireNonNull<PluginCommand?>(getCommand("worlddelete")).setExecutor(DeleteWorldCommand())
+        //Objects.requireNonNull(getCommand("worlddelete")).setAliases(List.of(*worldDeleteAlias))
+        //Objects.requireNonNull<PluginCommand?>(getCommand("worldtp")).setExecutor(TpWorldCommand())
+        //Objects.requireNonNull(getCommand("worldtp")).setAliases(List.of(*worldTPAlias))
+        //Objects.requireNonNull<PluginCommand?>(getCommand("setrank")).setExecutor(SetRankCommand())
+        //Objects.requireNonNull<PluginCommand?>(getCommand("sudo")).setExecutor(SudoCommand())
+
         greenMsg("Commands LOADED!")
     }
 
