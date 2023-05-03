@@ -16,7 +16,7 @@ import kotlin.collections.ArrayList
 
 object ThunderCore: JavaPlugin() {
 
-    private var console = server.consoleSender
+    var console = server.consoleSender
     private val thunderName: TextComponent = Component.text().build()
         .decorate(TextDecoration.BOLD)
         .color { NamedTextColor.YELLOW.value() }

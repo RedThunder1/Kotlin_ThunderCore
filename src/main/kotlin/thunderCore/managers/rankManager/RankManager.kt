@@ -74,6 +74,8 @@ object RankManager: ThunderManager {
         subPerms.add("setsubperms")
     }
 
+    fun getPlayerRanks(): ArrayList<Ranks> { return playerRanks }
+
     fun getRankByName(name: String?): Ranks? {
         for (pRanks in playerRanks) {
             if (pRanks.name == name) {
