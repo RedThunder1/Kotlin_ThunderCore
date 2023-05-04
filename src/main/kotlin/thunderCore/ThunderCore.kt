@@ -44,17 +44,24 @@ object ThunderCore: JavaPlugin() {
 
     //TODO:
     // Priority:
-    //      Skywars mini game
+    //      BedWars mini game
+    //          Finalize managers
+    //          Make temporary worlds for testing
     //      Commands
+    //          Commands are mostly done I just need to do testing to ensure everything works correctly
     //      Party system
+    //          Have party members join bedwars game with leader
+    //          Members can't start games
     // Secondary:
     //      Replace ChatColor since its depreciated
+    //          Test to make sure the new Component method works as intended
     //      Test for bugs once a server is set up
     //      Other Games
+    //          Skywars, SkyBlock, Kitpvp, PartyGames like Tnt run
     //      Friend system
     //      Timed Mute
     // Bugs to fix:
-    //      Staff chat doesn't work correctly because we can't get substrings
+    //      No know bugs at this time
 
     override fun onEnable() {
         plugin = this

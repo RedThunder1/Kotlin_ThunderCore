@@ -1,4 +1,4 @@
-package thunderCore.games.bedWarsManager.gameManager
+package thunderCore.games.bedWarsManager.gamesManager
 
 import net.kyori.adventure.text.Component
 import net.kyori.adventure.text.format.NamedTextColor
@@ -14,12 +14,11 @@ import org.bukkit.event.player.PlayerMoveEvent
 import org.bukkit.event.player.PlayerQuitEvent
 import org.bukkit.scheduler.BukkitRunnable
 import thunderCore.ThunderCore.get
-import thunderCore.games.bedWarsManager.BedWarsGameForm
 import thunderCore.games.bedWarsManager.bedWarsGenerator.CenterGenerator
 import thunderCore.games.bedWarsManager.bedWarsGenerator.SpawnGenerator
 import thunderCore.games.bedWarsManager.bedWarsGenerator.UpgradeGenerator
 import thunderCore.games.bedWarsManager.BedWarsManager
-import thunderCore.games.bedWarsManager.BedWarsTeamForm
+import thunderCore.games.bedWarsManager.teamManager.BedWarsTeamForm
 import thunderCore.managers.fileManager.FileManager.copyWorld
 import java.time.Duration
 

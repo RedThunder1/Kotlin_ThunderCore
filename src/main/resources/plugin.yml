@@ -1,0 +1,57 @@
+name: Thunder_Core
+main: ThunderCore.ThunderCore
+version: 1.0.0
+api-version: 1.19
+author: RedThunderSpartan
+description: Core Plugin for my server
+
+commands:
+  lobby:
+    usage: </lobby>
+    description: Command for players to teleport to lobby.
+  ban:
+    usage: <ipban/ban (player) (time d|h|m) (reason)>
+    description: Command for staff members to ban players.
+  build:
+    usage: </build>
+    aliases:
+      - "b"
+    description: Command for staff members to build on worlds with world protection.
+  mute:
+    usage: </mute (player)>
+    description: Command for staff members to mute players.
+    aliases:
+      - "unmute"
+  mutechat:
+    usage: </mutechat>
+    description: Command for staff members to mute the chat for all players other than staff.
+  vanish:
+    usage: </vanish>
+    description: Command for staff members to vanish and appear offline.
+  getvanished:
+    usage: </getvanished>
+    description: Command for staff members to see who is vanished.
+  party:
+    usage: </party (help to see all available commands)>
+    description: Allows players to form parties to make playing with friends easier.
+  worldcreate:
+    usage: </worldcreate (world name) (type)>
+    aliases:
+      - "wc"
+    description: Allows staff to create new worlds
+  worlddelete:
+    usage: </worlddelete (world name)>
+    aliases:
+      - "wd"
+    description: Allows staff to delete worlds
+  worldtp:
+    usage: </worldtp (world name)>
+    aliases:
+      - "wtp"
+    description: Allows staff to tp between worlds
+  setrank:
+    usage: </setrank (player) (rank)>
+    description: Allows staff to set player ranks
+  sudo:
+    usage: </sudo (player) (message)>
+    description: Allows staff members to send messages or commands as another player

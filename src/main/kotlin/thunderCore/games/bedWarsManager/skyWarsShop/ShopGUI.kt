@@ -9,7 +9,7 @@ import org.bukkit.inventory.Inventory
 import org.bukkit.inventory.ItemStack
 import org.bukkit.inventory.meta.ItemMeta
 import thunderCore.games.bedWarsManager.BedWarsManager
-import thunderCore.games.bedWarsManager.BedWarsTeamForm
+import thunderCore.games.bedWarsManager.teamManager.BedWarsTeamForm
 
 class ShopGUI {
     fun banGUI(player: Player) {

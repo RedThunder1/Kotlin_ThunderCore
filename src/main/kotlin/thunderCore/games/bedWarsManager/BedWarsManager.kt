@@ -1,20 +1,21 @@
 package thunderCore.games.bedWarsManager
 
-import com.google.gson.Gson
+import org.bukkit.Bukkit
 import org.bukkit.World
 import org.bukkit.entity.Player
-import thunderCore.ThunderCore
-import thunderCore.games.bedWarsManager.gameManager.BedWarsDuelGameManager
-import thunderCore.games.bedWarsManager.gameManager.BedWarsTeamGameManager
+import thunderCore.games.bedWarsManager.gamesManager.BedWarsGameForm
+import thunderCore.games.bedWarsManager.mapManager.BedWarsMapForm
+import thunderCore.games.bedWarsManager.startingGameManager.StartingGameManager
 import thunderCore.managers.ThunderManager
+import java.util.*
+import kotlin.collections.ArrayList
 
 object BedWarsManager : ThunderManager {
-    private val gson: Gson = Gson()
-    private val lobbyTemplate: World? = null
+    private val lobbyTemplate: World = Bukkit.getWorld("lobbyTemplate")!!
     private val teamMaps = ArrayList<BedWarsMapForm>()
     private val duelMaps = ArrayList<BedWarsMapForm>()
     val activeGames = ArrayList<BedWarsGameForm>()
-    private val startingGames = ArrayList<StartingGameRecord>()
+    private val startingGames = ArrayList<StartingGameManager>()
 
     init {
         initializeMaps()
@@ -24,47 +25,44 @@ object BedWarsManager : ThunderManager {
         activeGames.remove(removeGame)
     }
 
-    fun removeStartingGames(startingGame: StartingGameRecord) {
+    fun removeStartingGames(startingGame: StartingGameManager) {
         startingGames.remove(startingGame)
-    }
-
-    fun startGame(gameForm: BedWarsGameForm) {
-        activeGames.add(gameForm)
-        when (gameForm.mode) {
-            "quads", "trios", "duos", "solo" -> BedWarsTeamGameManager(gameForm)
-            "duel" -> BedWarsDuelGameManager(gameForm)
-            else -> ThunderCore.get().redMsg("There was an error initializing aSkyWars game!")
-        }
     }
 
     fun joinGame(player: Player, mode: String) {
         if (startingGames.isEmpty()) {
             initializeNewGame(player, mode)
+            return
         }
+        var gameToJoin: StartingGameManager? = null
         for (startingGame in startingGames) {
-            if (startingGame.mode == mode) {
-                startingGame.players.add(player)
-                //tp player to lobby
-                return
+            if (startingGame.gameForm.mode == mode) {
+                if (gameToJoin == null) {
+                    gameToJoin = startingGame
+                } else if (startingGame.playerCount > gameToJoin.playerCount){
+                    gameToJoin = startingGame
+                }
             }
         }
-        initializeNewGame(player, mode)
+        if (gameToJoin == null) {
+            initializeNewGame(player, mode)
+            return
+        }
+        gameToJoin.addPlayerToLobby(player)
     }
 
     private fun initializeNewGame(player: Player, mode: String) {
-        val players: ArrayList<Player?> = ArrayList<Player?>()
+        val players: ArrayList<Player> = ArrayList()
         players.add(player)
-        /*
-        Get random map here once maps are made
+        val map = teamMaps[0]
+        val lobbyID = UUID.randomUUID()
+        val newLobby: BedWarsMapForm
 
-
-        startingGames.add(new StartingGameRecord(players, mode, map, UUID.randomUUID()));
+        //startingGames.add(StartingGameManager(StartingGameRecord(players, mode, map, lobbyID, newLobby)));
         return;
-        */
     }
 
     private fun initializeMaps() {
         //Maps will be hardcoded
-        //lobbyTemplate = Bukkit.getWorld("lobbyTemplate");
     }
 }

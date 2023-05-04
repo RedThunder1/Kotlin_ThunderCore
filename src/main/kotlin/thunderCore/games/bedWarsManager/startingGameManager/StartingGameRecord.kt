@@ -1,7 +1,8 @@
-package thunderCore.games.bedWarsManager
+package thunderCore.games.bedWarsManager.startingGameManager
 
 import org.bukkit.World
 import org.bukkit.entity.Player
+import thunderCore.games.bedWarsManager.mapManager.BedWarsMapForm
 import java.util.*
 
 data class StartingGameRecord(

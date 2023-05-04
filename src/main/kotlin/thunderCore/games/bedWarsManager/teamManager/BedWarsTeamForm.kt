@@ -1,4 +1,4 @@
-package thunderCore.games.bedWarsManager
+package thunderCore.games.bedWarsManager.teamManager
 
 import org.bukkit.entity.Player
 

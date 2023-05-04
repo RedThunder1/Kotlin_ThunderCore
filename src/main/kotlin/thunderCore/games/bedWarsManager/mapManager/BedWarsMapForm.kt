@@ -1,4 +1,4 @@
-package thunderCore.games.bedWarsManager
+package thunderCore.games.bedWarsManager.mapManager
 
 import org.bukkit.Location
 import org.bukkit.World

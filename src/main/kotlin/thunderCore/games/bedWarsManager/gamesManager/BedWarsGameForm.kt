@@ -1,6 +1,8 @@
-package thunderCore.games.bedWarsManager
+package thunderCore.games.bedWarsManager.gamesManager
 
 import org.bukkit.entity.Player
+import thunderCore.games.bedWarsManager.teamManager.BedWarsTeamForm
+import thunderCore.games.bedWarsManager.mapManager.BedWarsMapForm
 
 data class BedWarsGameForm(
     var teams: ArrayList<BedWarsTeamForm>,
