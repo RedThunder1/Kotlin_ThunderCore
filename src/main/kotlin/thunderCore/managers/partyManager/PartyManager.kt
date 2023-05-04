@@ -5,10 +5,6 @@ import org.bukkit.entity.Player
 object PartyManager {
 
     private var parties: ArrayList<PartyForm> = ArrayList()
-    private var partyManager: PartyManager = this
-    fun get(): PartyManager {
-        return partyManager
-    }
 
     fun createParty(partyForm: PartyForm) {
         parties.add(partyForm)
@@ -29,7 +25,7 @@ object PartyManager {
 
     fun getPartyByMember(player: Player?): PartyForm? {
         for (partyForm in parties) {
-            if (partyForm.members!!.contains(player!!)) {
+            if (partyForm.members.contains(player!!)) {
                 return partyForm
             }
         }
@@ -47,7 +43,7 @@ object PartyManager {
 
     fun checkIfMember(player: Player): Boolean {
         for ((leader, members, invited) in parties) {
-            if (members!!.contains(player)) {
+            if (members.contains(player)) {
                 return true
             }
             if (invited.contains(player)) {

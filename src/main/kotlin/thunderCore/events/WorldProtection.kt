@@ -15,7 +15,7 @@ import org.bukkit.event.entity.EntityDamageEvent
 import org.bukkit.event.entity.PlayerDeathEvent
 import org.bukkit.event.player.PlayerAttemptPickupItemEvent
 import org.bukkit.event.player.PlayerItemDamageEvent
-import thunderCore.commands.staffCommands.BuildCommand.BuildManager
+import thunderCore.commands.staffCommands.buildCommand.BuildManager
 
 class WorldProtection : Listener {
     @EventHandler

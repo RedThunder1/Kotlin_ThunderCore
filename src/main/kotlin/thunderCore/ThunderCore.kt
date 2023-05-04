@@ -4,15 +4,25 @@ import net.kyori.adventure.text.Component
 import net.kyori.adventure.text.TextComponent
 import net.kyori.adventure.text.format.NamedTextColor
 import net.kyori.adventure.text.format.TextDecoration
+import org.bukkit.WorldCreator
 import org.bukkit.entity.Player
 import org.bukkit.plugin.java.JavaPlugin
+import thunderCore.commands.LobbyCommand
 import thunderCore.commands.PartyCommand
+import thunderCore.commands.staffCommands.*
+import thunderCore.commands.staffCommands.buildCommand.BuildCommand
+import thunderCore.commands.staffCommands.worlds.CreateWorldCommand
+import thunderCore.commands.staffCommands.worlds.DeleteWorldCommand
+import thunderCore.commands.staffCommands.worlds.TpWorldCommand
+import thunderCore.events.ChatListener
+import thunderCore.events.PlayerJoin
+import thunderCore.events.PlayerLeave
+import thunderCore.events.WorldProtection
 import thunderCore.managers.ThunderManager
 import thunderCore.managers.rankManager.FakePlayer
 import thunderCore.managers.rankManager.RankManager
 import thunderCore.utilities.AnnouncementMessages
 import thunderCore.utilities.Time
-import kotlin.collections.ArrayList
 
 object ThunderCore: JavaPlugin() {
 
@@ -31,6 +41,20 @@ object ThunderCore: JavaPlugin() {
     fun get(): ThunderCore { return plugin }
 
     private val managers: ArrayList<ThunderManager> = ArrayList()
+
+    //TODO:
+    // Priority:
+    //      Skywars mini game
+    //      Commands
+    //      Party system
+    // Secondary:
+    //      Replace ChatColor since its depreciated
+    //      Test for bugs once a server is set up
+    //      Other Games
+    //      Friend system
+    //      Timed Mute
+    // Bugs to fix:
+    //      Staff chat doesn't work correctly because we can't get substrings
 
     override fun onEnable() {
         plugin = this
@@ -61,9 +85,12 @@ object ThunderCore: JavaPlugin() {
     }
 
     private fun loadEvents() {
-
-
-
+        val pluginManager = server.pluginManager
+        pluginManager.registerEvents(PlayerJoin(), this)
+        pluginManager.registerEvents(PlayerLeave(), this)
+        pluginManager.registerEvents(WorldProtection(), this)
+        pluginManager.registerEvents(ChatListener(), this)
+        greenMsg("Events LOADED!")
         greenMsg("Events LOADED!")
     }
 
@@ -74,38 +101,43 @@ object ThunderCore: JavaPlugin() {
     }
 
     private fun loadWorlds() {
-
-
-
+        val worlds = ArrayList<String>()
+        worlds.add("lobby")
+        worlds.add("lobbytemplate")
+        greenMsg("Worlds Initialized!")
+        for (world in worlds) {
+            val worldCreator = WorldCreator(world)
+            worldCreator.createWorld()
+        }
         greenMsg("Worlds LOADED!")
     }
 
     private fun loadCommands() {
-        //val banAlias = arrayOf("ipban")
-        //val muteAlias = arrayOf("unmute")
-        //val lobbyAlias = arrayOf("hub")
-        //val worldCreateAlias = arrayOf("wc")
-        //val worldDeleteAlias = arrayOf("wd")
-        //val worldTPAlias = arrayOf("wtp")
-        //Objects.requireNonNull<PluginCommand?>(getCommand("lobby")).setExecutor(LobbyCommand())
-        //Objects.requireNonNull(getCommand("lobby")).setAliases(List.of(*lobbyAlias))
-        //Objects.requireNonNull<PluginCommand?>(getCommand("ban")).setExecutor(BanCommand())
-        //Objects.requireNonNull(getCommand("ban")).setAliases(List.of(*banAlias))
-        //Objects.requireNonNull<PluginCommand?>(getCommand("mutechat")).setExecutor(MuteChatCommand())
-        //Objects.requireNonNull<PluginCommand?>(getCommand("vanish")).setExecutor(VanishCommand())
-        //Objects.requireNonNull<PluginCommand?>(getCommand("build")).setExecutor(BuildCommand())
-        //Objects.requireNonNull<PluginCommand?>(getCommand("mute")).setExecutor(MuteCommand())
-        //getCommand("mute")!!.setAliases(List.of(*muteAlias))
-        //getCommand("getvanished")!!.setExecutor(GetVanishedCommand())
+        val banAlias = arrayOf("ipban")
+        val muteAlias = arrayOf("unmute")
+        val lobbyAlias = arrayOf("hub")
+        val worldCreateAlias = arrayOf("wc")
+        val worldDeleteAlias = arrayOf("wd")
+        val worldTPAlias = arrayOf("wtp")
+        getCommand("lobby")!!.setExecutor(LobbyCommand())
+        getCommand("lobby")!!.setAliases(lobbyAlias.asList())
+        getCommand("ban")!!.setExecutor(BanCommand())
+        getCommand("ban")!!.setAliases(banAlias.asList())
+        getCommand("mutechat")!!.setExecutor(MuteChatCommand())
+        getCommand("vanish")!!.setExecutor(VanishCommand())
+        getCommand("build")!!.setExecutor(BuildCommand())
+        getCommand("mute")!!.setExecutor(MuteCommand())
+        getCommand("mute")!!.setAliases(muteAlias.asList())
+        getCommand("getvanished")!!.setExecutor(GetVanishedCommand())
         getCommand("party")!!.setExecutor(PartyCommand())
-        //Objects.requireNonNull<PluginCommand?>(getCommand("worldcreate")).setExecutor(CreateWorldCommand())
-        //Objects.requireNonNull(getCommand("worldcreate")).setAliases(List.of(*worldCreateAlias))
-        //Objects.requireNonNull<PluginCommand?>(getCommand("worlddelete")).setExecutor(DeleteWorldCommand())
-        //Objects.requireNonNull(getCommand("worlddelete")).setAliases(List.of(*worldDeleteAlias))
-        //Objects.requireNonNull<PluginCommand?>(getCommand("worldtp")).setExecutor(TpWorldCommand())
-        //Objects.requireNonNull(getCommand("worldtp")).setAliases(List.of(*worldTPAlias))
-        //Objects.requireNonNull<PluginCommand?>(getCommand("setrank")).setExecutor(SetRankCommand())
-        //Objects.requireNonNull<PluginCommand?>(getCommand("sudo")).setExecutor(SudoCommand())
+        getCommand("worldcreate")!!.setExecutor(CreateWorldCommand())
+        getCommand("worldcreate")!!.setAliases(worldCreateAlias.asList())
+        getCommand("worlddelete")!!.setExecutor(DeleteWorldCommand())
+        getCommand("worlddelete")!!.setAliases(worldDeleteAlias.asList())
+        getCommand("worldtp")!!.setExecutor(TpWorldCommand())
+        getCommand("worldtp")!!.setAliases(worldTPAlias.asList())
+        getCommand("setrank")!!.setExecutor(SetRankCommand())
+        getCommand("sudo")!!.setExecutor(SudoCommand())
 
         greenMsg("Commands LOADED!")
     }

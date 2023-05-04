@@ -27,7 +27,7 @@ class PartyInvite {
             val invitedList: ArrayList<Player> = ArrayList()
             invitedList.add(invited)
             party = PartyForm(inviter, ArrayList(), invitedList)
-            PartyManager.get().createParty(party)
+            PartyManager.createParty(party)
         }
         if (party.members.size == 3) {
             inviter.sendMessage(Component.text("The party is full! You cannot invite more players!").color(NamedTextColor.RED))
@@ -37,7 +37,7 @@ class PartyInvite {
             inviter.sendMessage(Component.text("You have already invited " + invited.name).color(NamedTextColor.RED))
             return
         }
-        if (PartyManager.get().checkIfMember(invited)) {
+        if (PartyManager.checkIfMember(invited)) {
             inviter.sendMessage(Component.text(invited.name + " is already in a party!").color(NamedTextColor.RED))
             return
         }

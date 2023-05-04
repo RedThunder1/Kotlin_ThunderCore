@@ -1,4 +1,4 @@
-package thunderCore.commands.staffCommands.BuildCommand
+package thunderCore.commands.staffCommands.buildCommand
 
 import org.bukkit.entity.Player
 
