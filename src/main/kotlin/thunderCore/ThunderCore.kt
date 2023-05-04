@@ -61,7 +61,7 @@ object ThunderCore: JavaPlugin() {
     //      Friend system
     //      Timed Mute
     // Bugs to fix:
-    //      No know bugs at this time
+    //      No known bugs at this time
 
     override fun onEnable() {
         plugin = this
