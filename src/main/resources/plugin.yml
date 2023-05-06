@@ -1,5 +1,5 @@
 name: Thunder_Core
-main: ThunderCore.ThunderCore
+main: thunderCore.ThunderCore
 version: 1.0.0
 api-version: 1.19
 author: RedThunderSpartan

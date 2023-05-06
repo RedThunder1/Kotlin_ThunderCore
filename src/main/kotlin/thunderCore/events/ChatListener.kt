@@ -18,7 +18,7 @@ class ChatListener : Listener {
         val player = event.player
         val message = event.originalMessage()
         val fakePlayer = getFakePlayer(player)!!
-        if (chatMuted && !ThunderCore.get().isModerator(player)) {
+        if (chatMuted && !ThunderCore.get.isModerator(player)) {
             player.sendMessage(Component.text("The chat is currently muted!", NamedTextColor.RED))
             event.isCancelled = true
             return
@@ -30,14 +30,14 @@ class ChatListener : Listener {
         }
         val plainSerializer = PlainTextComponentSerializer.plainText()
         val messageStr = plainSerializer.serialize(message)
-        if (messageStr[0] == '#' && ThunderCore.get().isStaff(player)) {
+        if (messageStr[0] == '#' && ThunderCore.get.isStaff(player)) {
             val msg1 = messageStr.substring(1)
             event.isCancelled = true
             for (staff in Bukkit.getOnlinePlayers()) {
-                if (ThunderCore.get().isStaff(staff)) {
+                if (ThunderCore.get.isStaff(staff)) {
                     staff.sendMessage(Component.text("[STAFF CHAT] ", NamedTextColor.RED, TextDecoration.BOLD)
                         .append(Component.text(RankManager.get().getPlayerRank(player)!!.prefix.toString() + player.name))
-                        .append(Component.text(msg1, NamedTextColor.GOLD))
+                        .append(Component.text(": $msg1", NamedTextColor.GOLD))
                     )
                     return
                 }
@@ -45,8 +45,9 @@ class ChatListener : Listener {
         }
         for (players in Bukkit.getOnlinePlayers()) {
             if (players.world == player.world) {
-                players.sendMessage(Component.text(RankManager.get().getPlayerRank(player)!!.prefix.toString()
-                            + player.name + ": " + NamedTextColor.WHITE + event.originalMessage()))
+                //val prefix = plainSerializer.serialize(RankManager.get().getPlayerRank(player)!!.prefix)
+                players.sendMessage(Component.text(RankManager.get().getPlayerRank(player)!!.prefix + player.name + ": ")
+                    .append(Component.text(messageStr, NamedTextColor.WHITE)))
             }
         }
         event.isCancelled = true

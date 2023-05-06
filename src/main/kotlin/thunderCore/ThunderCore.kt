@@ -24,33 +24,36 @@ import thunderCore.managers.rankManager.RankManager
 import thunderCore.utilities.AnnouncementMessages
 import thunderCore.utilities.Time
 
-object ThunderCore: JavaPlugin() {
+class ThunderCore: JavaPlugin() {
 
     var console = server.consoleSender
     private val thunderName: TextComponent = Component.text().build()
         .decorate(TextDecoration.BOLD)
         .color { NamedTextColor.YELLOW.value() }
         .content("THUNDER")
-        .color { NamedTextColor.AQUA.value() }
-        .content("CORE")
+        .append(Component.text("CORE")
+            .decorate()
+            .color(NamedTextColor.AQUA)
+            .decorate(TextDecoration.BOLD))
+    // This is why I hate components ^^^^
 
+    companion object {
+        lateinit var get: ThunderCore
+    }
 
-
-
-    private lateinit var plugin: ThunderCore
-    fun get(): ThunderCore { return plugin }
 
     private val managers: ArrayList<ThunderManager> = ArrayList()
 
     //TODO:
     // Priority:
+    //      Kotlin needs some changing to work correctly with the server
     //      BedWars mini game
     //          Finalize managers
     //          Make temporary worlds for testing
     //      Commands
     //          Commands are mostly done I just need to do testing to ensure everything works correctly
     //      Party system
-    //          Have party members join bedwars game with leader
+    //          Have party members join BedWars game with leader
     //          Members can't start games
     // Secondary:
     //      Replace ChatColor since its depreciated
@@ -64,7 +67,7 @@ object ThunderCore: JavaPlugin() {
     //      No known bugs at this time
 
     override fun onEnable() {
-        plugin = this
+        get = this
         loadManagers()
         loadEvents()
         loadRunnables()
@@ -83,7 +86,7 @@ object ThunderCore: JavaPlugin() {
     }
 
     private fun loadManagers() {
-        managers.add(RankManager)
+        managers.add(RankManager.get())
         greenMsg("Managers have been INITIALIZED")
         for (thunderManager in managers) {
             thunderManager.load()

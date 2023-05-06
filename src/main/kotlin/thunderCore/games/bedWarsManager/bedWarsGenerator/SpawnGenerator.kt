@@ -36,7 +36,7 @@ class SpawnGenerator(private val location: Location) {
                     goldSpawnRate[0]--
                 }
             }
-        }.runTaskTimer(ThunderCore.get(), 0, 20)
+        }.runTaskTimer(ThunderCore.get, 0, 20)
     }
 
     fun endSpawn() {

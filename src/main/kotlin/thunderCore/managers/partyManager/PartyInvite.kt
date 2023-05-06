@@ -54,6 +54,6 @@ class PartyInvite {
                 }
                 time[0]--
             }
-        }.runTaskTimer(ThunderCore.get(), 0, 20)
+        }.runTaskTimer(ThunderCore.get, 0, 20)
     }
 }

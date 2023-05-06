@@ -30,11 +30,11 @@ class AnnouncementMessages: Runnable{
     override fun run() {
         messageNumber++
         when (messageNumber) {
-            1 -> ThunderCore.server.broadcast(discord)
-            2 -> ThunderCore.server.broadcast(rules)
-            3 -> ThunderCore.server.broadcast(games)
+            1 -> ThunderCore.get.server.broadcast(discord)
+            2 -> ThunderCore.get.server.broadcast(rules)
+            3 -> ThunderCore.get.server.broadcast(games)
             4 -> {
-                ThunderCore.server.broadcast(welcome)
+                ThunderCore.get.server.broadcast(welcome)
                 messageNumber = 0
             }
             else -> messageNumber = 0

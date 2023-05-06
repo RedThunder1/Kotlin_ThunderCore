@@ -10,7 +10,7 @@ data class BedWarsGameForm(
     var teams: ArrayList<BedWarsTeamForm>,
     val mode: String,
     val map: BedWarsMapForm,
-    var id: UUID
+    var id: String
 ) {
 
     fun getTeamByColor(color: String): BedWarsTeamForm? {

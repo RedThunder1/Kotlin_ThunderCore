@@ -15,18 +15,18 @@ class VanishCommand : CommandExecutor {
             sender.sendMessage(Messages.CONSOLECANTUSE)
             return false
         }
-        if (!ThunderCore.get().isStaff(sender)) {
+        if (!ThunderCore.get.isStaff(sender)) {
             sender.sendMessage(Messages.NOPERMS)
             return true
         }
         if (vanished.contains(sender)) {
             vanished.remove(sender)
-            sender.showPlayer(ThunderCore.get(), sender)
+            sender.showPlayer(ThunderCore.get, sender)
             sender.sendMessage(Component.text("You have unvanished!", NamedTextColor.RED))
             return true
         }
         vanished.add(sender)
-        sender.hidePlayer(ThunderCore.get(), sender)
+        sender.hidePlayer(ThunderCore.get, sender)
         sender.sendMessage(Component.text("You have vanished!", NamedTextColor.GREEN))
         return true
     }

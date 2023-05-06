@@ -28,7 +28,7 @@ class StartingGameManager(startingGameForm: StartingGameRecord): Listener{
             "duos" -> { requiredPlayerCount = 8 }
             "solo" -> { requiredPlayerCount = 4 }
             else -> {
-                ThunderCore.redMsg("There was an error initializing the bedwars game!")
+                ThunderCore.get.redMsg("There was an error initializing the bedwars game!")
                 gameForm.players[0].sendMessage(Component.text("There was an error with initializing the BedWars game! Please try again!"))
                 BedWarsManager.removeStartingGames(this)
             }
@@ -76,7 +76,7 @@ class StartingGameManager(startingGameForm: StartingGameRecord): Listener{
                 }
                 //Show countdown for players and if a playerCount decreases below 14 stop countdown
             }
-        }.runTaskTimer(ThunderCore, 0, 20)
+        }.runTaskTimer(ThunderCore.get, 0, 20)
     }
 
     private fun beginGame() {

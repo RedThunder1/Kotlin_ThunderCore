@@ -17,7 +17,7 @@ class TpWorldCommand : CommandExecutor {
             sender.sendMessage(Messages.CONSOLECANTUSE)
             return false
         }
-        if (!(sender.isOp || ThunderCore.get().isStaff(sender))) {
+        if (!(sender.isOp || ThunderCore.get.isStaff(sender))) {
             sender.sendMessage(Messages.NOPERMS)
             return false
         }

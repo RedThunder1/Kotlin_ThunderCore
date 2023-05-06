@@ -29,7 +29,7 @@ class SetRankCommand : CommandExecutor {
             sender.sendMessage(Component.text("That is not an available rank!", NamedTextColor.RED))
             return false
         }
-        if (!ThunderCore.get().isOwner(sender)) {
+        if (!ThunderCore.get.isOwner(sender)) {
             sender.sendMessage(Messages.NOPERMS)
             return true
         }

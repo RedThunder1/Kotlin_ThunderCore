@@ -16,7 +16,7 @@ class GetVanishedCommand : CommandExecutor {
             sender.sendMessage(Messages.CONSOLECANTUSE)
             return false
         }
-        if (!ThunderCore.get().isModerator(sender)) {
+        if (!ThunderCore.get.isModerator(sender)) {
             sender.sendMessage(Messages.NOPERMS)
             return true
         }

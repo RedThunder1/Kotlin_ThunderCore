@@ -18,7 +18,7 @@ class CreateWorldCommand : CommandExecutor {
             createWorld(args, sender)
             return true
         }
-        if (!(sender.isOp || ThunderCore.get().isAdmin(sender))) {
+        if (!(sender.isOp || ThunderCore.get.isAdmin(sender))) {
             sender.sendMessage(Messages.NOPERMS)
             return true
         }

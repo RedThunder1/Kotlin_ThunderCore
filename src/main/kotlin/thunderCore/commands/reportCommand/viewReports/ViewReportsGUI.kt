@@ -13,7 +13,7 @@ import thunderCore.managers.reportManager.ReportManager
 
 object ViewReportsGUI {
     fun reportsGui(player: Player) {
-        val inventory: Inventory = ThunderCore.server.createInventory(null, 54, Component.text().build()
+        val inventory: Inventory = ThunderCore.get.server.createInventory(null, 54, Component.text().build()
             .color(NamedTextColor.RED)
             .decorate(TextDecoration.BOLD)
             .content("Reports Menu"))

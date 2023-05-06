@@ -17,7 +17,7 @@ class SudoCommand : CommandExecutor {
             sender.sendMessage(Messages.CONSOLECANTUSE)
             return false
         }
-        if (!ThunderCore.get().isAdmin(sender)) {
+        if (!ThunderCore.get.isAdmin(sender)) {
             sender.sendMessage(Messages.NOPERMS)
             return true
         }

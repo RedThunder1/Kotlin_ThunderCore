@@ -9,6 +9,6 @@ data class StartingGameRecord(
     val players: ArrayList<Player>,
     val mode: String,
     val map: BedWarsMapForm,
-    val id: UUID,
+    val id: String,
     val lobby: World
 )

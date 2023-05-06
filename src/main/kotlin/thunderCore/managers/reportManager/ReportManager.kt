@@ -65,9 +65,9 @@ object ReportManager : ThunderManager {
             reports =
                 gson.fromJson(Objects.requireNonNull(FileManager.readFile(File("Reports.json"))), reports.javaClass)
         } catch (e: NullPointerException) {
-            ThunderCore.get().yellowMsg("There are no report files!")
+            ThunderCore.get.yellowMsg("There are no report files!")
         }
-        ThunderCore.get().greenMsg("Reports loaded!")
+        ThunderCore.get.greenMsg("Reports loaded!")
     }
 
     override fun save() {
@@ -75,6 +75,6 @@ object ReportManager : ThunderManager {
             val id = report.id.toString()
             FileManager.writeFile(File("ThunderCore/Reports/Report${id}.json"), gson.toJson(report))
         }
-        ThunderCore.get().greenMsg("Saved Reports!")
+        ThunderCore.get.greenMsg("Saved Reports!")
     }
 }

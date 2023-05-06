@@ -13,9 +13,11 @@ import thunderCore.utilities.Messages
 class LobbyCommand : CommandExecutor {
     private var lobby: World = Bukkit.getWorld("lobby")!!
     private var spawn: Location = Location(lobby, 0.5, 72.0, 0.5)
+
     override fun onCommand(sender: CommandSender, cmd: Command, label: String, args: Array<String>): Boolean {
+
         if (sender !is Player) {
-            ThunderCore.console.sendMessage(Messages.CONSOLECANTUSE)
+            ThunderCore.get.console.sendMessage(Messages.CONSOLECANTUSE)
             return false
         }
         sender.teleport(spawn)

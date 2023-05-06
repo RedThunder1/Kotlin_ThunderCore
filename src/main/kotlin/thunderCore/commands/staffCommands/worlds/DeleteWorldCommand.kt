@@ -30,7 +30,7 @@ class DeleteWorldCommand : CommandExecutor {
             }
             return false
         }
-        if (!(sender.isOp || ThunderCore.get().isAdmin(sender))) {
+        if (!(sender.isOp || ThunderCore.get.isAdmin(sender))) {
             sender.sendMessage(Messages.NOPERMS)
             return false
         }

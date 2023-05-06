@@ -13,7 +13,7 @@ import org.bukkit.event.entity.PlayerDeathEvent
 import org.bukkit.event.player.PlayerMoveEvent
 import org.bukkit.event.player.PlayerQuitEvent
 import org.bukkit.scheduler.BukkitRunnable
-import thunderCore.ThunderCore.get
+import thunderCore.ThunderCore
 import thunderCore.games.bedWarsManager.bedWarsGenerator.CenterGenerator
 import thunderCore.games.bedWarsManager.bedWarsGenerator.SpawnGenerator
 import thunderCore.games.bedWarsManager.bedWarsGenerator.UpgradeGenerator
@@ -103,7 +103,7 @@ class BedWarsTeamGameManager(private val gameForm: BedWarsGameForm) : Listener {
                 }
                 countdown[0]--
             }
-        }.runTaskTimer(get(), 0, 20)
+        }.runTaskTimer(ThunderCore.get, 0, 20)
         for (spawnGenerator in spawnGenerators) {
             spawnGenerator.startSpawning()
         }
@@ -127,7 +127,7 @@ class BedWarsTeamGameManager(private val gameForm: BedWarsGameForm) : Listener {
                 }
                 time[0]--
             }
-        }.runTaskTimer(get(), 0, 20)
+        }.runTaskTimer(ThunderCore.get, 0, 20)
     }
 
     fun endGame() {

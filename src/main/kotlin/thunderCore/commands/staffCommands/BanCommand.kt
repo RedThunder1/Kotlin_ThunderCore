@@ -20,7 +20,7 @@ class BanCommand : CommandExecutor {
             sender.sendMessage(Messages.CONSOLECANTUSE)
             return true
         }
-        if (!ThunderCore.get().isModerator(sender)) {
+        if (!ThunderCore.get.isModerator(sender)) {
             sender.sendMessage(Messages.NOPERMS)
             return true
         }
