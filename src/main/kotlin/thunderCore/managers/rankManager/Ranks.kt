@@ -1,3 +1,5 @@
 package thunderCore.managers.rankManager
 
-data class Ranks(val name: String, var permlevel: Int, val prefix: String)
+import net.kyori.adventure.text.format.NamedTextColor
+
+data class Ranks(val name: String, val permlevel: Int, val prefix: String)

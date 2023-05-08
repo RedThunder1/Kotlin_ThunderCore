@@ -28,7 +28,9 @@ class PlayerJoin : Listener {
         if (RankManager.get().getFakePlayer(player) == null) {
             RankManager.get().createFakePlayer(event.player, "member", null)
         }
-        player.displayName(Component.text(RankManager.get().getFakePlayer(player)!!.rank.prefix.toString()).append(Component.text(player.name)))
-        player.playerListName(Component.text(RankManager.get().getFakePlayer(player)!!.rank.prefix.toString()).append(Component.text(player.name)))
+        val rank = RankManager.get().getPlayerRank(player)
+        val prefix = rank!!.prefix
+        player.displayName(Component.text(prefix, RankManager.getRankColor(rank)).append(Component.text(player.name)))
+        player.playerListName(Component.text(prefix, RankManager.getRankColor(rank)).append(Component.text(player.name)))
     }
 }

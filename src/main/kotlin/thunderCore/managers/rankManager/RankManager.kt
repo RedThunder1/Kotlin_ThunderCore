@@ -1,9 +1,7 @@
 package thunderCore.managers.rankManager
 
 import com.google.gson.Gson
-import net.kyori.adventure.text.Component
 import net.kyori.adventure.text.format.NamedTextColor
-import net.kyori.adventure.text.format.TextDecoration
 import net.kyori.adventure.text.serializer.plain.PlainTextComponentSerializer
 import org.bukkit.entity.Player
 import thunderCore.ThunderCore
@@ -24,62 +22,34 @@ object RankManager: ThunderManager {
         return rankManager
     }
 
-
     init {
         val plainSerializer = PlainTextComponentSerializer.plainText()
-        val ownerPrefix = Component.text().build()
-            .decorate(TextDecoration.BOLD)
-            .color(NamedTextColor.DARK_RED)
-            .content("[Owner] ")
-        playerRanks.add(Ranks("owner", 4, plainSerializer.serialize(ownerPrefix)))
+        val ownerPrefix = "[Owner] "
+        playerRanks.add(Ranks("owner", 4, ownerPrefix))
 
-        val coownerPrefix = Component.text().build()
-            .decorate(TextDecoration.BOLD)
-            .color(NamedTextColor.RED)
-            .content("[Co Owner] ")
-        playerRanks.add(Ranks("co-owner", 4, plainSerializer.serialize(coownerPrefix)))
+        val coownerPrefix = "[Co Owner] "
+        playerRanks.add(Ranks("co-owner", 4, coownerPrefix))
 
-        val devPrefix = Component.text().build()
-            .decorate(TextDecoration.BOLD)
-            .color(NamedTextColor.DARK_BLUE)
-            .content("[Dev] ")
-        playerRanks.add(Ranks("developer", 3, plainSerializer.serialize(devPrefix)))
+        val devPrefix = "[Dev] "
+        playerRanks.add(Ranks("developer", 3, devPrefix))
 
-        val adminPrefix = Component.text().build()
-            .decorate(TextDecoration.BOLD)
-            .color(NamedTextColor.GOLD)
-            .content("[Admin] ")
-        playerRanks.add(Ranks("admin", 3, plainSerializer.serialize(adminPrefix)))
+        val adminPrefix = "[Admin] "
+        playerRanks.add(Ranks("admin", 3, adminPrefix))
 
-        val modPrefix = Component.text().build()
-            .decorate(TextDecoration.BOLD)
-            .color(NamedTextColor.YELLOW)
-            .content("[Mod] ")
-        playerRanks.add(Ranks("mod", 2, plainSerializer.serialize(modPrefix)))
+        val modPrefix = "[Mod] "
+        playerRanks.add(Ranks("mod", 2, modPrefix))
 
-        val builderPrefix = Component.text().build()
-            .decorate(TextDecoration.BOLD)
-            .color(NamedTextColor.BLUE)
-            .content("[Builder] ")
-        playerRanks.add(Ranks("builder", 2, plainSerializer.serialize(builderPrefix)))
+        val builderPrefix = "[Builder] "
+        playerRanks.add(Ranks("builder", 2, builderPrefix))
 
-        val tModPrefix = Component.text().build()
-            .decorate(TextDecoration.BOLD)
-            .color(NamedTextColor.BLUE)
-            .content("[Trial Mod] ")
-        playerRanks.add(Ranks("trial-mod", 1, plainSerializer.serialize(tModPrefix)))
+        val tModPrefix = "[Trial Mod] "
+        playerRanks.add(Ranks("trial-mod", 1, tModPrefix))
 
-        val spartanPrefix = Component.text().build()
-            .decorate(TextDecoration.BOLD)
-            .color(NamedTextColor.GREEN)
-            .content("[Spartan] ")
-        playerRanks.add(Ranks("spartan", 0, plainSerializer.serialize(spartanPrefix)))
+        val spartanPrefix = "[Spartan] "
+        playerRanks.add(Ranks("spartan", 0, spartanPrefix))
 
-        val memberPrefix = Component.text().build()
-            .decorate(TextDecoration.BOLD)
-            .color(NamedTextColor.AQUA)
-            .content("[Member] ")
-        playerRanks.add(Ranks("member", 0, plainSerializer.serialize(memberPrefix)))
+        val memberPrefix = "[Member] "
+        playerRanks.add(Ranks("member", 0, memberPrefix))
 
         subPerms.add("build")
         subPerms.add("heal")
@@ -143,6 +113,20 @@ object RankManager: ThunderManager {
             }
         }
         return false
+    }
+
+    fun getRankColor(rank: Ranks): NamedTextColor? {
+        return when (rank.name) {
+            "owner" -> { NamedTextColor.DARK_RED }
+            "co-owner" -> { NamedTextColor.RED }
+            "admin" -> { NamedTextColor.GOLD }
+            "mod" -> { NamedTextColor.YELLOW }
+            "trial-mod" -> { NamedTextColor.BLUE }
+            "dev", "builder" -> { NamedTextColor.DARK_BLUE }
+            "spartan" -> { NamedTextColor.GREEN }
+            "member" -> { NamedTextColor.AQUA }
+            else -> { NamedTextColor.WHITE }
+        }
     }
 
     override fun load() {

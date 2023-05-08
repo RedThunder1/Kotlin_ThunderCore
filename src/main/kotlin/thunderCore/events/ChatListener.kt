@@ -45,9 +45,11 @@ class ChatListener : Listener {
         }
         for (players in Bukkit.getOnlinePlayers()) {
             if (players.world == player.world) {
-                //val prefix = plainSerializer.serialize(RankManager.get().getPlayerRank(player)!!.prefix)
-                players.sendMessage(Component.text(RankManager.get().getPlayerRank(player)!!.prefix + player.name + ": ")
-                    .append(Component.text(messageStr, NamedTextColor.WHITE)))
+                val rank = RankManager.get().getPlayerRank(player)
+                val prefix = rank!!.prefix + "${player.name}: "
+                val color = RankManager.getRankColor(rank)
+                players.sendMessage(
+                    Component.text(prefix, color).append(Component.text(messageStr, NamedTextColor.WHITE)))
             }
         }
         event.isCancelled = true

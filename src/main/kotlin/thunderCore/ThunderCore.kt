@@ -46,8 +46,9 @@ class ThunderCore: JavaPlugin() {
 
     //TODO:
     // Priority:
-    //      Kotlin needs some changing to work correctly with the server
-    //      BedWars mini game
+    //      Games
+    //          KitPvp
+    //          BedWars mini game
     //          Finalize managers
     //          Make temporary worlds for testing
     //      Commands
