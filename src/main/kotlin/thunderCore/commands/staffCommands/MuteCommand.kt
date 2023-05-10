@@ -8,8 +8,8 @@ import org.bukkit.command.CommandExecutor
 import org.bukkit.command.CommandSender
 import org.bukkit.entity.Player
 import thunderCore.ThunderCore
-import thunderCore.managers.rankManager.FakePlayer
-import thunderCore.managers.rankManager.RankManager
+import thunderCore.managers.playerManager.FakePlayer
+import thunderCore.managers.playerManager.PlayerManager
 import thunderCore.utilities.Messages
 
 class MuteCommand : CommandExecutor {
@@ -31,8 +31,8 @@ class MuteCommand : CommandExecutor {
             return false
         }
         val muted: Player = Bukkit.getPlayer(args[0])!!
-        val mutedFakePlayer: FakePlayer = RankManager.getFakePlayer(muted)!!
-        if (RankManager.getPlayerRank(sender)!!.permlevel <= RankManager.getPlayerRank(muted)!!.permlevel) {
+        val mutedFakePlayer: FakePlayer = PlayerManager.getFakePlayer(muted)!!
+        if (PlayerManager.getPlayerRank(sender)!!.permlevel <= PlayerManager.getPlayerRank(muted)!!.permlevel) {
             sender.sendMessage(Component.text("You cannot mute that player!", NamedTextColor.RED))
             return true
         }

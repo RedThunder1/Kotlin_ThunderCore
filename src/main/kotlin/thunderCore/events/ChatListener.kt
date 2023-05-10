@@ -9,8 +9,8 @@ import org.bukkit.Bukkit
 import org.bukkit.event.EventHandler
 import org.bukkit.event.Listener
 import thunderCore.ThunderCore
-import thunderCore.managers.rankManager.RankManager
-import thunderCore.managers.rankManager.RankManager.getFakePlayer
+import thunderCore.managers.playerManager.PlayerManager
+import thunderCore.managers.playerManager.PlayerManager.getFakePlayer
 
 class ChatListener : Listener {
     @EventHandler
@@ -36,7 +36,7 @@ class ChatListener : Listener {
             for (staff in Bukkit.getOnlinePlayers()) {
                 if (ThunderCore.get.isStaff(staff)) {
                     staff.sendMessage(Component.text("[STAFF CHAT] ", NamedTextColor.RED, TextDecoration.BOLD)
-                        .append(Component.text(RankManager.get().getPlayerRank(player)!!.prefix.toString() + player.name))
+                        .append(Component.text(PlayerManager.getPlayerRank(player)!!.prefix + player.name))
                         .append(Component.text(": $msg1", NamedTextColor.GOLD))
                     )
                     return
@@ -45,9 +45,9 @@ class ChatListener : Listener {
         }
         for (players in Bukkit.getOnlinePlayers()) {
             if (players.world == player.world) {
-                val rank = RankManager.get().getPlayerRank(player)
+                val rank = PlayerManager.getPlayerRank(player)
                 val prefix = rank!!.prefix + "${player.name}: "
-                val color = RankManager.getRankColor(rank)
+                val color = PlayerManager.getRankColor(rank)
                 players.sendMessage(
                     Component.text(prefix, color).append(Component.text(messageStr, NamedTextColor.WHITE)))
             }

@@ -10,7 +10,7 @@ import org.bukkit.command.CommandExecutor
 import org.bukkit.command.CommandSender
 import org.bukkit.entity.Player
 import thunderCore.ThunderCore
-import thunderCore.managers.rankManager.RankManager
+import thunderCore.managers.playerManager.PlayerManager
 import thunderCore.utilities.Messages
 import java.util.*
 
@@ -41,7 +41,7 @@ class BanCommand : CommandExecutor {
             return false
         }
         val toBan: Player = Bukkit.getPlayer(args[0])!!
-        if (RankManager.get().getPlayerRank(sender)!!.permlevel <= RankManager.get().getPlayerRank(toBan)!!.permlevel
+        if (PlayerManager.getPlayerRank(sender)!!.permlevel <= PlayerManager.getPlayerRank(toBan)!!.permlevel
         ) {
             sender.sendMessage(Component.text("You cannot ban that player!", NamedTextColor.RED))
             return true

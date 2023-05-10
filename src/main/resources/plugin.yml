@@ -34,6 +34,8 @@ commands:
   party:
     usage: </party (help to see all available commands)>
     description: Allows players to form parties to make playing with friends easier.
+    aliases:
+      - "p"
   worldcreate:
     usage: </worldcreate (world name) (type)>
     aliases:
@@ -55,3 +57,17 @@ commands:
   sudo:
     usage: </sudo (player) (message)>
     description: Allows staff members to send messages or commands as another player
+  kitpvp:
+    usage: </kitpvp>
+    description: Allows players to teleport to the kitpvp game.
+  kits:
+    usage: </kits>
+    description: Allows players to open a GUI to select kits for kitpvp
+  bypass:
+    usage: </bypass>
+    description: Allows admins and up to bypass world protection
+  friend:
+    usage: Ex </friend add <player>>
+    description: Allows players to add friends on the server!
+    aliases:
+      - "f"

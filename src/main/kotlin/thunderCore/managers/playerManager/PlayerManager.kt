@@ -1,4 +1,4 @@
-package thunderCore.managers.rankManager
+package thunderCore.managers.playerManager
 
 import com.google.gson.Gson
 import net.kyori.adventure.text.format.NamedTextColor
@@ -12,18 +12,13 @@ import java.lang.NullPointerException
 import java.util.*
 import kotlin.collections.ArrayList
 
-object RankManager: ThunderManager {
+object PlayerManager: ThunderManager {
     private val gson = Gson()
     private val playerRanks: ArrayList<Ranks> = ArrayList()
     var fakePlayers: ArrayList<FakePlayer> = ArrayList()
     private val subPerms: ArrayList<String> = ArrayList()
-    private var rankManager: RankManager = this
-    fun get(): RankManager {
-        return rankManager
-    }
 
     init {
-        val plainSerializer = PlainTextComponentSerializer.plainText()
         val ownerPrefix = "[Owner] "
         playerRanks.add(Ranks("owner", 4, ownerPrefix))
 
@@ -103,12 +98,12 @@ object RankManager: ThunderManager {
 
     fun createFakePlayer(player: Player, rank: String?, subperms: List<String>?) {
         ThunderCore.get.greenMsg("Created a fake player!")
-        fakePlayers.add(FakePlayer(getRankByName(rank)!!, player.uniqueId, subperms, muted = false, inGame = false))
+        fakePlayers.add(FakePlayer(getRankByName(rank)!!, player.uniqueId, subperms , ArrayList(), 0, muted = false, inGame = false))
     }
 
-    fun checkSubPerm(s: String): Boolean {
+    fun checkSubPerm(string: String): Boolean {
         for (subPerm in subPerms) {
-            if (s == subPerm) {
+            if (string == subPerm) {
                 return true
             }
         }

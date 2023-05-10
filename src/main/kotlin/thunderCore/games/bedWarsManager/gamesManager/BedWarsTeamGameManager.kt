@@ -22,7 +22,7 @@ import thunderCore.games.bedWarsManager.teamManager.BedWarsTeamForm
 import thunderCore.managers.fileManager.FileManager.copyWorld
 import java.time.Duration
 
-class BedWarsTeamGameManager(private val gameForm: BedWarsGameForm) : Listener {
+class BedWarsTeamGameManager(private val gameForm: BedWarsGameForm): Listener {
     private var gameOver = false
     private var frozen = true
     private val spawns = gameForm.map.teamSpawns

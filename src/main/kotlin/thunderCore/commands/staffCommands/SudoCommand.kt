@@ -3,7 +3,7 @@ package thunderCore.commands.staffCommands
 import net.kyori.adventure.text.Component
 import net.kyori.adventure.text.format.NamedTextColor
 import org.bukkit.Bukkit
-import thunderCore.managers.rankManager.RankManager
+import thunderCore.managers.playerManager.PlayerManager
 import org.bukkit.command.Command
 import org.bukkit.command.CommandExecutor
 import org.bukkit.command.CommandSender
@@ -30,7 +30,7 @@ class SudoCommand : CommandExecutor {
             return true
         }
         val p: Player = Bukkit.getPlayer(args[0])!!
-        if (RankManager.getPlayerRank(sender)?.permlevel!! <= RankManager.get().getPlayerRank(p)?.permlevel!!) {
+        if (PlayerManager.getPlayerRank(sender)?.permlevel!! <= PlayerManager.getPlayerRank(p)?.permlevel!!) {
             sender.sendMessage(Component.text("You cannot sudo that player!", NamedTextColor.RED))
             return true
         }

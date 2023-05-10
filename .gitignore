@@ -1,3 +1,4 @@
 /target/
 /Kotlin_ThunderCore.iml
 /.idea/
+/src/main/kotlin/thunderCore/managers/sqlManager/

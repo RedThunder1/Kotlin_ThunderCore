@@ -8,20 +8,20 @@ import org.bukkit.command.CommandExecutor
 import org.bukkit.command.CommandSender
 import org.bukkit.entity.Player
 import thunderCore.ThunderCore
-import thunderCore.managers.rankManager.FakePlayer
-import thunderCore.managers.rankManager.RankManager
+import thunderCore.managers.playerManager.FakePlayer
+import thunderCore.managers.playerManager.PlayerManager
 import thunderCore.utilities.Messages
 
 class SetRankCommand : CommandExecutor {
     override fun onCommand(sender: CommandSender, command: Command, label: String, args: Array<String>): Boolean {
         if (sender !is Player) {
-            for (playerRank in RankManager.getPlayerRanks()) {
+            for (playerRank in PlayerManager.getPlayerRanks()) {
                 if (args[1].equals(playerRank.name, ignoreCase = true)) {
                     if (Bukkit.getPlayer(args[0]) == null) {
                         sender.sendMessage(Messages.NOTAPLAYER)
                         return false
                     }
-                    val fakePlayer: FakePlayer = Bukkit.getPlayer(args[0])?.let { RankManager.getFakePlayer(it) }!!
+                    val fakePlayer: FakePlayer = Bukkit.getPlayer(args[0])?.let { PlayerManager.getFakePlayer(it) }!!
                     fakePlayer.rank = playerRank
                     return true
                 }
@@ -46,9 +46,9 @@ class SetRankCommand : CommandExecutor {
             sender.sendMessage(Component.text("You must provide a rank!", NamedTextColor.RED))
             return false
         }
-        for (playerRank in RankManager.get().getPlayerRanks()) {
+        for (playerRank in PlayerManager.getPlayerRanks()) {
             if (args[1].equals(playerRank.name, ignoreCase = true)) {
-                val fakePlayer: FakePlayer = RankManager.getFakePlayer(rankedPlayer)!!
+                val fakePlayer: FakePlayer = PlayerManager.getFakePlayer(rankedPlayer)!!
                 fakePlayer.rank = playerRank
                 return true
             }
