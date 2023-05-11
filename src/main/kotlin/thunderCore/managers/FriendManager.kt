@@ -9,7 +9,7 @@ import thunderCore.managers.playerManager.PlayerManager
 import java.util.UUID
 
 object FriendManager {
-    private val requests = ArrayList<ArrayList<UUID>>()
+    private val requests = ArrayList<HashMap<UUID, UUID>>()
 
     fun requestFriend(player: Player, added: Player) {
         for (request in requests) {
@@ -37,12 +37,17 @@ object FriendManager {
             .append(accept)
             .append(Component.text(" || ", NamedTextColor.GOLD))
             .append(deny))
-        requests.add(arrayListOf(player.uniqueId, added.uniqueId))
+        val map = HashMap<UUID, UUID>()
+        map[player.uniqueId] = added.uniqueId
+        requests.add(map)
     }
 
     fun acceptFriend(adder: Player, added: Player) {
-        for (request in requests) {
-            if (request.contains(adder.uniqueId) && request.contains(added.uniqueId)) { requests.remove(request) }
+        //check if there is a valid request
+        val request = getRequestByPlayers(adder, added)
+        if (request == null) {
+            added.sendMessage(Component.text("You have not gotten a request from ${adder.name}"))
+            return
         }
         PlayerManager.getFakePlayer(adder)!!.friends.add(added)
         adder.sendMessage(Component.text("You are now friends with ${added.name}!", NamedTextColor.GREEN))
@@ -51,8 +56,11 @@ object FriendManager {
     }
 
     fun denyFriend(adder: Player, added: Player) {
-        for (request in requests) {
-            if (request.contains(adder.uniqueId) && request.contains(added.uniqueId)) { requests.remove(request) }
+        //check if there is a valid request
+        val request = getRequestByPlayers(adder, added)
+        if (request == null) {
+            added.sendMessage(Component.text("You have not gotten a request from ${adder.name}"))
+            return
         }
         adder.sendMessage(Component.text("${added.name} denied your friend request!", NamedTextColor.RED))
         added.sendMessage(Component.text("You denied ${adder.name} friend request!", NamedTextColor.RED))
@@ -65,5 +73,12 @@ object FriendManager {
             player.sendMessage(Component.text("You are no longer friends with ${remove.name}!", NamedTextColor.RED))
             remove.sendMessage(Component.text("You are no longer friends with ${player.name}!", NamedTextColor.RED))
         }
+    }
+
+    private fun getRequestByPlayers(adder: Player, added: Player): HashMap<UUID, UUID>? {
+        for (request in requests) {
+            if (request[adder.uniqueId] == added.uniqueId) { return request }
+        }
+        return null
     }
 }

@@ -7,6 +7,7 @@ import org.bukkit.command.Command
 import org.bukkit.command.CommandExecutor
 import org.bukkit.command.CommandSender
 import org.bukkit.entity.Player
+import thunderCore.managers.FriendManager
 import thunderCore.managers.playerManager.PlayerManager
 import thunderCore.utilities.Messages
 
@@ -32,15 +33,43 @@ class FriendsCommand : CommandExecutor {
                     player.sendMessage(Messages.NOTAPLAYER)
                     return false
                 }
+                FriendManager.requestFriend(player, added)
             }
             "accept" -> {
-
+                if (args[1].isEmpty()) {
+                    player.sendMessage(Component.text("You must provide a player to add!", NamedTextColor.RED))
+                    return false
+                }
+                val added =  Bukkit.getPlayer(args[1])
+                if (added == null) {
+                    player.sendMessage(Messages.NOTAPLAYER)
+                    return false
+                }
+                FriendManager.acceptFriend(added, player)
             }
             "deny" -> {
-
+                if (args[1].isEmpty()) {
+                    player.sendMessage(Component.text("You must provide a player to add!", NamedTextColor.RED))
+                    return false
+                }
+                val added =  Bukkit.getPlayer(args[1])
+                if (added == null) {
+                    player.sendMessage(Messages.NOTAPLAYER)
+                    return false
+                }
+                FriendManager.denyFriend(added, player)
             }
             "remove" -> {
-
+                if (args[1].isEmpty()) {
+                    player.sendMessage(Component.text("You must provide a player to add!", NamedTextColor.RED))
+                    return false
+                }
+                val removed =  Bukkit.getPlayer(args[1])
+                if (removed == null) {
+                    player.sendMessage(Messages.NOTAPLAYER)
+                    return false
+                }
+                FriendManager.removeFriend(player, removed)
             }
             "list" -> {
                 val fakePlayer = PlayerManager.getFakePlayer(player)!!
