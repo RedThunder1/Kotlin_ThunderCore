@@ -1,8 +1,6 @@
 package thunderCore.games.bedWarsManager.startingGameManager
 
-import net.kyori.adventure.text.Component
-import net.kyori.adventure.text.format.NamedTextColor
-import net.kyori.adventure.title.Title
+import org.bukkit.ChatColor
 import org.bukkit.Instrument
 import org.bukkit.Note
 import org.bukkit.entity.Player
@@ -13,7 +11,6 @@ import thunderCore.games.bedWarsManager.BedWarsManager
 import thunderCore.games.bedWarsManager.gamesManager.BedWarsGameForm
 import thunderCore.games.bedWarsManager.gamesManager.BedWarsTeamGameManager
 import thunderCore.games.bedWarsManager.teamManager.BedWarsTeamForm
-import java.time.Duration
 
 class StartingGameManager(startingGameForm: StartingGameRecord): Listener{
     private var starting = false
@@ -29,8 +26,8 @@ class StartingGameManager(startingGameForm: StartingGameRecord): Listener{
             "solo" -> { requiredPlayerCount = 4 }
             else -> {
                 ThunderCore.get.redMsg("There was an error initializing the bedwars game!")
-                gameForm.players[0].sendMessage(Component.text("There was an error with initializing the BedWars game! Please try again!"))
-                BedWarsManager.removeStartingGames(this)
+                gameForm.players[0].sendMessage("" + ChatColor.RED + "There was an error with initializing the BedWars game! Please try again!")
+                BedWarsManager.get.removeStartingGames(this)
             }
         }
 
@@ -50,7 +47,7 @@ class StartingGameManager(startingGameForm: StartingGameRecord): Listener{
             gameCountdown()
         }
         for (players in gameForm.players) {
-            players.sendMessage(Component.text("${player.name} + has joined the game! [$playerCount/$requiredPlayerCount]", NamedTextColor.GOLD))
+            players.sendMessage("" + ChatColor.GOLD + "${player.name} + has joined the game! [$playerCount/$requiredPlayerCount]")
         }
     }
 
@@ -60,10 +57,7 @@ class StartingGameManager(startingGameForm: StartingGameRecord): Listener{
         object : BukkitRunnable() {
             override fun run() {
                 for (player in gameForm.players) {
-                    player.showTitle(
-                        Title.title(Component.text(time, NamedTextColor.RED),
-                        Component.empty(),
-                        Title.Times.times(Duration.ofMillis(100), Duration.ofMillis(600), Duration.ofMillis(100))))
+                    player.sendTitle("" + ChatColor.RED + time, null, 5, 10, 5)
                     player.playNote(player.location, Instrument.CHIME, Note.natural(1, Note.Tone.A))
                 }
                 if (time == 0) {
@@ -82,7 +76,7 @@ class StartingGameManager(startingGameForm: StartingGameRecord): Listener{
     private fun beginGame() {
         //Begin game by loading new game manager and removing this once done
         //Create teams here
-        var teams: ArrayList<BedWarsTeamForm> = ArrayList()
+        val teams: ArrayList<BedWarsTeamForm> = ArrayList()
         var team1: BedWarsTeamForm
         for (i in 1 until 4) {
 
@@ -92,7 +86,7 @@ class StartingGameManager(startingGameForm: StartingGameRecord): Listener{
 
 
 
-        BedWarsManager.removeStartingGames(this)
+        BedWarsManager.get.removeStartingGames(this)
     }
 
 }

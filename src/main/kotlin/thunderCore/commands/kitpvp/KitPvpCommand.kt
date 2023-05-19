@@ -1,8 +1,7 @@
 package thunderCore.commands.kitpvp
 
-import net.kyori.adventure.text.Component
-import net.kyori.adventure.text.format.NamedTextColor
 import org.bukkit.Bukkit
+import org.bukkit.Location
 import org.bukkit.command.Command
 import org.bukkit.command.CommandExecutor
 import org.bukkit.command.CommandSender
@@ -18,10 +17,10 @@ class KitPvpCommand: CommandExecutor {
         }
         val player = sender.player!!
         if (player.world == Bukkit.getWorld("kitpvp")!!) {
-            player.sendMessage(Component.text("You are already in the kitpvp world! use /kits to open the kit menu!", NamedTextColor.RED))
+            player.teleport(Location(Bukkit.getWorld("kitpvp"), 0.5, 72.0, 0.5))
             return true
         }
-        KitPvPManager.playerJoin(player)
+        KitPvPManager.get.playerJoin(player)
         return true
     }
 

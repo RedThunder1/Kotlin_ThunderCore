@@ -1,8 +1,7 @@
 package thunderCore.events
 
-import net.kyori.adventure.text.Component
-import net.kyori.adventure.text.format.NamedTextColor
 import org.bukkit.Bukkit
+import org.bukkit.ChatColor
 import org.bukkit.Location
 import org.bukkit.World
 import org.bukkit.entity.Player
@@ -14,10 +13,13 @@ import org.bukkit.event.entity.CreatureSpawnEvent
 import org.bukkit.event.entity.EntityDamageByEntityEvent
 import org.bukkit.event.entity.EntityDamageEvent
 import org.bukkit.event.entity.PlayerDeathEvent
-import org.bukkit.event.player.PlayerAttemptPickupItemEvent
 import org.bukkit.event.player.PlayerItemDamageEvent
+import org.bukkit.event.player.PlayerPickupItemEvent
+import org.bukkit.scheduler.BukkitRunnable
+import thunderCore.ThunderCore
 import thunderCore.commands.staffCommands.buildCommand.BuildManager
 import thunderCore.commands.staffCommands.bypassCommand.BypassManager
+
 
 class WorldProtection : Listener {
     @EventHandler
@@ -25,8 +27,8 @@ class WorldProtection : Listener {
         val player: Player = event.player
         val world: World = event.block.world
         if (isWorldProtected(world)) {
-            if (!BuildManager.builders.contains(player) || BypassManager.bypassing.contains(player)) {
-                player.sendMessage(Component.text("You can't break that block!", NamedTextColor.RED))
+            if (!(BuildManager.builders.contains(player) || BypassManager.bypassing.contains(player))) {
+                player.sendMessage("" + ChatColor.RED + "You can't break that block!")
                 event.isCancelled = true
             }
         }
@@ -36,10 +38,11 @@ class WorldProtection : Listener {
     fun onPlace(event: BlockPlaceEvent) {
         val player: Player = event.player
         val world: World = event.block.world
-        if (isWorldProtected(world)) {
-            if (!BuildManager.builders.contains(player) || BypassManager.bypassing.contains(player)) {
-                event.isCancelled = true
-            }
+        if (!isWorldProtected(world)) {
+            return
+        }
+        if (!(BuildManager.builders.contains(player) || BypassManager.bypassing.contains(player))) {
+            event.isCancelled = true
         }
     }
 
@@ -61,7 +64,7 @@ class WorldProtection : Listener {
     }
 
     @EventHandler
-    fun pickUp(event: PlayerAttemptPickupItemEvent) {
+    fun pickUp(event: PlayerPickupItemEvent) {
         val world: World = event.player.world
         if (isWorldProtected(world)) {
             if (!(BypassManager.bypassing.contains(event.player))) {
@@ -81,6 +84,26 @@ class WorldProtection : Listener {
     @EventHandler
     fun damage(event: EntityDamageEvent) {
         val world: World = event.entity.world
+        if (!isWorldProtected(world)) {
+            return
+        }
+        if (event.cause == EntityDamageEvent.DamageCause.VOID) {
+            object : BukkitRunnable() {
+                override fun run() {
+                    if (event.entity is Player) {
+                        event.entity.teleport(Location(event.entity.world, 0.5, 72.1, 0.5))
+                        event.entity.fallDistance = 0f
+                        event.isCancelled = true
+                        return
+                    }
+                }
+            }.runTaskLater(ThunderCore.get, 1L)
+            if (event.entity is Player) {
+                event.entity.teleport(Location(event.entity.world, 0.5, 72.1, 0.5))
+                event.isCancelled = true
+                return
+            }
+        }
         if (world === Bukkit.getWorld("lobby")) {
             event.isCancelled = true
         }
@@ -106,6 +129,6 @@ class WorldProtection : Listener {
 
     companion object {
         private val protectedWorlds: List<String> =
-            ArrayList(mutableListOf("world", "kitpvp", "pvp", "lobby", "dueltemplate"))
+            ArrayList(listOf("world", "kitpvp", "pvp", "lobby", "dueltemplate"))
     }
 }

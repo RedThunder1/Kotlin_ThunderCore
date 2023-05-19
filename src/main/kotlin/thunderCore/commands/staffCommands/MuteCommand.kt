@@ -1,8 +1,7 @@
 package thunderCore.commands.staffCommands
 
-import net.kyori.adventure.text.Component
-import net.kyori.adventure.text.format.NamedTextColor
 import org.bukkit.Bukkit
+import org.bukkit.ChatColor
 import org.bukkit.command.Command
 import org.bukkit.command.CommandExecutor
 import org.bukkit.command.CommandSender
@@ -23,7 +22,7 @@ class MuteCommand : CommandExecutor {
             return true
         }
         if (args[0].isEmpty()) {
-            sender.sendMessage(Component.text("You must provide a player to mute!", NamedTextColor.RED))
+            sender.sendMessage("${ChatColor.RED}You must provide a player to mute!")
             return false
         }
         if (Bukkit.getPlayer(args[0]) == null) {
@@ -31,24 +30,24 @@ class MuteCommand : CommandExecutor {
             return false
         }
         val muted: Player = Bukkit.getPlayer(args[0])!!
-        val mutedFakePlayer: FakePlayer = PlayerManager.getFakePlayer(muted)!!
-        if (PlayerManager.getPlayerRank(sender)!!.permlevel <= PlayerManager.getPlayerRank(muted)!!.permlevel) {
-            sender.sendMessage(Component.text("You cannot mute that player!", NamedTextColor.RED))
+        val mutedFakePlayer: FakePlayer = PlayerManager.get.getFakePlayer(muted)!!
+        if (PlayerManager.get.getPlayerRank(sender)!!.permlevel <= PlayerManager.get.getPlayerRank(muted)!!.permlevel) {
+            sender.sendMessage("${ChatColor.RED}You cannot mute that player!")
             return true
         }
         if (label == "mute") {
             if (mutedFakePlayer.muted) {
-                sender.sendMessage(Component.text("${muted.name} is already muted", NamedTextColor.RED))
+                sender.sendMessage("${ChatColor.RED}${muted.name} is already muted")
                 return true
             }
-            sender.sendMessage(Component.text("${muted.name} has been MUTED!", NamedTextColor.RED))
+            sender.sendMessage("${ChatColor.RED}${muted.name} has been MUTED!")
             mutedFakePlayer.muted = true
         } else {
             if (!mutedFakePlayer.muted) {
-                sender.sendMessage(Component.text("${muted.name} isn't muted", NamedTextColor.RED))
+                sender.sendMessage("${ChatColor.RED}${muted.name} isn't muted")
                 return true
             }
-            sender.sendMessage(Component.text("${muted.name} has been UNMUTED!", NamedTextColor.RED))
+            sender.sendMessage("${ChatColor.RED}${muted.name} has been UNMUTED!")
             mutedFakePlayer.muted = false
         }
         return true

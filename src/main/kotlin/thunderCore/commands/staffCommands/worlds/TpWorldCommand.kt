@@ -1,9 +1,8 @@
 package thunderCore.commands.staffCommands.worlds
 
-import net.kyori.adventure.text.Component
-import net.kyori.adventure.text.format.NamedTextColor
 import org.bukkit.Bukkit
-import org.bukkit.World
+import org.bukkit.ChatColor
+import org.bukkit.Location
 import org.bukkit.command.Command
 import org.bukkit.command.CommandExecutor
 import org.bukkit.command.CommandSender
@@ -22,29 +21,27 @@ class TpWorldCommand : CommandExecutor {
             return false
         }
         if (args.isEmpty()) {
-            sender.sendMessage(Component.text("Please provide a world to teleport to!", NamedTextColor.RED))
+            sender.sendMessage("${ChatColor.RED}Please provide a world to teleport to!")
             return false
         }
         val w = args[0]
         if (Bukkit.getWorld(w) == null) {
-            sender.sendMessage(Component.text("That is not an available world!", NamedTextColor.RED))
+            sender.sendMessage("${ChatColor.RED}That is not an available world!")
             return false
         }
         if (args.size > 1) {
             val p = args[1]
             if (Bukkit.getPlayer(p) != null) {
-                val world: World = Bukkit.getWorld(w)!!
                 val player1: Player = Bukkit.getPlayer(p)!!
-                val loc = world.spawnLocation
+                val loc = Location(Bukkit.getWorld(w), 0.5, 72.0, 0.5)
                 player1.teleport(loc)
                 return false
             } else {
-                sender.sendMessage(Component.text("That is not an online player!", NamedTextColor.RED))
+                sender.sendMessage("${ChatColor.RED}That is not an online player!")
             }
             return false
         }
-        val world: World = Bukkit.getWorld(w)!!
-        val loc = world.spawnLocation
+        val loc = Location(Bukkit.getWorld(w), 0.5, 72.0, 0.5)
         sender.teleport(loc)
         return true
     }

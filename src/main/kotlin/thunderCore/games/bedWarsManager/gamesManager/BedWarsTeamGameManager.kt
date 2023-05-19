@@ -1,8 +1,5 @@
 package thunderCore.games.bedWarsManager.gamesManager
 
-import net.kyori.adventure.text.Component
-import net.kyori.adventure.text.format.NamedTextColor
-import net.kyori.adventure.title.Title
 import org.bukkit.*
 import org.bukkit.entity.EntityType
 import org.bukkit.entity.Player
@@ -19,8 +16,7 @@ import thunderCore.games.bedWarsManager.bedWarsGenerator.SpawnGenerator
 import thunderCore.games.bedWarsManager.bedWarsGenerator.UpgradeGenerator
 import thunderCore.games.bedWarsManager.BedWarsManager
 import thunderCore.games.bedWarsManager.teamManager.BedWarsTeamForm
-import thunderCore.managers.fileManager.FileManager.copyWorld
-import java.time.Duration
+import thunderCore.managers.fileManager.FileManager
 
 class BedWarsTeamGameManager(private val gameForm: BedWarsGameForm): Listener {
     private var gameOver = false
@@ -32,10 +28,10 @@ class BedWarsTeamGameManager(private val gameForm: BedWarsGameForm): Listener {
     init {
         val map = gameForm.map
         val gameWorld = map.mapTemplate
-        gameForm.id = gameWorld.name + (BedWarsManager.activeGames.size + 1)
+        gameForm.id = gameWorld.name + (BedWarsManager.get.activeGames.size + 1)
 
         //Copy world
-        copyWorld(gameWorld, gameForm.id)
+        FileManager.get.copyWorld(gameWorld, gameForm.id)
         for (team in gameForm.teams) {
             players.addAll(team.teamMembers)
         }
@@ -91,15 +87,8 @@ class BedWarsTeamGameManager(private val gameForm: BedWarsGameForm): Listener {
                     cancel()
                 }
                 for (player in players) {
-                    val title = Title.title(
-                        Component.text(NamedTextColor.GREEN.toString() + countdown[0].toString()),
-                        Component.empty(),
-                        Title.Times.times(
-                            Duration.ofMillis(100), Duration.ofMillis(600), Duration.ofMillis(100)
-                        )
-                    )
                     player.playNote(player.location, Instrument.CHIME, Note.natural(1, Note.Tone.A))
-                    player.showTitle(title)
+                    player.sendTitle("" + ChatColor.GREEN + countdown[0], null, 5, 10, 5)
                 }
                 countdown[0]--
             }
@@ -143,7 +132,7 @@ class BedWarsTeamGameManager(private val gameForm: BedWarsGameForm): Listener {
 
     @EventHandler
     fun onDeath(event: PlayerDeathEvent) {
-        val player = event.player
+        val player: Player = event.entity
         if (player.world.name != gameForm.id) {
             return
         }
@@ -152,7 +141,7 @@ class BedWarsTeamGameManager(private val gameForm: BedWarsGameForm): Listener {
         when (ede.cause) {
             DamageCause.VOID -> {
                 for (p in players) {
-                    p.sendMessage(Component.text(NamedTextColor.RED.toString() + player.name + NamedTextColor.GOLD + " has died to the void!"))
+                    p.sendMessage("" + ChatColor.RED + player.name + ChatColor.GOLD + " has died to the void!")
                 }
             }
 
@@ -161,25 +150,25 @@ class BedWarsTeamGameManager(private val gameForm: BedWarsGameForm): Listener {
                     (ede.entity as Player).killer?.let { gameForm.getTeamByPlayer((ede.entity as Player).killer)!!.addPlayerKill(it) }
                 }
                 for (p in players) {
-                    p.sendMessage(Component.text(NamedTextColor.RED.toString() + player.name + NamedTextColor.GOLD + " was killed by " + ede.entity.name + "!"))
+                    p.sendMessage("" + ChatColor.RED + player.name + ChatColor.GOLD + " was killed by " + ede.entity.name + "!")
                 }
             }
 
             DamageCause.FALL -> {
                 for (p in players) {
-                    p.sendMessage(Component.text(NamedTextColor.RED.toString() + player.name + NamedTextColor.GOLD + " fell to their death!"))
+                    p.sendMessage("" + ChatColor.RED + player.name + ChatColor.GOLD + " fell to their death!")
                 }
             }
 
             DamageCause.FIRE -> {
                 for (p in players) {
-                    p.sendMessage(Component.text(NamedTextColor.RED.toString() + player.name + NamedTextColor.GOLD + " burned to death!"))
+                    p.sendMessage("" + ChatColor.RED + player.name + ChatColor.GOLD + " burned to death!")
                 }
             }
 
             DamageCause.SUFFOCATION -> {
                 for (p in players) {
-                    p.sendMessage(Component.text(NamedTextColor.RED.toString() + player.name + NamedTextColor.GOLD + " suffocated to death!"))
+                    p.sendMessage("" + ChatColor.RED + player.name + ChatColor.GOLD + " suffocated to death!")
                 }
             }
             else -> { //gets mad without a default

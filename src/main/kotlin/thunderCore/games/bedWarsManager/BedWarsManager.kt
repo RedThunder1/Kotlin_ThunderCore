@@ -10,7 +10,10 @@ import thunderCore.managers.ThunderManager
 import java.util.*
 import kotlin.collections.ArrayList
 
-object BedWarsManager : ThunderManager {
+class BedWarsManager : ThunderManager {
+    companion object {
+        lateinit var get: BedWarsManager
+    }
     private val lobbyTemplate: World = Bukkit.getWorld("lobbyTemplate")!!
     private val teamMaps = ArrayList<BedWarsMapForm>()
     private val duelMaps = ArrayList<BedWarsMapForm>()
@@ -19,6 +22,7 @@ object BedWarsManager : ThunderManager {
 
     init {
         initializeMaps()
+        get = this
     }
 
     fun removeActiveGames(removeGame: BedWarsGameForm) {

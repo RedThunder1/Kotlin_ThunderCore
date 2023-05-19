@@ -1,44 +1,40 @@
 package thunderCore.managers.partyManager
 
+import net.md_5.bungee.api.chat.ClickEvent
 import thunderCore.ThunderCore
-import net.kyori.adventure.text.Component
-import net.kyori.adventure.text.event.ClickEvent
-import net.kyori.adventure.text.format.NamedTextColor
+import net.md_5.bungee.api.chat.TextComponent
+import org.bukkit.ChatColor
 import org.bukkit.entity.Player
 import org.bukkit.scheduler.BukkitRunnable
 
 class PartyInvite {
-    private val accept = Component.text("ACCEPT", NamedTextColor.GREEN)
-        .clickEvent(ClickEvent.runCommand("party join"))
-        .toBuilder().build()
-    private val deny = Component.text("DENY", NamedTextColor.RED)
-        .clickEvent(ClickEvent.runCommand("party deny"))
-        .toBuilder().build()
+    private val accept = TextComponent("" + ChatColor.GREEN + "ACCEPT")
+    private val deny = TextComponent("" + ChatColor.RED + "DENY")
+
+    init {
+        accept.clickEvent = ClickEvent(ClickEvent.Action.RUN_COMMAND, "party join")
+        deny.clickEvent = ClickEvent(ClickEvent.Action.RUN_COMMAND, "party deny")
+    }
 
     fun invitePlayer(inviter: Player, invited: Player) {
-        invited.sendMessage(Component.text().build()
-            .color(NamedTextColor.GOLD)
-            .content("You have been invited to a party by ${inviter.name}! ")
-            .append(accept)
-            .append(Component.text(" || ", NamedTextColor.GOLD))
-            .append(deny))
-        var party = PartyManager.getPartyByLeader(inviter)
+        invited.sendMessage("" + ChatColor.GOLD + "You have been invited to a party by ${inviter.name}! " + accept + ChatColor.GOLD + " || " + deny)
+        var party = PartyManager.get.getPartyByLeader(inviter)
         if (party == null) {
             val invitedList: ArrayList<Player> = ArrayList()
             invitedList.add(invited)
             party = PartyForm(inviter, ArrayList(), invitedList)
-            PartyManager.createParty(party)
+            PartyManager.get.createParty(party)
         }
         if (party.members.size == 3) {
-            inviter.sendMessage(Component.text("The party is full! You cannot invite more players!").color(NamedTextColor.RED))
+            inviter.sendMessage("" + ChatColor.RED + "The party is full! You cannot invite more players!")
             return
         }
         if (party.invited.contains(invited)) {
-            inviter.sendMessage(Component.text("You have already invited " + invited.name).color(NamedTextColor.RED))
+            inviter.sendMessage("" + ChatColor.RED + "You have already invited ${invited.name}!")
             return
         }
-        if (PartyManager.checkIfMember(invited)) {
-            inviter.sendMessage(Component.text(invited.name + " is already in a party!").color(NamedTextColor.RED))
+        if (PartyManager.get.checkIfMember(invited)) {
+            inviter.sendMessage("" + ChatColor.RED + "${invited.name} is already in a party!")
             return
         }
         val time = intArrayOf(60)
@@ -49,7 +45,7 @@ class PartyInvite {
                 }
                 if (time[0] == 0) {
                     party.invited.remove(invited)
-                    invited.sendMessage(Component.text("Your party invite has expired!").color(NamedTextColor.RED))
+                    invited.sendMessage("" + ChatColor.RED +"Your party invite has expired!")
                     cancel()
                 }
                 time[0]--

@@ -1,8 +1,7 @@
 package thunderCore.commands.kitpvp.kitsCommand
 
-import net.kyori.adventure.text.Component
-import net.kyori.adventure.text.format.NamedTextColor
 import org.bukkit.Bukkit
+import org.bukkit.ChatColor
 import org.bukkit.command.Command
 import org.bukkit.command.CommandExecutor
 import org.bukkit.command.CommandSender
@@ -17,10 +16,17 @@ class KitsCommand: CommandExecutor {
         }
         val player = sender.player
         if (player!!.world != Bukkit.getWorld("kitpvp")) {
-            player.sendMessage(Component.text("You can only use this command in the kitpvp world!", NamedTextColor.RED))
+            player.sendMessage("${ChatColor.RED}You can only use this command in the kitpvp world!")
             return true;
         }
-        KitsGUI.kitsGui(player)
+        /*
+        if (player.location.x > -20 && player.location.x < 20 && player.location.z > -20 && player.location.z < 20) {
+            player.sendMessage(Component.text("You must be in the spawn to change kits!", NamedTextColor.RED))
+            return true
+        }
+         */
+        val gui = KitsGUI()
+        gui.kitsGui(player)
         return true;
     }
 

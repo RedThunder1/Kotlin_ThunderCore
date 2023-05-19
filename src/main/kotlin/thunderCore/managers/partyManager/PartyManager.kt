@@ -2,10 +2,13 @@ package thunderCore.managers.partyManager
 
 import org.bukkit.entity.Player
 
-object PartyManager {
+class PartyManager {
 
     private var parties: ArrayList<PartyForm> = ArrayList()
-
+    companion object {
+        lateinit var get: PartyManager
+    }
+    init { get = this }
     fun createParty(partyForm: PartyForm) {
         parties.add(partyForm)
     }

@@ -1,9 +1,6 @@
 package thunderCore
 
-import net.kyori.adventure.text.Component
-import net.kyori.adventure.text.TextComponent
-import net.kyori.adventure.text.format.NamedTextColor
-import net.kyori.adventure.text.format.TextDecoration
+import org.bukkit.ChatColor
 import org.bukkit.WorldCreator
 import org.bukkit.entity.Player
 import org.bukkit.plugin.java.JavaPlugin
@@ -19,6 +16,7 @@ import thunderCore.commands.staffCommands.bypassCommand.BypassCommand
 import thunderCore.commands.staffCommands.worlds.CreateWorldCommand
 import thunderCore.commands.staffCommands.worlds.DeleteWorldCommand
 import thunderCore.commands.staffCommands.worlds.TpWorldCommand
+import thunderCore.commands.staffCommands.worlds.WorldListCommand
 import thunderCore.events.ChatListener
 import thunderCore.events.PlayerJoin
 import thunderCore.events.PlayerLeave
@@ -32,14 +30,8 @@ import thunderCore.utilities.Time
 
 class ThunderCore: JavaPlugin() {
 
-    var console = server.consoleSender
-    private val thunderName: TextComponent = Component.text().build()
-        .decorate(TextDecoration.BOLD)
-        .color { NamedTextColor.YELLOW.value() }
-        .content("THUNDER")
-        .append(Component.text(" CORE: ")
-            .color(NamedTextColor.AQUA)
-            .decorate(TextDecoration.BOLD))
+    private var console = server.consoleSender
+    private val thunderName: String = "" + ChatColor.YELLOW + "THUNDER" + ChatColor.AQUA + "MC" + ChatColor.RESET
     // This is why I hate components ^^^^
 
     companion object {
@@ -51,9 +43,9 @@ class ThunderCore: JavaPlugin() {
 
     //TODO:
     // Priority:
-    //      Games
-    //          KitPvp
-    //          Make temporary worlds for testing
+    //      Kitpvp
+    //          Make a penalty for leaving in combat
+    //          More balanced kits
     //      Party system
     //          Have party members join games with leader
     //          Members can't start games
@@ -81,6 +73,7 @@ class ThunderCore: JavaPlugin() {
     override fun onLoad() { greenMsg("LOADED!") }
 
     override fun onDisable() {
+        //Delete game worlds
         for (thunderManager in managers) {
             thunderManager.save()
         }
@@ -88,7 +81,7 @@ class ThunderCore: JavaPlugin() {
     }
 
     private fun loadManagers() {
-        managers.add(PlayerManager)
+        managers.add(PlayerManager.get)
         greenMsg("Managers have been INITIALIZED")
         for (thunderManager in managers) {
             thunderManager.load()
@@ -109,7 +102,7 @@ class ThunderCore: JavaPlugin() {
 
     private fun loadRunnables() {
         val scheduler = server.scheduler
-        scheduler.runTaskTimer(this, AnnouncementMessages(), 0, Time.TEN_MIN)
+        scheduler.runTaskTimer(this, AnnouncementMessages(), 0, Time.get.TEN_MIN)
         greenMsg("Runnables LOADED!")
     }
 
@@ -117,6 +110,8 @@ class ThunderCore: JavaPlugin() {
         val worlds = ArrayList<String>()
         worlds.add("lobby")
         worlds.add("lobbytemplate")
+        worlds.add("kitpvp")
+        worlds.add("building")
         greenMsg("Worlds Initialized!")
         for (world in worlds) {
             val worldCreator = WorldCreator(world)
@@ -144,6 +139,8 @@ class ThunderCore: JavaPlugin() {
         getCommand("worlddelete")!!.setAliases(listOf("wd"))
         getCommand("worldtp")!!.setExecutor(TpWorldCommand())
         getCommand("worldtp")!!.setAliases(listOf("wtp"))
+        getCommand("worldlist")!!.setExecutor(WorldListCommand())
+        getCommand("worldlist")!!.setAliases(listOf("wl"))
         getCommand("setrank")!!.setExecutor(SetRankCommand())
         getCommand("sudo")!!.setExecutor(SudoCommand())
         getCommand("kits")!!.setExecutor(KitsCommand())
@@ -151,52 +148,54 @@ class ThunderCore: JavaPlugin() {
         getCommand("bypass")!!.setExecutor(BypassCommand())
         getCommand("friend")!!.setExecutor(FriendsCommand())
         getCommand("friend")!!.setAliases(listOf("f"))
-
+        getCommand("flyspeed")!!.setExecutor(FlySpeedCommand())
         greenMsg("Commands LOADED!")
     }
 
     fun greenMsg(text: String) {
-        console.sendMessage(thunderName.append(Component.text(text).color(NamedTextColor.GREEN)))    }
+        console.sendMessage(thunderName + ChatColor.GREEN + text)
+    }
 
     fun redMsg(text: String) {
-        console.sendMessage(thunderName.append(Component.text(text).color(NamedTextColor.RED)))
+        console.sendMessage(thunderName + ChatColor.RED + text)
     }
 
     fun yellowMsg(text: String) {
-        console.sendMessage(thunderName.append(Component.text(text).color(NamedTextColor.YELLOW)))    }
+        console.sendMessage(thunderName + ChatColor.YELLOW + text)
+    }
 
     fun isStaff(player: Player): Boolean {
-        return if (PlayerManager.fakePlayers.contains(PlayerManager.getFakePlayer(player))) {
-            val fakePlayer: FakePlayer? = PlayerManager.getFakePlayer(player)
+        return if (PlayerManager.get.fakePlayers.contains(PlayerManager.get.getFakePlayer(player))) {
+            val fakePlayer: FakePlayer? = PlayerManager.get.getFakePlayer(player)
             fakePlayer!!.rank.permlevel >= 1
         } else player.isOp
     }
 
     fun isModerator(player: Player): Boolean {
-        return if (PlayerManager.fakePlayers.contains(PlayerManager.getFakePlayer(player))) {
-            val fakePlayer: FakePlayer? = PlayerManager.getFakePlayer(player)
+        return if (PlayerManager.get.fakePlayers.contains(PlayerManager.get.getFakePlayer(player))) {
+            val fakePlayer: FakePlayer? = PlayerManager.get.getFakePlayer(player)
             fakePlayer!!.rank.permlevel >= 2
         } else player.isOp
     }
 
     fun isAdmin(player: Player): Boolean {
-        return if (PlayerManager.fakePlayers.contains(PlayerManager.getFakePlayer(player))) {
-            val fakePlayer: FakePlayer? = PlayerManager.getFakePlayer(player)
+        return if (PlayerManager.get.fakePlayers.contains(PlayerManager.get.getFakePlayer(player))) {
+            val fakePlayer: FakePlayer? = PlayerManager.get.getFakePlayer(player)
             fakePlayer!!.rank.permlevel >= 3
         } else player.isOp
     }
 
     fun isOwner(player: Player): Boolean {
-        return if (PlayerManager.fakePlayers.contains(PlayerManager.getFakePlayer(player))) {
-            val fakePlayer: FakePlayer? = PlayerManager.getFakePlayer(player)
+        return if (PlayerManager.get.fakePlayers.contains(PlayerManager.get.getFakePlayer(player))) {
+            val fakePlayer: FakePlayer? = PlayerManager.get.getFakePlayer(player)
             fakePlayer!!.rank.permlevel >= 4
         } else player.isOp
     }
 
     fun isBuilder(player: Player): Boolean {
-        return if (PlayerManager.fakePlayers.contains(PlayerManager.getFakePlayer(player))) {
-            val fakePlayer: FakePlayer? = PlayerManager.getFakePlayer(player)
-            fakePlayer!!.rank == PlayerManager.getRankByName("builder")
+        return if (PlayerManager.get.fakePlayers.contains(PlayerManager.get.getFakePlayer(player))) {
+            val fakePlayer: FakePlayer? = PlayerManager.get.getFakePlayer(player)
+            fakePlayer!!.rank == PlayerManager.get.getRankByName("builder")
         } else isAdmin(player)
     }
 }

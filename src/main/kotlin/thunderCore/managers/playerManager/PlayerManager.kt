@@ -1,8 +1,7 @@
 package thunderCore.managers.playerManager
 
 import com.google.gson.Gson
-import net.kyori.adventure.text.format.NamedTextColor
-import net.kyori.adventure.text.serializer.plain.PlainTextComponentSerializer
+import org.bukkit.ChatColor
 import org.bukkit.entity.Player
 import thunderCore.ThunderCore
 import thunderCore.managers.ThunderManager
@@ -12,13 +11,18 @@ import java.lang.NullPointerException
 import java.util.*
 import kotlin.collections.ArrayList
 
-object PlayerManager: ThunderManager {
+class PlayerManager: ThunderManager {
     private val gson = Gson()
     private val playerRanks: ArrayList<Ranks> = ArrayList()
     var fakePlayers: ArrayList<FakePlayer> = ArrayList()
     private val subPerms: ArrayList<String> = ArrayList()
 
+    companion object {
+        lateinit var get: PlayerManager
+    }
+
     init {
+        get = this
         val ownerPrefix = "[Owner] "
         playerRanks.add(Ranks("owner", 4, ownerPrefix))
 
@@ -110,17 +114,17 @@ object PlayerManager: ThunderManager {
         return false
     }
 
-    fun getRankColor(rank: Ranks): NamedTextColor? {
+    fun getRankColor(rank: Ranks): ChatColor {
         return when (rank.name) {
-            "owner" -> { NamedTextColor.DARK_RED }
-            "co-owner" -> { NamedTextColor.RED }
-            "admin" -> { NamedTextColor.GOLD }
-            "mod" -> { NamedTextColor.YELLOW }
-            "trial-mod" -> { NamedTextColor.BLUE }
-            "dev", "builder" -> { NamedTextColor.DARK_BLUE }
-            "spartan" -> { NamedTextColor.GREEN }
-            "member" -> { NamedTextColor.AQUA }
-            else -> { NamedTextColor.WHITE }
+            "owner" -> { ChatColor.DARK_RED }
+            "co-owner" -> { ChatColor.RED }
+            "admin" -> { ChatColor.GOLD }
+            "mod" -> { ChatColor.YELLOW }
+            "trial-mod" -> { ChatColor.BLUE }
+            "dev", "builder" -> { ChatColor.DARK_BLUE }
+            "spartan" -> { ChatColor.GREEN }
+            "member" -> { ChatColor.AQUA }
+            else -> { ChatColor.WHITE }
         }
     }
 
@@ -129,7 +133,7 @@ object PlayerManager: ThunderManager {
             val folder = File("ThunderCore/FakePlayers/")
             val listOfFiles = folder.listFiles()
             for (file in Objects.requireNonNull<Array<File>>(listOfFiles)) {
-                val fileContent: String? = FileManager.readFile(file)
+                val fileContent: String? = FileManager.get.readFile(file)
                 fakePlayers.add(gson.fromJson(fileContent, FakePlayer::class.java))
             }
         } catch (e: NullPointerException) {
@@ -141,7 +145,7 @@ object PlayerManager: ThunderManager {
     override fun save() {
         for (fakePlayer in fakePlayers) {
             val id: String = fakePlayer.uuid.toString()
-            FileManager.writeFile(File("ThunderCore/FakePlayers/$id.json"), gson.toJson(fakePlayer))
+            FileManager.get.writeFile(File("ThunderCore/FakePlayers/$id.json"), gson.toJson(fakePlayer))
         }
         ThunderCore.get.greenMsg("Saved Player Ranks!")
     }

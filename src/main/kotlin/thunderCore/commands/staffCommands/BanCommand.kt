@@ -1,10 +1,9 @@
 package thunderCore.commands.staffCommands
 
-import net.kyori.adventure.text.Component
-import net.kyori.adventure.text.format.NamedTextColor
 import org.apache.commons.lang3.StringUtils
 import org.bukkit.BanList
 import org.bukkit.Bukkit
+import org.bukkit.ChatColor
 import org.bukkit.command.Command
 import org.bukkit.command.CommandExecutor
 import org.bukkit.command.CommandSender
@@ -25,15 +24,15 @@ class BanCommand : CommandExecutor {
             return true
         }
         if (args.isEmpty()) {
-            sender.sendMessage(Component.text("You must provide a player to ban, ban time, and a ban reason!", NamedTextColor.RED))
+            sender.sendMessage("${ChatColor.RED}You must provide a player to ban, ban time, and a ban reason!")
             return false
         }
         if (args[1].isEmpty()) {
-            sender.sendMessage(Component.text("You must provide a ban time!", NamedTextColor.RED))
+            sender.sendMessage("${ChatColor.RED}You must provide a ban time!")
             return false
         }
         if (args[2].isEmpty()) {
-            sender.sendMessage(Component.text("You must provide a ban reason!", NamedTextColor.RED))
+            sender.sendMessage("${ChatColor.RED}You must provide a ban reason!")
             return false
         }
         if (Bukkit.getPlayer(args[0]) == null) {
@@ -41,9 +40,9 @@ class BanCommand : CommandExecutor {
             return false
         }
         val toBan: Player = Bukkit.getPlayer(args[0])!!
-        if (PlayerManager.getPlayerRank(sender)!!.permlevel <= PlayerManager.getPlayerRank(toBan)!!.permlevel
+        if (PlayerManager.get.getPlayerRank(sender)!!.permlevel <= PlayerManager.get.getPlayerRank(toBan)!!.permlevel
         ) {
-            sender.sendMessage(Component.text("You cannot ban that player!", NamedTextColor.RED))
+            sender.sendMessage("${ChatColor.RED}You cannot ban that player!")
             return true
         }
         val time = args[1]
@@ -58,7 +57,7 @@ class BanCommand : CommandExecutor {
         for (i in time.indices) {
             if (time[i] == 'd') {
                 if (i == 0) {
-                    sender.sendMessage(Component.text("Incorrect arguments! no amount of days provided!", NamedTextColor.RED))
+                    sender.sendMessage("${ChatColor.RED}Incorrect arguments! no amount of days provided!")
                     return false
                 }
                 try {
@@ -66,12 +65,12 @@ class BanCommand : CommandExecutor {
                     day = check.toInt()
                     end = i
                 } catch (e: Exception) {
-                    sender.sendMessage(Component.text("Incorrect arguments! Incorrect day time provided!", NamedTextColor.RED))
+                    sender.sendMessage("${ChatColor.RED}Incorrect arguments! Incorrect day time provided!")
                     return false
                 }
             } else if (time[i] == 'h') {
                 if (i == 0) {
-                    sender.sendMessage(Component.text("Incorrect arguments! no amount of hours provided!", NamedTextColor.RED))
+                    sender.sendMessage("${ChatColor.RED}Incorrect arguments! no amount of hours provided!")
                     return false
                 }
                 try {
@@ -79,12 +78,12 @@ class BanCommand : CommandExecutor {
                     hour = check.toInt()
                     end = i
                 } catch (e: Exception) {
-                    sender.sendMessage(Component.text("Incorrect arguments! Incorrect hour time provided!", NamedTextColor.RED))
+                    sender.sendMessage("${ChatColor.RED}Incorrect arguments! Incorrect hour time provided!")
                     return false
                 }
             } else if (time[i] == 'm') {
                 if (i == 0) {
-                    sender.sendMessage(Component.text("Incorrect arguments! no amount of minutes provided!", NamedTextColor.RED))
+                    sender.sendMessage("${ChatColor.RED}Incorrect arguments! no amount of minutes provided!")
                     return false
                 }
                 try {
@@ -92,7 +91,7 @@ class BanCommand : CommandExecutor {
                     minute = check.toInt()
                     end = i
                 } catch (e: Exception) {
-                    sender.sendMessage(Component.text("Incorrect arguments! Incorrect minute time provided!", NamedTextColor.RED))
+                    sender.sendMessage("${ChatColor.RED}Incorrect arguments! Incorrect minute time provided!")
                     return false
                 }
             }
@@ -123,7 +122,7 @@ class BanCommand : CommandExecutor {
                 Date(System.currentTimeMillis() + day.toLong() * hour * minute),
                 null
             )
-            toBan.kick(Component.text(reason.toString()))
+            toBan.kickPlayer("${ChatColor.RED}$reason")
         } else {
             Bukkit.getBanList(BanList.Type.NAME).
             addBan(
@@ -132,7 +131,7 @@ class BanCommand : CommandExecutor {
                 Date(System.currentTimeMillis() + day.toLong() * hour * minute),
                 null
             )
-            toBan.kick(Component.text(reason.toString()))
+            toBan.kickPlayer("${ChatColor.RED}$reason")
         }
         return true
     }

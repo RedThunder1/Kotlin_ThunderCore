@@ -1,7 +1,6 @@
 package thunderCore.commands.staffCommands.buildCommand
 
-import net.kyori.adventure.text.Component
-import net.kyori.adventure.text.format.NamedTextColor
+import org.bukkit.ChatColor
 import org.bukkit.command.Command
 import org.bukkit.command.CommandExecutor
 import org.bukkit.command.CommandSender
@@ -21,11 +20,11 @@ class BuildCommand : CommandExecutor {
         }
         if (BuildManager.builders.contains(sender)) {
             BuildManager.builders.remove(sender)
-            sender.sendMessage(Component.text("Build mode Disabled", NamedTextColor.RED))
+            sender.sendMessage("${ChatColor.RED}Build mode Disabled")
             return true
         }
         BuildManager.builders.add(sender)
-        sender.sendMessage(Component.text("Build mode Enabled", NamedTextColor.GREEN))
+        sender.sendMessage("${ChatColor.GREEN}Build mode Enabled")
         return true
     }
 }

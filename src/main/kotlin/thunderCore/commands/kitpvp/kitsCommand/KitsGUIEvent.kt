@@ -1,9 +1,6 @@
 package thunderCore.commands.kitpvp.kitsCommand
 
-import net.kyori.adventure.text.Component
-import net.kyori.adventure.text.format.NamedTextColor
-import net.kyori.adventure.text.format.TextDecoration
-import net.kyori.adventure.text.serializer.plain.PlainTextComponentSerializer
+import org.bukkit.ChatColor
 import org.bukkit.event.EventHandler
 import org.bukkit.event.Listener
 import org.bukkit.event.inventory.InventoryClickEvent
@@ -18,35 +15,34 @@ class KitsGUIEvent: Listener {
 
     @EventHandler
     fun invClickEvent(event: InventoryClickEvent) {
-        if (event.view.title() != Component.text().build()
-        .color(NamedTextColor.BLUE)
-        .decorate(TextDecoration.BOLD)
-        .content("Kits Menu")) { return }
+        if (event.view.title != "${ChatColor.BOLD}${ChatColor.BLUE}Kits Menu") { return }
 
         val item = event.currentItem
         val player = event.whoClicked
-        if (item == null) {
-            return
-        }
+        if (item == null) { return }
 
-        val plainSerializer = PlainTextComponentSerializer.plainText()
-        val name = plainSerializer.serialize(item.displayName())
-        val kit: KitData? = KitPvPManager.getKitByName(name)
+        var name = item.itemMeta!!.displayName
+        name = name.substring(1, name.length-1).lowercase()
+        val kit: KitData? = KitPvPManager.get.getKitByName(name)
 
         if (kit == null) {
             event.isCancelled = true
             return
         }
-
-        val equipment = player.equipment
+        player.inventory.clear()
+        for (effect in player.activePotionEffects) { player.removePotionEffect(effect.type) }
+        val equipment = player.equipment!!
         equipment.helmet = kit.armor[0]
         equipment.chestplate = kit.armor[1]
         equipment.leggings = kit.armor[2]
         equipment.boots = kit.armor[3]
 
+        if (kit.effects != null) {
+            for (effect in kit.effects) { player.addPotionEffect(effect) }
+        }
         for (i in kit.items) { player.inventory.addItem(i) }
 
-        event.inventory.close()
+        player.closeInventory()
         event.isCancelled = true
     }
 

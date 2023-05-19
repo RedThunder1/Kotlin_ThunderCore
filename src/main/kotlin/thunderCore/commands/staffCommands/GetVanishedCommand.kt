@@ -1,7 +1,6 @@
 package thunderCore.commands.staffCommands
 
-import net.kyori.adventure.text.Component
-import net.kyori.adventure.text.format.NamedTextColor
+import org.bukkit.ChatColor
 import org.bukkit.command.Command
 import org.bukkit.command.CommandExecutor
 import org.bukkit.command.CommandSender
@@ -21,14 +20,14 @@ class GetVanishedCommand : CommandExecutor {
             return true
         }
         if (vanished.isEmpty()) {
-            sender.sendMessage(Component.text("There are no vanished players!", NamedTextColor.RED))
+            sender.sendMessage("${ChatColor.RED}There are no vanished players!")
             return true
         }
         val vanishedPlayers = StringBuilder()
         for (vPlayer in vanished) {
             vanishedPlayers.append(vPlayer.name).append(", ")
         }
-        sender.sendMessage(Component.text(vanishedPlayers.toString() + "are vanished!", NamedTextColor.GREEN))
+        sender.sendMessage("${ChatColor.GREEN}$vanishedPlayers are vanished!")
         return true
     }
 }

@@ -1,7 +1,6 @@
 package thunderCore.commands.staffCommands.worlds
 
-import net.kyori.adventure.text.Component
-import net.kyori.adventure.text.format.NamedTextColor
+import org.bukkit.ChatColor
 import org.bukkit.World
 import org.bukkit.WorldCreator
 import org.bukkit.WorldType
@@ -23,7 +22,7 @@ class CreateWorldCommand : CommandExecutor {
             return true
         }
         if (args.isEmpty()) {
-            sender.sendMessage(Component.text("Please provide a world type like Normal, Flat, Void", NamedTextColor.RED))
+            sender.sendMessage("${ChatColor.RED}Please provide a world type like Normal, Flat, Void")
             return false
         }
         createWorld(args, sender)
@@ -49,14 +48,15 @@ class CreateWorldCommand : CommandExecutor {
 
             "void" -> {
                 wc.generator(VoidWorldGenerator())
+                wc.biomeProvider(PlainsProvider())
                 wc.createWorld()
             }
 
             else -> {
-                sender.sendMessage(Component.text("World types can only be normal, flat, or void!", NamedTextColor.RED))
+                sender.sendMessage("${ChatColor.RED}World types can only be normal, flat, or void!")
                 return
             }
         }
-        sender.sendMessage(Component.text("You have created a new $type world named  ${name}!", NamedTextColor.GREEN))
+        sender.sendMessage("${ChatColor.GREEN}You have created a new $type world named ${name}!")
     }
 }

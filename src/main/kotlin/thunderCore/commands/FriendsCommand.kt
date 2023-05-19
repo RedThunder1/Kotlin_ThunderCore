@@ -1,8 +1,7 @@
 package thunderCore.commands
 
-import net.kyori.adventure.text.Component
-import net.kyori.adventure.text.format.NamedTextColor
 import org.bukkit.Bukkit
+import org.bukkit.ChatColor
 import org.bukkit.command.Command
 import org.bukkit.command.CommandExecutor
 import org.bukkit.command.CommandSender
@@ -19,13 +18,13 @@ class FriendsCommand : CommandExecutor {
         }
         val player = sender.player!!
         if (args == null || args.isEmpty()) {
-            player.sendMessage(Component.text("You must provide a command! Use /friends help for more information!", NamedTextColor.RED))
+            player.sendMessage("${ChatColor.RED}You must provide a command! Use /friends help for more information!")
             return false
         }
         when (args[0].lowercase()) {
             "add" -> {
                 if (args[1].isEmpty()) {
-                    player.sendMessage(Component.text("You must provide a player to add!", NamedTextColor.RED))
+                    player.sendMessage("${ChatColor.RED}You must provide a player to add!")
                     return false
                 }
                 val added =  Bukkit.getPlayer(args[1])
@@ -33,11 +32,11 @@ class FriendsCommand : CommandExecutor {
                     player.sendMessage(Messages.NOTAPLAYER)
                     return false
                 }
-                FriendManager.requestFriend(player, added)
+                FriendManager.get.requestFriend(player, added)
             }
             "accept" -> {
                 if (args[1].isEmpty()) {
-                    player.sendMessage(Component.text("You must provide a player to add!", NamedTextColor.RED))
+                    player.sendMessage("${ChatColor.RED}You must provide a player to add!")
                     return false
                 }
                 val added =  Bukkit.getPlayer(args[1])
@@ -45,11 +44,11 @@ class FriendsCommand : CommandExecutor {
                     player.sendMessage(Messages.NOTAPLAYER)
                     return false
                 }
-                FriendManager.acceptFriend(added, player)
+                FriendManager.get.acceptFriend(added, player)
             }
             "deny" -> {
                 if (args[1].isEmpty()) {
-                    player.sendMessage(Component.text("You must provide a player to add!", NamedTextColor.RED))
+                    player.sendMessage("${ChatColor.RED}You must provide a player to add!")
                     return false
                 }
                 val added =  Bukkit.getPlayer(args[1])
@@ -57,11 +56,11 @@ class FriendsCommand : CommandExecutor {
                     player.sendMessage(Messages.NOTAPLAYER)
                     return false
                 }
-                FriendManager.denyFriend(added, player)
+                FriendManager.get.denyFriend(added, player)
             }
             "remove" -> {
                 if (args[1].isEmpty()) {
-                    player.sendMessage(Component.text("You must provide a player to add!", NamedTextColor.RED))
+                    player.sendMessage("${ChatColor.RED}You must provide a player to add!")
                     return false
                 }
                 val removed =  Bukkit.getPlayer(args[1])
@@ -69,36 +68,35 @@ class FriendsCommand : CommandExecutor {
                     player.sendMessage(Messages.NOTAPLAYER)
                     return false
                 }
-                FriendManager.removeFriend(player, removed)
+                FriendManager.get.removeFriend(player, removed)
             }
             "list" -> {
-                val fakePlayer = PlayerManager.getFakePlayer(player)!!
+                val fakePlayer = PlayerManager.get.getFakePlayer(player)!!
                 if (fakePlayer.friends.isEmpty()) {
-                    player.sendMessage(Component.text("You don't have any friends yet!  You can add the by running the command /friend add <player>", NamedTextColor.RED))
+                    player.sendMessage("${ChatColor.RED}You don't have any friends yet!  You can add the by running the command /friend add <player>")
                     return true
                 }
                 //Eventually I want to have this formatted into pages but for now this will work
                 for (friend in fakePlayer.friends) {
-                    val online: Component = if (friend.isOnline) {
-                        Component.text("ONLINE", NamedTextColor.GREEN)
+                    val status: String = if (friend.isOnline) {
+                        "${ChatColor.GREEN}ONLINE"
                     } else {
-                        Component.text("OFFLINE", NamedTextColor.RED)
+                        "${ChatColor.RED}OFFLINE"
                     }
-                    player.sendMessage(Component.text(friend.name + ": ", NamedTextColor.GOLD).append(online))
+                    player.sendMessage("${ChatColor.RED}${friend.name}: $status")
                 }
             }
             "help"-> {
-                sender.sendMessage(Component.text("The available commands for Friend are:\n" +
+                sender.sendMessage("${ChatColor.GOLD}The available commands for Friend are:\n" +
                         "/friend add <player> \n" +
                         "/friend remove <player> \n" +
                         "/friend accept <player> \n" +
                         "/friend deny <player>\n" +
                         "/friend remove <player>\n" +
-                        "/friend list",
-                    NamedTextColor.GOLD))
+                        "/friend list")
             }
             else -> {
-                player.sendMessage(Component.text("That is not an avalible command! Use /friends help for more information!", NamedTextColor.RED))
+                player.sendMessage("${ChatColor.RED}That is not an available command! Use /friends help for more information!")
             }
         }
         return true

@@ -1,8 +1,7 @@
 package thunderCore.commands.staffCommands
 
-import net.kyori.adventure.text.Component
-import net.kyori.adventure.text.format.NamedTextColor
 import org.bukkit.Bukkit
+import org.bukkit.ChatColor
 import thunderCore.managers.playerManager.PlayerManager
 import org.bukkit.command.Command
 import org.bukkit.command.CommandExecutor
@@ -22,7 +21,7 @@ class SudoCommand : CommandExecutor {
             return true
         }
         if (args[0].isBlank()) {
-            sender.sendMessage(Component.text("You must provide a player and message!", NamedTextColor.RED))
+            sender.sendMessage("${ChatColor.RED}You must provide a player and message!")
             return false
         }
         if (Bukkit.getPlayer(args[0]) == null) {
@@ -30,22 +29,22 @@ class SudoCommand : CommandExecutor {
             return true
         }
         val p: Player = Bukkit.getPlayer(args[0])!!
-        if (PlayerManager.getPlayerRank(sender)?.permlevel!! <= PlayerManager.getPlayerRank(p)?.permlevel!!) {
-            sender.sendMessage(Component.text("You cannot sudo that player!", NamedTextColor.RED))
+        if (PlayerManager.get.getPlayerRank(sender)?.permlevel!! <= PlayerManager.get.getPlayerRank(p)?.permlevel!!) {
+            sender.sendMessage("${ChatColor.RED}You cannot sudo that player!")
             return true
         }
-        val pLenght: Int = p.name.length
         if (args[1].isBlank()) {
-            sender.sendMessage(Component.text("You must provide a message!", NamedTextColor.RED))
+            sender.sendMessage("${ChatColor.RED}You must provide a message!")
             return false
         }
         val length = args.size
-        val msg = args.contentToString().substring(pLenght, length)
+        val msg = args.contentToString().substring(p.name.length, length)
         if (args[1][0] == '/') {
             p.performCommand(msg)
             return true
         }
         for (members in Bukkit.getOnlinePlayers()) {
+            //Change to do proper colors
             members.sendMessage("<" + p.name + "> " + msg)
         }
         return true

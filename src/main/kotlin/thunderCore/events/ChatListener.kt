@@ -1,55 +1,46 @@
 package thunderCore.events
 
-import io.papermc.paper.event.player.AsyncChatEvent
-import net.kyori.adventure.text.Component
-import net.kyori.adventure.text.format.NamedTextColor
-import net.kyori.adventure.text.format.TextDecoration
-import net.kyori.adventure.text.serializer.plain.PlainTextComponentSerializer
 import org.bukkit.Bukkit
+import org.bukkit.ChatColor
 import org.bukkit.event.EventHandler
 import org.bukkit.event.Listener
+import org.bukkit.event.player.AsyncPlayerChatEvent
 import thunderCore.ThunderCore
 import thunderCore.managers.playerManager.PlayerManager
-import thunderCore.managers.playerManager.PlayerManager.getFakePlayer
 
 class ChatListener : Listener {
     @EventHandler
-    fun onMessage(event: AsyncChatEvent) {
+    fun onMessage(event: AsyncPlayerChatEvent) {
         val player = event.player
-        val message = event.originalMessage()
-        val fakePlayer = getFakePlayer(player)!!
+        val message = event.message
+        val fakePlayer = PlayerManager.get.getFakePlayer(player)!!
         if (chatMuted && !ThunderCore.get.isModerator(player)) {
-            player.sendMessage(Component.text("The chat is currently muted!", NamedTextColor.RED))
+            player.sendMessage("" + ChatColor.RED + "The chat is currently muted!")
             event.isCancelled = true
             return
         }
         if (fakePlayer.muted) {
             event.isCancelled = true
-            player.sendMessage(Component.text("You are muted! You cannot send messages at this time!", NamedTextColor.RED))
+            player.sendMessage("" + ChatColor.RED + "You are muted! You cannot send messages at this time!")
             return
         }
-        val plainSerializer = PlainTextComponentSerializer.plainText()
-        val messageStr = plainSerializer.serialize(message)
-        if (messageStr[0] == '#' && ThunderCore.get.isStaff(player)) {
-            val msg1 = messageStr.substring(1)
+
+        if (message.toCharArray()[0] == '#' && ThunderCore.get.isStaff(player)) {
+            val msg1 = message.substring(1)
             event.isCancelled = true
             for (staff in Bukkit.getOnlinePlayers()) {
                 if (ThunderCore.get.isStaff(staff)) {
-                    staff.sendMessage(Component.text("[STAFF CHAT] ", NamedTextColor.RED, TextDecoration.BOLD)
-                        .append(Component.text(PlayerManager.getPlayerRank(player)!!.prefix + player.name))
-                        .append(Component.text(": $msg1", NamedTextColor.GOLD))
-                    )
+                    staff.sendMessage("" + ChatColor.BOLD + ChatColor.RED + "[STAFF CHAT] " + PlayerManager.get.getPlayerRank(player)!!.prefix + player.name + ChatColor.GOLD + ": $msg1")
                     return
                 }
             }
         }
         for (players in Bukkit.getOnlinePlayers()) {
             if (players.world == player.world) {
-                val rank = PlayerManager.getPlayerRank(player)
+                val rank = PlayerManager.get.getPlayerRank(player)
                 val prefix = rank!!.prefix + "${player.name}: "
-                val color = PlayerManager.getRankColor(rank)
-                players.sendMessage(
-                    Component.text(prefix, color).append(Component.text(messageStr, NamedTextColor.WHITE)))
+                val color = PlayerManager.get.getRankColor(rank)
+                players.sendMessage("" + color + prefix + ChatColor.WHITE + message)
             }
         }
         event.isCancelled = true

@@ -1,7 +1,6 @@
 package thunderCore.events
 
-import net.kyori.adventure.text.Component
-import net.kyori.adventure.text.format.NamedTextColor
+import org.bukkit.ChatColor
 import org.bukkit.entity.Player
 import org.bukkit.event.EventHandler
 import org.bukkit.event.Listener
@@ -12,7 +11,7 @@ class PlayerLeave : Listener {
     @EventHandler
     fun onLeave(event: PlayerQuitEvent) {
         val player: Player = event.player
-        event.quitMessage(Component.text("${player.name} has left the server!", NamedTextColor.RED))
+        event.quitMessage = "" + ChatColor.RED + "${player.name} has left the server!"
         BuildManager.builders.remove(event.player)
     }
 }

@@ -1,22 +1,26 @@
 package thunderCore.games.kitpvpManager
 
-import net.kyori.adventure.text.Component
-import net.kyori.adventure.text.format.NamedTextColor
 import org.bukkit.Bukkit
+import org.bukkit.ChatColor
 import org.bukkit.Location
 import org.bukkit.Material
 import org.bukkit.entity.Player
 import org.bukkit.inventory.ItemStack
+import org.bukkit.potion.PotionEffect
+import org.bukkit.potion.PotionEffectType
 import kotlin.collections.ArrayList
 
-
-object KitPvPManager {
+class KitPvPManager {
+    companion object {
+        lateinit var get: KitPvPManager
+    }
 
     var kits: ArrayList<KitData> = ArrayList()
     var players = ArrayList<Player>()
     private val spawn = Location(Bukkit.getWorld("kitpvp"), 0.5, 72.0, 0.5)
 
     init {
+        get = this
         //These are the kits for now.  They will be balanced soon, and I'll add more kits soon.
         //kits will also be unlockable in the future.  Whether that's by leveling up or earning and spending coins in game I don't know yet
 
@@ -31,11 +35,16 @@ object KitPvPManager {
         brawlerKit.add(ItemStack(Material.IRON_SWORD))
         brawlerKit.add(ItemStack(Material.COOKED_BEEF, 16))
 
+        val brawlerEffects = ArrayList<PotionEffect>()
+        brawlerEffects.add(PotionEffect(PotionEffectType.SPEED, PotionEffect.INFINITE_DURATION, 1))
+
         val brawlerLogo = ItemStack(Material.IRON_SWORD)
         val brawlerLogoMeta = brawlerLogo.itemMeta
-        brawlerLogoMeta.displayName(Component.text("Brawler", NamedTextColor.AQUA))
+        brawlerLogoMeta!!.setDisplayName("" + ChatColor.AQUA + "Brawler")
         brawlerLogo.itemMeta = brawlerLogoMeta
-        kits.add(KitData("brawler", brawlerArmor, brawlerKit, brawlerLogo))
+        kits.add(KitData("brawler", brawlerArmor, brawlerKit, brawlerLogo, brawlerEffects))
+
+
 
         //Fighter Kit
         val fighterArmor = ArrayList<ItemStack>()
@@ -50,10 +59,12 @@ object KitPvPManager {
 
         val fighterLogo = ItemStack(Material.IRON_CHESTPLATE)
         val fighterLogoMeta = fighterLogo.itemMeta
-        fighterLogoMeta.displayName(Component.text("Brawler", NamedTextColor.AQUA))
+        fighterLogoMeta!!.setDisplayName("" + ChatColor.AQUA + "Fighter")
         fighterLogo.itemMeta = fighterLogoMeta
-        kits.add(KitData("fighter", fighterArmor, fighterKit, fighterLogo))
+        kits.add(KitData("fighter", fighterArmor, fighterKit, fighterLogo, null))
 
+
+        
         //Tank Kit
         val tankArmor = ArrayList<ItemStack>()
         tankArmor.add(ItemStack(Material.DIAMOND_HELMET))
@@ -65,11 +76,35 @@ object KitPvPManager {
         tankKit.add(ItemStack(Material.IRON_SWORD))
         tankKit.add(ItemStack(Material.COOKED_BEEF, 16))
 
+        val tankEffects = ArrayList<PotionEffect>()
+        tankEffects.add(PotionEffect(PotionEffectType.SLOW, PotionEffect.INFINITE_DURATION, 1))
+
         val tankLogo = ItemStack(Material.DIAMOND_CHESTPLATE)
         val tankLogoMeta = tankLogo.itemMeta
-        tankLogoMeta.displayName(Component.text("Brawler", NamedTextColor.AQUA))
+        tankLogoMeta!!.setDisplayName("" + ChatColor.AQUA + "Tank")
         tankLogo.itemMeta = tankLogoMeta
-        kits.add(KitData("tank", tankArmor, tankKit, tankLogo))
+        kits.add(KitData("tank", tankArmor, tankKit, tankLogo, tankEffects))
+
+
+
+        //Archer kit
+        val archerArmor = ArrayList<ItemStack>()
+        archerArmor.add(ItemStack(Material.IRON_HELMET))
+        archerArmor.add(ItemStack(Material.IRON_CHESTPLATE))
+        archerArmor.add(ItemStack(Material.CHAINMAIL_LEGGINGS))
+        archerArmor.add(ItemStack(Material.IRON_BOOTS))
+
+        val archerKit = ArrayList<ItemStack>()
+        archerKit.add(ItemStack(Material.IRON_SWORD))
+        archerKit.add(ItemStack(Material.BOW))
+        archerKit.add(ItemStack(Material.ARROW, 64))
+        archerKit.add(ItemStack(Material.COOKED_BEEF, 16))
+
+        val archerLogo = ItemStack(Material.BOW)
+        val archerLogoMeta = archerLogo.itemMeta
+        archerLogoMeta!!.setDisplayName("" + ChatColor.AQUA + "Archer")
+        archerLogo.itemMeta = archerLogoMeta
+        kits.add(KitData("archer", archerArmor, archerKit, archerLogo, null))
     }
 
     fun playerJoin(player: Player) {

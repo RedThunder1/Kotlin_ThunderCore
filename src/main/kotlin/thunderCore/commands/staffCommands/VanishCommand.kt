@@ -1,7 +1,6 @@
 package thunderCore.commands.staffCommands
 
-import net.kyori.adventure.text.Component
-import net.kyori.adventure.text.format.NamedTextColor
+import org.bukkit.ChatColor
 import thunderCore.ThunderCore
 import org.bukkit.command.Command
 import org.bukkit.command.CommandExecutor
@@ -22,12 +21,12 @@ class VanishCommand : CommandExecutor {
         if (vanished.contains(sender)) {
             vanished.remove(sender)
             sender.showPlayer(ThunderCore.get, sender)
-            sender.sendMessage(Component.text("You have unvanished!", NamedTextColor.RED))
+            sender.sendMessage("${ChatColor.RED}You have unvanished!")
             return true
         }
         vanished.add(sender)
         sender.hidePlayer(ThunderCore.get, sender)
-        sender.sendMessage(Component.text("You have vanished!", NamedTextColor.GREEN))
+        sender.sendMessage("${ChatColor.GREEN}You have vanished!")
         return true
     }
 

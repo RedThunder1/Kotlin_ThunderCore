@@ -2,8 +2,8 @@ package thunderCore.commands.staffCommands.buildCommand
 
 import org.bukkit.entity.Player
 
-object BuildManager {
-
-    val builders: ArrayList<Player> = ArrayList()
-
+class BuildManager {
+    companion object {
+        val builders: ArrayList<Player> = ArrayList()
+    }
 }

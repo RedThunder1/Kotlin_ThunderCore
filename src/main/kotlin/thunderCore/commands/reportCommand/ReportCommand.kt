@@ -1,8 +1,7 @@
 package thunderCore.commands.reportCommand
 
-import net.kyori.adventure.text.Component
-import net.kyori.adventure.text.format.NamedTextColor
 import org.bukkit.Bukkit
+import org.bukkit.ChatColor
 import org.bukkit.command.Command
 import org.bukkit.command.CommandExecutor
 import org.bukkit.command.CommandSender
@@ -18,7 +17,7 @@ class ReportCommand : CommandExecutor {
             return false
         }
         if (args[0].isEmpty()) {
-            sender.sendMessage(Component.text("You must provide a player to report and a reason!", NamedTextColor.RED))
+            sender.sendMessage("${ChatColor.RED}You must provide a player to report and a reason!")
             return false
         }
         val toReport: Player? = Bukkit.getPlayer(args[0])
@@ -27,15 +26,15 @@ class ReportCommand : CommandExecutor {
             return false
         }
         if (args[1].isEmpty()) {
-            sender.sendMessage(Component.text("You must provide a report reason!", NamedTextColor.RED))
+            sender.sendMessage("${ChatColor.RED}You must provide a report reason!")
             return false
         }
         val reason = StringBuilder()
         for (str in args.copyOfRange(1, args.size)) {
             reason.append(str).append(" ")
         }
-        ReportManager.createReport(sender, toReport, reason.toString(), UUID.randomUUID())
-        sender.sendMessage(Component.text("You have successfully reported ", NamedTextColor.GOLD).append(Component.text(toReport.name, NamedTextColor.RED)))
+        ReportManager.get.createReport(sender, toReport, reason.toString(), UUID.randomUUID())
+        sender.sendMessage("${ChatColor.GOLD}You have successfully reported ${ChatColor.RED}${toReport.name}")
         return true
     }
 }

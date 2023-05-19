@@ -1,7 +1,6 @@
 package thunderCore.commands.staffCommands
 
-import net.kyori.adventure.text.Component
-import net.kyori.adventure.text.format.NamedTextColor
+import org.bukkit.ChatColor
 import org.bukkit.command.Command
 import org.bukkit.command.CommandExecutor
 import org.bukkit.command.CommandSender
@@ -21,11 +20,11 @@ class MuteChatCommand : CommandExecutor {
             return true
         }
         if (ChatListener.chatMuted) {
-            sender.sendMessage(Component.text("Chat has been unmuted!", NamedTextColor.GREEN))
+            sender.sendMessage("${ChatColor.GREEN}Chat has been unmuted!")
             ChatListener.chatMuted = false
             return true
         }
-        sender.sendMessage(Component.text("Chat has been muted!", NamedTextColor.RED))
+        sender.sendMessage("${ChatColor.RED}Chat has been muted!")
         ChatListener.chatMuted = true
         return true
     }

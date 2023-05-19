@@ -1,7 +1,6 @@
 package thunderCore.commands.staffCommands.bypassCommand
 
-import net.kyori.adventure.text.Component
-import net.kyori.adventure.text.format.NamedTextColor
+import org.bukkit.ChatColor
 import org.bukkit.command.Command
 import org.bukkit.command.CommandExecutor
 import org.bukkit.command.CommandSender
@@ -22,11 +21,11 @@ class BypassCommand: CommandExecutor{
         }
         if (BypassManager.bypassing.contains(player)) {
             BypassManager.bypassing.remove(player)
-            player.sendMessage(Component.text("You are no longer bypassing World Protection!", NamedTextColor.GREEN))
+            player.sendMessage("${ChatColor.GREEN}You are no longer bypassing World Protection!")
             return true;
         }
         BypassManager.bypassing.add(player)
-        player.sendMessage(Component.text("You are now bypassing World Protection!", NamedTextColor.RED))
+        player.sendMessage("${ChatColor.RED}You are now bypassing World Protection!")
         return true;
     }
 

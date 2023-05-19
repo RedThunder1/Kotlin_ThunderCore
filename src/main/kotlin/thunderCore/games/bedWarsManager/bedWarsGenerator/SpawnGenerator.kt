@@ -11,7 +11,7 @@ class SpawnGenerator(private val location: Location) {
     private var spawnItems = true
     private var defaultIronSpawnRate = 2f
     private var defaultGoldSpawnRate = 10f
-    private val world: World = location.world
+    private val world: World = location.world!!
 
     fun startSpawning() {
         val ironSpawnRate = floatArrayOf(2f)

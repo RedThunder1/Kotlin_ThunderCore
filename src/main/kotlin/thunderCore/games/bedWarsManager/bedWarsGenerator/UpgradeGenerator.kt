@@ -10,7 +10,7 @@ import thunderCore.ThunderCore
 class UpgradeGenerator(private val location: Location) {
     private var spawnItems = true
     private var defaultSpawnRate = 20f
-    private val world: World = location.world
+    private val world: World = location.world!!
 
     fun startSpawning() {
         val spawnRate = floatArrayOf(20f)

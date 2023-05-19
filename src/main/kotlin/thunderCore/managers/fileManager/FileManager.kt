@@ -9,8 +9,11 @@ import java.io.FileWriter
 import java.io.IOException
 import java.nio.file.Files
 
-object FileManager {
-
+class FileManager {
+    companion object {
+        lateinit var get: FileManager
+    }
+    init { get = this }
     fun readFile(fileName: File?): String? {
         try {
             val fileReader = FileReader(fileName!!)

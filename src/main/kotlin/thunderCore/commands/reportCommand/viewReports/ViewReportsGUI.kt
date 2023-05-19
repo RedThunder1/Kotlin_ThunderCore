@@ -1,8 +1,6 @@
 package thunderCore.commands.reportCommand.viewReports
 
-import net.kyori.adventure.text.Component
-import net.kyori.adventure.text.format.NamedTextColor
-import net.kyori.adventure.text.format.TextDecoration
+import org.bukkit.ChatColor
 import org.bukkit.Material
 import org.bukkit.entity.Player
 import org.bukkit.inventory.Inventory
@@ -11,22 +9,23 @@ import org.bukkit.inventory.meta.ItemMeta
 import thunderCore.ThunderCore
 import thunderCore.managers.reportManager.ReportManager
 
-object ViewReportsGUI {
+class ViewReportsGUI {
+    companion object {
+        lateinit var get: ViewReportsGUI
+    }
+    init { get = this }
     fun reportsGui(player: Player) {
-        val inventory: Inventory = ThunderCore.get.server.createInventory(null, 54, Component.text().build()
-            .color(NamedTextColor.RED)
-            .decorate(TextDecoration.BOLD)
-            .content("Reports Menu"))
-        for (report in ReportManager.reports) {
+        val inventory: Inventory = ThunderCore.get.server.createInventory(null, 54, "${ChatColor.BOLD}${ChatColor.RED}Reports Menu")
+        for (report in ReportManager.get.reports) {
             val itemStack = ItemStack(Material.REDSTONE_BLOCK)
-            val itemMeta: ItemMeta = itemStack.itemMeta
-            itemMeta.displayName(Component.text("Player Report!", NamedTextColor.RED))
-            val lore: MutableList<Component> = ArrayList()
-            lore.add(Component.text("Reporter: " + report.reporter.name))
-            lore.add(Component.text("Reported: " + report.reported.name))
-            lore.add(Component.text("Reason: " + report.reason))
-            lore.add(Component.text("ID: " + report.id))
-            itemMeta.lore(lore)
+            val itemMeta: ItemMeta = itemStack.itemMeta!!
+            itemMeta.setDisplayName("${ChatColor.RED}Player Report!")
+            val lore: MutableList<String> = ArrayList()
+            lore.add("Reporter: " + report.reporter.name)
+            lore.add("Reported: " + report.reported.name)
+            lore.add("Reason: " + report.reason)
+            lore.add("ID: " + report.id)
+            itemMeta.lore = lore
             itemStack.setItemMeta(itemMeta)
             inventory.addItem(itemStack)
         }

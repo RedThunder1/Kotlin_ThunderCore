@@ -40,34 +40,42 @@ commands:
     usage: </worldcreate (world name) (type)>
     aliases:
       - "wc"
-    description: Allows staff to create new worlds
+    description: Allows staff to create new worlds.
   worlddelete:
     usage: </worlddelete (world name)>
     aliases:
       - "wd"
-    description: Allows staff to delete worlds
+    description: Allows staff to delete worlds.
   worldtp:
     usage: </worldtp (world name)>
     aliases:
       - "wtp"
-    description: Allows staff to tp between worlds
+    description: Allows staff to tp between worlds.
+  worldlist:
+    usage: </worldlist>
+    aliases:
+      - "wl"
+    description: Allows staff members to view all worlds
   setrank:
     usage: </setrank (player) (rank)>
-    description: Allows staff to set player ranks
+    description: Allows staff to set player ranks.
   sudo:
     usage: </sudo (player) (message)>
-    description: Allows staff members to send messages or commands as another player
+    description: Allows staff members to send messages or commands as another player.
   kitpvp:
     usage: </kitpvp>
     description: Allows players to teleport to the kitpvp game.
   kits:
     usage: </kits>
-    description: Allows players to open a GUI to select kits for kitpvp
+    description: Allows players to open a GUI to select kits for kitpvp.
   bypass:
     usage: </bypass>
-    description: Allows admins and up to bypass world protection
+    description: Allows admins and up to bypass world protection.
   friend:
-    usage: Ex </friend add <player>>
+    usage: Example </friend add (player)>
     description: Allows players to add friends on the server!
     aliases:
       - "f"
+  flyspeed:
+    usage: </flyspeed (speed)>
+    description: Allows staff to change fly speed.
