@@ -3,13 +3,14 @@ package thunderCore.managers.fileManager
 import org.bukkit.Bukkit
 import org.bukkit.World
 import org.bukkit.WorldCreator
+import thunderCore.managers.ThunderManager
 import java.io.File
 import java.io.FileReader
 import java.io.FileWriter
 import java.io.IOException
 import java.nio.file.Files
 
-class FileManager {
+class FileManager: ThunderManager {
     companion object {
         lateinit var get: FileManager
     }
@@ -44,7 +45,6 @@ class FileManager {
         }
     }
 
-    @Throws(RuntimeException::class)
     private fun copyFileStructure(source: File, target: File) {
         try {
             val ignore = ArrayList(mutableListOf("uid.dat", "session.lock"))

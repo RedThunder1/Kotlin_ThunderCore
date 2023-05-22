@@ -23,6 +23,8 @@ class PlayerJoin : Listener {
         val location = Location(lobbyWorld, 0.5, 72.0, 0.5)
         player.teleport(location)
         player.health = 20.0
+        player.foodLevel = 20
+        player.saturation = 20F
         if (PlayerManager.get.getFakePlayer(player) == null) {
             PlayerManager.get.createFakePlayer(event.player, "member", null)
         }

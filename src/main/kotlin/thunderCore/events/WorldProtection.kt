@@ -4,6 +4,7 @@ import org.bukkit.Bukkit
 import org.bukkit.ChatColor
 import org.bukkit.Location
 import org.bukkit.World
+import org.bukkit.entity.EntityType
 import org.bukkit.entity.Player
 import org.bukkit.event.EventHandler
 import org.bukkit.event.Listener
@@ -13,6 +14,7 @@ import org.bukkit.event.entity.CreatureSpawnEvent
 import org.bukkit.event.entity.EntityDamageByEntityEvent
 import org.bukkit.event.entity.EntityDamageEvent
 import org.bukkit.event.entity.PlayerDeathEvent
+import org.bukkit.event.player.PlayerChangedWorldEvent
 import org.bukkit.event.player.PlayerItemDamageEvent
 import org.bukkit.event.player.PlayerPickupItemEvent
 import org.bukkit.scheduler.BukkitRunnable
@@ -76,6 +78,7 @@ class WorldProtection : Listener {
     @EventHandler
     fun creatureSpawnEvent(event: CreatureSpawnEvent) {
         val world: World = event.entity.world
+        if (event.entityType == EntityType.ARMOR_STAND) { return }
         if (isWorldProtected(world)) {
             event.isCancelled = true
         }
@@ -116,6 +119,16 @@ class WorldProtection : Listener {
             val location = Location(Bukkit.getWorld("lobby"), 0.5, 72.0, 0.5)
             player.teleport(location)
         }
+    }
+
+    @EventHandler
+    fun onWorldChange(event: PlayerChangedWorldEvent) {
+        val player: Player = event.player
+        player.inventory.clear()
+        for (effect in player.activePotionEffects) { player.removePotionEffect(effect.type) }
+        player.health = 20.0
+        player.foodLevel = 20
+        player.saturation = 20F
     }
 
     private fun isWorldProtected(world: World): Boolean {

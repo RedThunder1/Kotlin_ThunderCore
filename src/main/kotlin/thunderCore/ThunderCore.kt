@@ -21,10 +21,18 @@ import thunderCore.events.ChatListener
 import thunderCore.events.PlayerJoin
 import thunderCore.events.PlayerLeave
 import thunderCore.events.WorldProtection
+import thunderCore.games.bedWarsManager.BedWarsManager
 import thunderCore.games.kitpvpManager.KitPvPEvents
+import thunderCore.games.kitpvpManager.KitPvPManager
+import thunderCore.managers.FriendManager
 import thunderCore.managers.ThunderManager
+import thunderCore.managers.fileManager.FileManager
+import thunderCore.managers.floatingtextmanager.FloatingTextManager
+import thunderCore.managers.npcmanager.NPCManager
+import thunderCore.managers.partyManager.PartyManager
 import thunderCore.managers.playerManager.FakePlayer
 import thunderCore.managers.playerManager.PlayerManager
+import thunderCore.managers.reportManager.ReportManager
 import thunderCore.utilities.AnnouncementMessages
 import thunderCore.utilities.Time
 
@@ -62,10 +70,10 @@ class ThunderCore: JavaPlugin() {
 
     override fun onEnable() {
         get = this
+        loadWorlds()
         loadManagers()
         loadEvents()
         loadRunnables()
-        loadWorlds()
         loadCommands()
         greenMsg("ENABLED!")
     }
@@ -81,7 +89,16 @@ class ThunderCore: JavaPlugin() {
     }
 
     private fun loadManagers() {
-        managers.add(PlayerManager.get)
+        managers.add(PlayerManager())
+        managers.add(ReportManager())
+        managers.add(FriendManager())
+        managers.add(PartyManager())
+        managers.add(FileManager())
+        managers.add(KitPvPManager())
+        managers.add(BedWarsManager())
+        managers.add(NPCManager())
+        managers.add(FloatingTextManager())
+
         greenMsg("Managers have been INITIALIZED")
         for (thunderManager in managers) {
             thunderManager.load()
@@ -102,7 +119,7 @@ class ThunderCore: JavaPlugin() {
 
     private fun loadRunnables() {
         val scheduler = server.scheduler
-        scheduler.runTaskTimer(this, AnnouncementMessages(), 0, Time.get.TEN_MIN)
+        scheduler.runTaskTimer(this, AnnouncementMessages(), 0, Time.TEN_MIN)
         greenMsg("Runnables LOADED!")
     }
 
@@ -149,19 +166,20 @@ class ThunderCore: JavaPlugin() {
         getCommand("friend")!!.setExecutor(FriendsCommand())
         getCommand("friend")!!.setAliases(listOf("f"))
         getCommand("flyspeed")!!.setExecutor(FlySpeedCommand())
+        getCommand("holo")!!.setExecutor(FloatingTextCommand())
         greenMsg("Commands LOADED!")
     }
 
     fun greenMsg(text: String) {
-        console.sendMessage(thunderName + ChatColor.GREEN + text)
+        console.sendMessage(thunderName + ChatColor.GREEN + ": $text")
     }
 
     fun redMsg(text: String) {
-        console.sendMessage(thunderName + ChatColor.RED + text)
+        console.sendMessage(thunderName + ChatColor.RED + ": $text")
     }
 
     fun yellowMsg(text: String) {
-        console.sendMessage(thunderName + ChatColor.YELLOW + text)
+        console.sendMessage(thunderName + ChatColor.YELLOW + ": $text")
     }
 
     fun isStaff(player: Player): Boolean {

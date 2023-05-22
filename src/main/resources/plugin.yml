@@ -79,3 +79,6 @@ commands:
   flyspeed:
     usage: </flyspeed (speed)>
     description: Allows staff to change fly speed.
+  holo:
+    usage: </holo list|add|remove|edit|move (id req) (text opt)>
+    description: Allows staff to create new Floating Text.

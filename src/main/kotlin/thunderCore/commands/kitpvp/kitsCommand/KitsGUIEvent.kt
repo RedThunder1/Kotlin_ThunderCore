@@ -15,14 +15,12 @@ class KitsGUIEvent: Listener {
 
     @EventHandler
     fun invClickEvent(event: InventoryClickEvent) {
-        if (event.view.title != "${ChatColor.BOLD}${ChatColor.BLUE}Kits Menu") { return }
-
+        if (ChatColor.stripColor(event.view.title) != "Kits Menu") { return }
         val item = event.currentItem
         val player = event.whoClicked
         if (item == null) { return }
 
-        var name = item.itemMeta!!.displayName
-        name = name.substring(1, name.length-1).lowercase()
+        val name = item.itemMeta!!.displayName.lowercase()
         val kit: KitData? = KitPvPManager.get.getKitByName(name)
 
         if (kit == null) {

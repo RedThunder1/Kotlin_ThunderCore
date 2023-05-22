@@ -14,7 +14,7 @@ class BedWarsManager : ThunderManager {
     companion object {
         lateinit var get: BedWarsManager
     }
-    private val lobbyTemplate: World = Bukkit.getWorld("lobbyTemplate")!!
+    private val lobbyTemplate: World = Bukkit.getWorld("lobbytemplate")!!
     private val teamMaps = ArrayList<BedWarsMapForm>()
     private val duelMaps = ArrayList<BedWarsMapForm>()
     val activeGames = ArrayList<BedWarsGameForm>()

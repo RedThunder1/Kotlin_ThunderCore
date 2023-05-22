@@ -8,9 +8,11 @@ import org.bukkit.entity.Player
 import org.bukkit.inventory.ItemStack
 import org.bukkit.potion.PotionEffect
 import org.bukkit.potion.PotionEffectType
+import thunderCore.ThunderCore
+import thunderCore.managers.ThunderManager
 import kotlin.collections.ArrayList
 
-class KitPvPManager {
+class KitPvPManager: ThunderManager {
     companion object {
         lateinit var get: KitPvPManager
     }
@@ -114,9 +116,7 @@ class KitPvPManager {
 
     fun getKitByName(name: String): KitData? {
         for (kit in kits) {
-            if (name == kit.name) {
-                return kit
-            }
+            if (ChatColor.stripColor(kit.name) == ChatColor.stripColor(name)) { return kit }
         }
         return null
     }

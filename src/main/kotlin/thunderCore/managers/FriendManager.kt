@@ -7,7 +7,7 @@ import org.bukkit.entity.Player
 import thunderCore.managers.playerManager.PlayerManager
 import java.util.UUID
 
-class FriendManager {
+class FriendManager: ThunderManager {
     companion object {
         lateinit var get: FriendManager
     }
