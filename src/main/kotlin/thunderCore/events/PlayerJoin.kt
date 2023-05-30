@@ -8,6 +8,8 @@ import org.bukkit.entity.Player
 import org.bukkit.event.EventHandler
 import org.bukkit.event.Listener
 import org.bukkit.event.player.PlayerJoinEvent
+import org.bukkit.scoreboard.Team
+import thunderCore.managers.npcmanager.NPCManager
 import thunderCore.managers.playerManager.PlayerManager
 
 class PlayerJoin : Listener {
@@ -32,6 +34,11 @@ class PlayerJoin : Listener {
         val prefix = rank!!.prefix
         player.setDisplayName("" + PlayerManager.get.getRankColor(rank) + prefix + player.name)
         player.setPlayerListName("" + PlayerManager.get.getRankColor(rank) + prefix + player.name)
-        //Set player nametag here
+
+        //Set player name tag here
+
+        if (NPCManager.get.npcs.isNotEmpty()) {
+            for (npc in NPCManager.get.npcs.values) { NPCManager.get.addNPCPacket(npc, player) }
+        }
     }
 }

@@ -167,6 +167,7 @@ class ThunderCore: JavaPlugin() {
         getCommand("friend")!!.setAliases(listOf("f"))
         getCommand("flyspeed")!!.setExecutor(FlySpeedCommand())
         getCommand("holo")!!.setExecutor(FloatingTextCommand())
+        getCommand("npc")!!.setExecutor(NPCCommand())
         greenMsg("Commands LOADED!")
     }
 

@@ -57,8 +57,6 @@ class FloatingTextManager: ThunderManager {
 
 
         val stand: ArmorStand = player.world.spawnEntity(player.location, EntityType.ARMOR_STAND) as ArmorStand
-
-
         stand.isVisible = false
         stand.setGravity(false)
         stand.customName = customName
@@ -71,7 +69,10 @@ class FloatingTextManager: ThunderManager {
     fun removeFloatingText(id: String): String {
         if (stands.isEmpty()) { return "${ChatColor.RED}There are no stands to remove!" }
         val stand = getStand(id) ?: return "${ChatColor.RED}That is not a stand!"
-        stand.stand.remove()
+        stand.armorStand.remove()
+        if (stand.subStands.isNotEmpty()) {
+            for (s in stand.subStands) { s.remove() }
+        }
         return "${ChatColor.GREEN}That stand has been removed!!"
     }
 
@@ -90,9 +91,30 @@ class FloatingTextManager: ThunderManager {
                 val fileContent: String? = FileManager.get.readFile(file)
                 stands.add(gson.fromJson(fileContent, FloatingText::class.java))
             }
-            //for (stand in stands) {
-            //spawn stands
-            //}
+            for (stand in stands) {
+                val s: ArmorStand = stand.location.world!!.spawnEntity(stand.location, EntityType.ARMOR_STAND) as ArmorStand
+                s.isVisible = false
+                s.setGravity(false)
+                s.customName = stand.armorStand.customName
+                s.isCustomNameVisible = true
+                s.isCollidable = false
+                if (stand.subStands.isNotEmpty()) {
+                    var offset = 1
+                    val loc = stand.location
+                    val newList = ArrayList<ArmorStand>()
+                    for (subStand in stand.subStands) {
+                        val sub: ArmorStand = loc.world!!.spawnEntity(Location(loc.world, loc.x, loc.y - (0.1 * offset), loc.z), EntityType.ARMOR_STAND) as ArmorStand
+                        sub.isVisible = false
+                        sub.setGravity(false)
+                        sub.customName = subStand.customName
+                        sub.isCustomNameVisible = true
+                        sub.isCollidable = false
+                        newList.add(sub)
+                        offset++
+                    }
+                    stand.subStands = newList
+                }
+            }
         } catch (e: NullPointerException) {
             ThunderCore.get.yellowMsg("THERE ARE NO FLOATING TEXT!")
         }
@@ -104,7 +126,7 @@ class FloatingTextManager: ThunderManager {
             val id: String = stand.id
             FileManager.get.writeFile(File("ThunderCore/FloatingText/$id.json"), gson.toJson(stands))
         }
-        if (stands.isNotEmpty()) { for (stand in stands) { stand.stand.remove() } }
+        if (stands.isNotEmpty()) { for (stand in stands) { stand.armorStand.remove() } }
         ThunderCore.get.greenMsg("Saved Floating Text!")
     }
 

@@ -80,5 +80,8 @@ commands:
     usage: </flyspeed (speed)>
     description: Allows staff to change fly speed.
   holo:
-    usage: </holo list|add|remove|edit|move (id req) (text opt)>
+    usage: </holo list|add|remove|edit|move (id opt) (text opt)>
     description: Allows staff to create new Floating Text.
+  npc:
+    usage: </npc add|remove|edit|move|list (id opt) (name opt)>
+    description: Allows staff to create new NPC's

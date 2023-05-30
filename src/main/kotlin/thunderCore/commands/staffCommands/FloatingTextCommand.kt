@@ -32,8 +32,8 @@ class FloatingTextCommand: CommandExecutor {
                 return true
             }
             player.sendMessage("${ChatColor.GOLD}_______Stands_______")
-            for (key in FloatingTextManager.get.stands.keys) {
-                player.sendMessage("${ChatColor.GOLD}|| $key")
+            for (stand in FloatingTextManager.get.stands) {
+                player.sendMessage("${ChatColor.GOLD}|| ${stand.id}")
             }
             return true
 
@@ -64,7 +64,7 @@ class FloatingTextCommand: CommandExecutor {
                     player.sendMessage("${ChatColor.RED}That is not an available holo to move!")
                     return true
                 }
-                stand.stand.teleport(player.location)
+                stand.armorStand.teleport(player.location)
             }
             "edit" -> {
 
@@ -83,7 +83,7 @@ class FloatingTextCommand: CommandExecutor {
 
                 for (str in args.copyOfRange(2, args.size)) { textBuilder.append(str).append(" ") }
 
-                stand.customName = textBuilder.toString()
+                stand.armorStand.customName = textBuilder.toString()
             }
             else -> {
                 player.sendMessage("${ChatColor.RED}That is not a proper sub command! /holo add | /holo remove | /holo edit")
