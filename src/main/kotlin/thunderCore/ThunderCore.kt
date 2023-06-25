@@ -40,7 +40,6 @@ class ThunderCore: JavaPlugin() {
 
     private var console = server.consoleSender
     private val thunderName: String = "" + ChatColor.YELLOW + "THUNDER" + ChatColor.AQUA + "MC" + ChatColor.RESET
-    // This is why I hate components ^^^^
 
     companion object {
         lateinit var get: ThunderCore
@@ -128,6 +127,7 @@ class ThunderCore: JavaPlugin() {
         worlds.add("lobby")
         worlds.add("lobbytemplate")
         worlds.add("kitpvp")
+        worlds.add("tempkitpvp")
         worlds.add("building")
         greenMsg("Worlds Initialized!")
         for (world in worlds) {

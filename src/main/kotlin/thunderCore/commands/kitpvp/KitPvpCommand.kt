@@ -1,6 +1,7 @@
 package thunderCore.commands.kitpvp
 
 import org.bukkit.Bukkit
+import org.bukkit.ChatColor
 import org.bukkit.Location
 import org.bukkit.command.Command
 import org.bukkit.command.CommandExecutor
@@ -16,12 +17,10 @@ class KitPvpCommand: CommandExecutor {
             return false
         }
         val player = sender.player!!
-        if (player.world == Bukkit.getWorld("kitpvp")!!) {
-            player.teleport(Location(Bukkit.getWorld("kitpvp"), 0.5, 72.0, 0.5))
-            return true
+        if (player.world == Bukkit.getWorld("kitpvp")) {
+            player.sendMessage("${ChatColor.RED}You are already in the kitpvp world!")
         }
         KitPvPManager.get.playerJoin(player)
         return true
     }
-
 }

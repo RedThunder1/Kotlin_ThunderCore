@@ -122,11 +122,13 @@ class FloatingTextManager: ThunderManager {
     }
 
     override fun save() {
-        for (stand in stands) {
-            val id: String = stand.id
-            FileManager.get.writeFile(File("ThunderCore/FloatingText/$id.json"), gson.toJson(stands))
+        if (stands.isNotEmpty()) {
+            for (stand in stands) {
+                val id: String = stand.id
+                FileManager.get.writeFile(File("ThunderCore/FloatingText/$id.json"), gson.toJson(stands))
+                removeFloatingText(stand.id)
+            }
         }
-        if (stands.isNotEmpty()) { for (stand in stands) { stand.armorStand.remove() } }
         ThunderCore.get.greenMsg("Saved Floating Text!")
     }
 

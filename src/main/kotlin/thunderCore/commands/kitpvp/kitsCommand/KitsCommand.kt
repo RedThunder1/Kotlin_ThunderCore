@@ -15,7 +15,7 @@ class KitsCommand: CommandExecutor {
             return false;
         }
         val player = sender.player
-        if (player!!.world != Bukkit.getWorld("kitpvp")) {
+        if (player!!.world != Bukkit.getWorld("tempkitpvp")) {
             player.sendMessage("${ChatColor.RED}You can only use this command in the kitpvp world!")
             return true;
         }

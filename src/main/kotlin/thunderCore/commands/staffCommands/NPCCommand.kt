@@ -24,7 +24,7 @@ class NPCCommand: CommandExecutor {
             player.sendMessage(Messages.NOPERMS)
             return true
         }
-        if (args == null || args[0].isEmpty()) {
+        if (args == null || args.isEmpty()) {
             player.sendMessage("${ChatColor.RED}You must provide a subcommand! (add|move|edit|remove)")
             return false
         }

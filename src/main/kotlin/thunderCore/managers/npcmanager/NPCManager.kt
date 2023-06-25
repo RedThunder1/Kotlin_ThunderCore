@@ -3,15 +3,9 @@ package thunderCore.managers.npcmanager
 import com.mojang.authlib.GameProfile
 import net.minecraft.network.protocol.game.ClientboundPlayerInfoUpdatePacket
 import net.minecraft.network.protocol.game.PacketPlayOutEntityDestroy
-import net.minecraft.network.protocol.game.PacketPlayOutEntityHeadRotation
-import net.minecraft.network.protocol.game.PacketPlayOutNamedEntitySpawn
-import net.minecraft.server.MinecraftServer
 import net.minecraft.server.level.EntityPlayer
 import net.minecraft.server.network.PlayerConnection
 import net.minecraft.world.entity.Entity
-import org.bukkit.Bukkit
-import org.bukkit.craftbukkit.v1_19_R3.CraftServer
-import org.bukkit.craftbukkit.v1_19_R3.CraftWorld
 import org.bukkit.craftbukkit.v1_19_R3.entity.CraftPlayer
 import org.bukkit.entity.Player
 import thunderCore.managers.ThunderManager
@@ -19,6 +13,8 @@ import java.util.*
 
 
 class NPCManager: ThunderManager {
+
+    //TODO: Cannot figure out nms' stupid functions yet so I am unable to create working npcs yet so this will be on hold while other features are worked on like game modes.
 
     val npcs: HashMap<String, EntityPlayer> = HashMap()
 
@@ -32,6 +28,16 @@ class NPCManager: ThunderManager {
 
     fun createNPC(id: String, name: String, player: Player) {
         val customName = name.replace('~', '§', true)
+        val craftPlayer = player as CraftPlayer
+        val serverPlayer = craftPlayer.handle
+        val server = serverPlayer.c
+        val level = serverPlayer.x()
+
+        val npc = EntityPlayer(server, level, GameProfile(UUID.randomUUID(), customName))
+        val connection = npc.b
+        //connection.a(ClientboundPlayerInfoUpdatePacket(ClientboundPlayerInfoUpdatePacket.a.))
+
+        /*
         val entityPlayer: EntityPlayer = (player as CraftPlayer).handle
         val nmsServer: MinecraftServer = (Bukkit.getServer() as CraftServer).server
         // Change "world" to the world the NPC should be spawned in.
@@ -47,7 +53,7 @@ class NPCManager: ThunderManager {
                 for (n in npcs.values) { addNPCPacket(n, p) }
             }
         }
-
+         */
     }
 
     fun removeNPCPacket(npc: Entity, player: Player) {
@@ -56,13 +62,18 @@ class NPCManager: ThunderManager {
     }
 
     fun addNPCPacket(npc: EntityPlayer, player: Player) {
+
+
+
+
+
         val connection: PlayerConnection = (player as CraftPlayer).handle.b
         // "Adds the player data for the client to use when spawning a player" - https://wiki.vg/Protocol#Spawn_Player
         //connection.a(ClientboundPlayerInfoUpdatePacket())
         // Spawns the NPC for the player client.
-        connection.a(PacketPlayOutNamedEntitySpawn(npc))
+        //connection.a(PacketPlayOutNamedEntitySpawn(npc))
         // Correct head rotation when spawned in player look direction.
-        connection.a(PacketPlayOutEntityHeadRotation(npc, Byte.MIN_VALUE))
+        //connection.a(PacketPlayOutEntityHeadRotation(npc, Byte.MIN_VALUE))
     }
 
     fun getNPCByID(id: String): EntityPlayer? {
