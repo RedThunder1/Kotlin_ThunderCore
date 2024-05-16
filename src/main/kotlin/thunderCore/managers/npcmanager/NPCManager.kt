@@ -1,12 +1,6 @@
 package thunderCore.managers.npcmanager
 
-import com.mojang.authlib.GameProfile
-import net.minecraft.network.protocol.game.ClientboundPlayerInfoUpdatePacket
-import net.minecraft.network.protocol.game.PacketPlayOutEntityDestroy
-import net.minecraft.server.level.EntityPlayer
-import net.minecraft.server.network.PlayerConnection
-import net.minecraft.world.entity.Entity
-import org.bukkit.craftbukkit.v1_19_R3.entity.CraftPlayer
+import org.bukkit.entity.Entity
 import org.bukkit.entity.Player
 import thunderCore.managers.ThunderManager
 import java.util.*
@@ -15,7 +9,7 @@ import java.util.*
 class NPCManager: ThunderManager {
 
     //TODO: Cannot figure out nms' stupid functions yet so I am unable to create working npcs yet so this will be on hold while other features are worked on like game modes.
-
+    /*
     val npcs: HashMap<String, EntityPlayer> = HashMap()
 
     companion object {
@@ -97,4 +91,5 @@ class NPCManager: ThunderManager {
     override fun save() {
         //Save NPCs
     }
+     */
 }

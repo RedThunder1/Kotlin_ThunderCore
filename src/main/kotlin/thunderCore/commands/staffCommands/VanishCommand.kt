@@ -20,12 +20,12 @@ class VanishCommand : CommandExecutor {
         }
         if (vanished.contains(sender)) {
             vanished.remove(sender)
-            sender.showPlayer(ThunderCore.get, sender)
+            sender.showPlayer(sender)
             sender.sendMessage("${ChatColor.RED}You have unvanished!")
             return true
         }
         vanished.add(sender)
-        sender.hidePlayer(ThunderCore.get, sender)
+        sender.hidePlayer(sender)
         sender.sendMessage("${ChatColor.GREEN}You have vanished!")
         return true
     }

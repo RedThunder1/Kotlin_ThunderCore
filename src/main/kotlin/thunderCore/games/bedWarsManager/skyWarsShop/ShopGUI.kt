@@ -15,7 +15,7 @@ class ShopGUI {
         val inventory: Inventory =
             Bukkit.createInventory(null, 54, "" + ChatColor.GOLD + "Shop Menu")
         for (i in 0..53) {
-            val blackGlass = ItemStack(Material.BLACK_STAINED_GLASS, 1)
+            val blackGlass = ItemStack(Material.BLACK_STAINED_GLASS_PANE, 1)
             val emptyMeta: ItemMeta = blackGlass.itemMeta!!
             emptyMeta.setDisplayName("-")
             blackGlass.setItemMeta(emptyMeta)
@@ -72,7 +72,7 @@ class ShopGUI {
         wood.setItemMeta(woodMeta)
         inventory.setItem(2, wood)
 
-        val endStone = ItemStack(Material.OAK_WOOD, 8)
+        val endStone = ItemStack(Material.END_STONE, 8)
         val endStoneMeta: ItemMeta = endStone.itemMeta!!
         endStoneMeta.setDisplayName("EndStone (4 Gold)")
         endStone.setItemMeta(endStoneMeta)

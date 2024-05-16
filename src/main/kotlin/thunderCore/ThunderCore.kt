@@ -167,7 +167,7 @@ class ThunderCore: JavaPlugin() {
         getCommand("friend")!!.setAliases(listOf("f"))
         getCommand("flyspeed")!!.setExecutor(FlySpeedCommand())
         getCommand("holo")!!.setExecutor(FloatingTextCommand())
-        getCommand("npc")!!.setExecutor(NPCCommand())
+        //getCommand("npc")!!.executor = NPCCommand()
         greenMsg("Commands LOADED!")
     }
 
@@ -186,35 +186,35 @@ class ThunderCore: JavaPlugin() {
     fun isStaff(player: Player): Boolean {
         return if (PlayerManager.get.fakePlayers.contains(PlayerManager.get.getFakePlayer(player))) {
             val fakePlayer: FakePlayer? = PlayerManager.get.getFakePlayer(player)
-            fakePlayer!!.rank.permlevel >= 1
+            fakePlayer!!.rank.permlevel >= 1 || player.isOp
         } else player.isOp
     }
 
     fun isModerator(player: Player): Boolean {
         return if (PlayerManager.get.fakePlayers.contains(PlayerManager.get.getFakePlayer(player))) {
             val fakePlayer: FakePlayer? = PlayerManager.get.getFakePlayer(player)
-            fakePlayer!!.rank.permlevel >= 2
+            fakePlayer!!.rank.permlevel >= 2 || player.isOp
         } else player.isOp
     }
 
     fun isAdmin(player: Player): Boolean {
         return if (PlayerManager.get.fakePlayers.contains(PlayerManager.get.getFakePlayer(player))) {
             val fakePlayer: FakePlayer? = PlayerManager.get.getFakePlayer(player)
-            fakePlayer!!.rank.permlevel >= 3
+            fakePlayer!!.rank.permlevel >= 3 || player.isOp
         } else player.isOp
     }
 
     fun isOwner(player: Player): Boolean {
         return if (PlayerManager.get.fakePlayers.contains(PlayerManager.get.getFakePlayer(player))) {
             val fakePlayer: FakePlayer? = PlayerManager.get.getFakePlayer(player)
-            fakePlayer!!.rank.permlevel >= 4
+            fakePlayer!!.rank.permlevel >= 4 || player.isOp
         } else player.isOp
     }
 
     fun isBuilder(player: Player): Boolean {
         return if (PlayerManager.get.fakePlayers.contains(PlayerManager.get.getFakePlayer(player))) {
             val fakePlayer: FakePlayer? = PlayerManager.get.getFakePlayer(player)
-            fakePlayer!!.rank == PlayerManager.get.getRankByName("builder")
+            fakePlayer!!.rank == PlayerManager.get.getRankByName("builder") || player.isOp
         } else isAdmin(player)
     }
 }

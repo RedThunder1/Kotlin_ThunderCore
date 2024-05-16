@@ -23,12 +23,14 @@ class SpawnGenerator(private val location: Location) {
                 if (!spawnItems) {
                     cancel()
                 }
+
                 if (ironSpawnRate[0] <= 0) {
                     world.dropItemNaturally(location, iron)
                     ironSpawnRate[0] = defaultIronSpawnRate
                 } else {
                     ironSpawnRate[0]--
                 }
+
                 if (goldSpawnRate[0] <= 0) {
                     world.dropItemNaturally(location, gold)
                     goldSpawnRate[0] = defaultGoldSpawnRate

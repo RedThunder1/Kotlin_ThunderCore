@@ -24,6 +24,8 @@ class BedWarsTeamGameManager(private val gameForm: BedWarsGameForm): Listener {
     private val spawns = gameForm.map.teamSpawns
     private val teams: List<BedWarsTeamForm> = gameForm.teams
     private val players = ArrayList<Player>()
+    private val livingTeams = gameForm.teams
+    private val shops = gameForm.map.teamShops
 
     init {
         val map = gameForm.map
@@ -38,10 +40,11 @@ class BedWarsTeamGameManager(private val gameForm: BedWarsGameForm): Listener {
 
 
         //Initialize Shops
+        for (shop in shops) {
+            //Spawn Shop Npc
+        }
 
-
-        //Initialize Generators
-
+    //Initialize Generators
         //SpawnGenerators
         val redGen = SpawnGenerator(spawns[0])
         val yellowGen = SpawnGenerator(spawns[1])
@@ -87,8 +90,8 @@ class BedWarsTeamGameManager(private val gameForm: BedWarsGameForm): Listener {
                     cancel()
                 }
                 for (player in players) {
-                    player.playNote(player.location, Instrument.CHIME, Note.natural(1, Note.Tone.A))
-                    player.sendTitle("" + ChatColor.GREEN + countdown[0], null, 5, 10, 5)
+                    player.playNote(player.location, Instrument.PIANO, Note.natural(1, Note.Tone.A))
+                    player.sendTitle("" + ChatColor.GREEN + countdown[0], null)
                 }
                 countdown[0]--
             }
@@ -110,7 +113,7 @@ class BedWarsTeamGameManager(private val gameForm: BedWarsGameForm): Listener {
                 if (gameOver) {
                     cancel()
                 }
-                if (time[0] <= 0) {
+                if (time[0] <= 0 || livingTeams.size <= 1) {
                     endGame()
                     cancel()
                 }
@@ -171,7 +174,10 @@ class BedWarsTeamGameManager(private val gameForm: BedWarsGameForm): Listener {
                     p.sendMessage("" + ChatColor.RED + player.name + ChatColor.GOLD + " suffocated to death!")
                 }
             }
-            else -> { //gets mad without a default
+            else -> {
+                for (p in players) {
+                    p.sendMessage("" + ChatColor.RED + player.name + ChatColor.GOLD + " died!")
+                }
             }
         }
     }

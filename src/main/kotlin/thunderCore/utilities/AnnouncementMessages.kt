@@ -13,7 +13,7 @@ class AnnouncementMessages: Runnable{
 
     private val welcome = "" + ChatColor.GREEN + "Welcome to ThunderMC! Here we will have many mini games such as Bed Wars, Sky Wars, and others soon to come!"
 
-    private val discord = TextComponent("Join our discord by clicking here!");
+    private val discord = TextComponent("Join our discord by clicking here!")
 
     init {
         discord.clickEvent = ClickEvent(ClickEvent.Action.OPEN_URL, "https://discord.gg/ueebY62cfw")

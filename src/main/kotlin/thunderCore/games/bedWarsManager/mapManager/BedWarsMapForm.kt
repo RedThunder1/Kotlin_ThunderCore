@@ -5,6 +5,7 @@ import org.bukkit.World
 import java.util.*
 
 data class BedWarsMapForm(
+    //Team lists Should be in order of Red - Blue - Green - Yellow
     val name: String,
     val mapTemplate: World,
     val worldType: String,

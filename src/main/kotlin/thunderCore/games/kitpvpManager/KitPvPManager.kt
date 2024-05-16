@@ -8,7 +8,6 @@ import org.bukkit.entity.Player
 import org.bukkit.inventory.ItemStack
 import org.bukkit.potion.PotionEffect
 import org.bukkit.potion.PotionEffectType
-import thunderCore.ThunderCore
 import thunderCore.managers.ThunderManager
 import kotlin.collections.ArrayList
 
@@ -19,7 +18,7 @@ class KitPvPManager: ThunderManager {
 
     var kits: ArrayList<KitData> = ArrayList()
     var players = ArrayList<Player>()
-    private val spawn = Location(Bukkit.getWorld("kitpvp"), 0.5, 72.0, 0.5)
+    private val spawn = Location(Bukkit.getWorld("kitpvp"), -6.5, 136.0, -54.5)
 
     init {
         get = this
@@ -38,7 +37,7 @@ class KitPvPManager: ThunderManager {
         brawlerKit.add(ItemStack(Material.COOKED_BEEF, 16))
 
         val brawlerEffects = ArrayList<PotionEffect>()
-        brawlerEffects.add(PotionEffect(PotionEffectType.SPEED, PotionEffect.INFINITE_DURATION, 1))
+        brawlerEffects.add(PotionEffect(PotionEffectType.SPEED, Integer.MAX_VALUE, 1))
 
         val brawlerLogo = ItemStack(Material.IRON_SWORD)
         val brawlerLogoMeta = brawlerLogo.itemMeta
@@ -79,7 +78,7 @@ class KitPvPManager: ThunderManager {
         tankKit.add(ItemStack(Material.COOKED_BEEF, 16))
 
         val tankEffects = ArrayList<PotionEffect>()
-        tankEffects.add(PotionEffect(PotionEffectType.SLOW, PotionEffect.INFINITE_DURATION, 1))
+        tankEffects.add(PotionEffect(PotionEffectType.SLOW, Integer.MAX_VALUE, 1))
 
         val tankLogo = ItemStack(Material.DIAMOND_CHESTPLATE)
         val tankLogoMeta = tankLogo.itemMeta

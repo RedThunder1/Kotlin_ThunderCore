@@ -2,7 +2,6 @@ package thunderCore.commands.staffCommands.worlds
 
 import org.bukkit.Bukkit
 import org.bukkit.ChatColor
-import org.bukkit.World
 import org.bukkit.command.Command
 import org.bukkit.command.CommandExecutor
 import org.bukkit.command.CommandSender
@@ -24,7 +23,7 @@ class DeleteWorldCommand : CommandExecutor {
                 return false
             }
             Bukkit.unloadWorld(name, false)
-            if (Objects.requireNonNull<World>(Bukkit.getWorld(name)).worldFolder.delete()) {
+            if (Objects.requireNonNull(Bukkit.getWorld(name))?.worldFolder?.delete() == true) {
                 sender.sendMessage("${ChatColor.DARK_RED}The world $name was deleted!")
             }
             return false
@@ -43,7 +42,7 @@ class DeleteWorldCommand : CommandExecutor {
             return true
         }
         Bukkit.unloadWorld(name, false)
-        if (Objects.requireNonNull<World>(Bukkit.getWorld(name)).worldFolder.delete()) {
+        if (Objects.requireNonNull(Bukkit.getWorld(name))?.worldFolder?.delete() == true) {
             sender.sendMessage("${ChatColor.DARK_RED}The world $name was deleted!")
         }
         return true

@@ -62,7 +62,7 @@ class ReportManager : ThunderManager {
         try {
             val folder = File("ThunderCore/Reports/")
             val listOfFiles: Array<File> = folder.listFiles()!!
-            for (file in Objects.requireNonNull<Array<File>>(listOfFiles)) {
+            for (file in Objects.requireNonNull(listOfFiles)) {
                 val fileContent: String? = FileManager.get.readFile(file)
                 reports.add(gson.fromJson(fileContent, ReportRecord::class.java))
             }

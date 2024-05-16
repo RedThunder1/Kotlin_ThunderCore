@@ -57,8 +57,8 @@ class StartingGameManager(startingGameForm: StartingGameRecord): Listener{
         object : BukkitRunnable() {
             override fun run() {
                 for (player in gameForm.players) {
-                    player.sendTitle("" + ChatColor.RED + time, null, 5, 10, 5)
-                    player.playNote(player.location, Instrument.CHIME, Note.natural(1, Note.Tone.A))
+                    player.sendTitle("" + ChatColor.RED + time, null)
+                    player.playNote(player.location, Instrument.PIANO, Note.natural(1, Note.Tone.A))
                 }
                 if (time == 0) {
                     beginGame()

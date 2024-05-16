@@ -47,7 +47,6 @@ class FloatingTextManager: ThunderManager {
                     stand.setGravity(false)
                     stand.customName = name.substring(lastRange, i)
                     stand.isCustomNameVisible = true
-                    stand.isCollidable = false
                     subStands.add(stand)
                 }
                 lastRange = i+1
@@ -61,7 +60,6 @@ class FloatingTextManager: ThunderManager {
         stand.setGravity(false)
         stand.customName = customName
         stand.isCustomNameVisible = true
-        stand.isCollidable = false
         stands.add(FloatingText(id, player.location, stand, subStands))
         player.sendMessage("${ChatColor.GREEN}Holo has been created! ID: $id")
     }
@@ -97,7 +95,6 @@ class FloatingTextManager: ThunderManager {
                 s.setGravity(false)
                 s.customName = stand.armorStand.customName
                 s.isCustomNameVisible = true
-                s.isCollidable = false
                 if (stand.subStands.isNotEmpty()) {
                     var offset = 1
                     val loc = stand.location
@@ -108,7 +105,6 @@ class FloatingTextManager: ThunderManager {
                         sub.setGravity(false)
                         sub.customName = subStand.customName
                         sub.isCustomNameVisible = true
-                        sub.isCollidable = false
                         newList.add(sub)
                         offset++
                     }

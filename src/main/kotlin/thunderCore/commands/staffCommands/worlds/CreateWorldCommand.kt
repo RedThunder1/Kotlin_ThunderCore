@@ -47,8 +47,7 @@ class CreateWorldCommand : CommandExecutor {
             }
 
             "void" -> {
-                wc.generator(VoidWorldGenerator())
-                wc.biomeProvider(PlainsProvider())
+                wc.generator(EmptyChunkGenerator())
                 wc.createWorld()
             }
 

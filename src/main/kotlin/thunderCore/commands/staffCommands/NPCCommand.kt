@@ -1,8 +1,5 @@
 package thunderCore.commands.staffCommands
 
-import net.minecraft.core.Position
-import net.minecraft.server.level.EntityPlayer
-import net.minecraft.server.level.WorldServer
 import org.bukkit.Bukkit
 import org.bukkit.ChatColor
 import org.bukkit.command.Command
@@ -12,8 +9,9 @@ import org.bukkit.entity.Player
 import thunderCore.ThunderCore
 import thunderCore.managers.npcmanager.NPCManager
 import thunderCore.utilities.Messages
-
-class NPCCommand: CommandExecutor {
+//: CommandExecutor
+class NPCCommand {
+    /*
     override fun onCommand(sender: CommandSender, cmd: Command, label: String, args: Array<out String>?): Boolean {
         if (sender !is Player) {
             sender.sendMessage(Messages.CONSOLECANTUSE)
@@ -88,4 +86,5 @@ class NPCCommand: CommandExecutor {
 
         return true
     }
+     */
 }

@@ -35,6 +35,6 @@ class FlySpeedCommand: CommandExecutor{
         if (speed > 1f) { speed = 1f } else if (speed < -1f) { speed = -1f }
 
         player.flySpeed = speed
-        return true;
+        return true
     }
 }

@@ -3,7 +3,6 @@ package thunderCore.games.bedWarsManager.gamesManager
 import org.bukkit.entity.Player
 import thunderCore.games.bedWarsManager.teamManager.BedWarsTeamForm
 import thunderCore.games.bedWarsManager.mapManager.BedWarsMapForm
-import java.util.*
 import kotlin.collections.ArrayList
 
 data class BedWarsGameForm(

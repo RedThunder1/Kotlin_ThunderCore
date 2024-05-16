@@ -1,7 +1,7 @@
 name: Thunder_Core
 main: thunderCore.ThunderCore
 version: 1.0.0
-api-version: 1.19
+api-version: 1.16
 author: RedThunderSpartan
 description: Core Plugin for my server
 

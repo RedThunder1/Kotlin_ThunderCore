@@ -63,7 +63,7 @@ class BedWarsManager : ThunderManager {
         val newLobby: BedWarsMapForm
 
         //startingGames.add(StartingGameManager(StartingGameRecord(players, mode, map, lobbyID, newLobby)));
-        return;
+        return
     }
 
     private fun initializeMaps() {
