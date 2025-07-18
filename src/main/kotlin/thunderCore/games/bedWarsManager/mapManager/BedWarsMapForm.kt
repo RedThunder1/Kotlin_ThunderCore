@@ -2,7 +2,6 @@ package thunderCore.games.bedWarsManager.mapManager
 
 import org.bukkit.Location
 import org.bukkit.World
-import java.util.*
 
 data class BedWarsMapForm(
     //Team lists Should be in order of Red - Blue - Green - Yellow

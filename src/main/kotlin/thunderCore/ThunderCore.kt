@@ -10,6 +10,8 @@ import thunderCore.commands.PartyCommand
 import thunderCore.commands.kitpvp.KitPvpCommand
 import thunderCore.commands.kitpvp.kitsCommand.KitsCommand
 import thunderCore.commands.kitpvp.kitsCommand.KitsGUIEvent
+import thunderCore.commands.reportCommand.ReportCommand
+import thunderCore.commands.reportCommand.viewReports.ViewReportsCommand
 import thunderCore.commands.staffCommands.*
 import thunderCore.commands.staffCommands.buildCommand.BuildCommand
 import thunderCore.commands.staffCommands.bypassCommand.BypassCommand
@@ -134,40 +136,43 @@ class ThunderCore: JavaPlugin() {
             val worldCreator = WorldCreator(world)
             worldCreator.createWorld()
         }
+
         greenMsg("Worlds LOADED!")
     }
 
     private fun loadCommands() {
         getCommand("lobby")!!.setExecutor(LobbyCommand())
-        getCommand("lobby")!!.setAliases(listOf("hub"))
+        getCommand("lobby")!!.aliases = listOf("hub")
         getCommand("ban")!!.setExecutor(BanCommand())
-        getCommand("ban")!!.setAliases(listOf("ipban"))
+        getCommand("ban")!!.aliases = listOf("ipban")
         getCommand("mutechat")!!.setExecutor(MuteChatCommand())
         getCommand("vanish")!!.setExecutor(VanishCommand())
         getCommand("build")!!.setExecutor(BuildCommand())
         getCommand("mute")!!.setExecutor(MuteCommand())
-        getCommand("mute")!!.setAliases(listOf("unmute"))
+        getCommand("mute")!!.aliases = listOf("unmute")
         getCommand("getvanished")!!.setExecutor(GetVanishedCommand())
         getCommand("party")!!.setExecutor(PartyCommand())
-        getCommand("party")!!.setAliases(listOf("p"))
+        getCommand("party")!!.aliases = listOf("p")
         getCommand("worldcreate")!!.setExecutor(CreateWorldCommand())
-        getCommand("worldcreate")!!.setAliases(listOf("wc"))
+        getCommand("worldcreate")!!.aliases = listOf("wc")
         getCommand("worlddelete")!!.setExecutor(DeleteWorldCommand())
-        getCommand("worlddelete")!!.setAliases(listOf("wd"))
+        getCommand("worlddelete")!!.aliases = listOf("wd")
         getCommand("worldtp")!!.setExecutor(TpWorldCommand())
-        getCommand("worldtp")!!.setAliases(listOf("wtp"))
+        getCommand("worldtp")!!.aliases = listOf("wtp")
         getCommand("worldlist")!!.setExecutor(WorldListCommand())
-        getCommand("worldlist")!!.setAliases(listOf("wl"))
+        getCommand("worldlist")!!.aliases = listOf("wl")
         getCommand("setrank")!!.setExecutor(SetRankCommand())
         getCommand("sudo")!!.setExecutor(SudoCommand())
         getCommand("kits")!!.setExecutor(KitsCommand())
         getCommand("kitpvp")!!.setExecutor(KitPvpCommand())
         getCommand("bypass")!!.setExecutor(BypassCommand())
         getCommand("friend")!!.setExecutor(FriendsCommand())
-        getCommand("friend")!!.setAliases(listOf("f"))
+        getCommand("friend")!!.aliases = listOf("f")
         getCommand("flyspeed")!!.setExecutor(FlySpeedCommand())
         getCommand("holo")!!.setExecutor(FloatingTextCommand())
         //getCommand("npc")!!.executor = NPCCommand()
+        getCommand("report")!!.setExecutor(ReportCommand())
+        getCommand("reports")!!.setExecutor(ViewReportsCommand())
         greenMsg("Commands LOADED!")
     }
 

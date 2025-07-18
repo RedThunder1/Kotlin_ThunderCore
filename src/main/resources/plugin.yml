@@ -1,9 +1,9 @@
 name: Thunder_Core
 main: thunderCore.ThunderCore
-version: 1.0.0
-api-version: 1.16
+version: 0.5.0
+api-version: 1.21
 author: RedThunderSpartan
-description: Core Plugin for my server
+description: Core Plugin for my server ThunderMC!
 
 commands:
   lobby:
@@ -85,3 +85,9 @@ commands:
   npc:
     usage: </npc add|remove|edit|move|list (id opt) (name opt)>
     description: Allows staff to create new NPC's
+  report:
+    usage: </report (player) (reason)>
+    description: Allows players to report other players.
+  reports:
+    usage: </reports>
+    description: Allows staff to view reports.

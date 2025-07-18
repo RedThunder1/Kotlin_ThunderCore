@@ -29,7 +29,7 @@ class KitPvPEvents: Listener {
         if (event.entity.world != Bukkit.getWorld("kitpvp")) {
             return
         }
-        if (event.entity.location.x > spawn.x - 20 && event.entity.location.x < spawn.x + 20 && event.entity.location.z > spawn.z - 20 && event.entity.location.z < spawn.z + 20) {
+        if (event.entity.location.y > spawn.y-2) {
             event.isCancelled = true
             return
         }

@@ -8,7 +8,6 @@ import org.bukkit.entity.Player
 import thunderCore.ThunderCore
 import thunderCore.managers.floatingtextmanager.FloatingTextManager
 import thunderCore.utilities.Messages
-import java.lang.StringBuilder
 
 class FloatingTextCommand: CommandExecutor {
 

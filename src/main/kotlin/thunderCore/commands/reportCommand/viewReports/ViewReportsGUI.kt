@@ -26,7 +26,7 @@ class ViewReportsGUI {
             lore.add("Reason: " + report.reason)
             lore.add("ID: " + report.id)
             itemMeta.lore = lore
-            itemStack.setItemMeta(itemMeta)
+            itemStack.itemMeta = itemMeta
             inventory.addItem(itemStack)
         }
         player.openInventory(inventory)

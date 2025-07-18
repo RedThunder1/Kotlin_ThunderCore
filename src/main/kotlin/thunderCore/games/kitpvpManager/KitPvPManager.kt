@@ -18,7 +18,7 @@ class KitPvPManager: ThunderManager {
 
     var kits: ArrayList<KitData> = ArrayList()
     var players = ArrayList<Player>()
-    private val spawn = Location(Bukkit.getWorld("kitpvp"), -6.5, 136.0, -54.5)
+    private val spawn = Location(Bukkit.getWorld("kitpvp"), -5.5, 138.0, -180.5)
 
     init {
         get = this
@@ -78,7 +78,7 @@ class KitPvPManager: ThunderManager {
         tankKit.add(ItemStack(Material.COOKED_BEEF, 16))
 
         val tankEffects = ArrayList<PotionEffect>()
-        tankEffects.add(PotionEffect(PotionEffectType.SLOW, Integer.MAX_VALUE, 1))
+        tankEffects.add(PotionEffect(PotionEffectType.SLOWNESS, Integer.MAX_VALUE, 1))
 
         val tankLogo = ItemStack(Material.DIAMOND_CHESTPLATE)
         val tankLogoMeta = tankLogo.itemMeta

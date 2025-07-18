@@ -6,6 +6,7 @@ import org.bukkit.event.EventHandler
 import org.bukkit.event.Listener
 import org.bukkit.event.player.PlayerQuitEvent
 import thunderCore.commands.staffCommands.buildCommand.BuildManager
+import thunderCore.games.kitpvpManager.KitPvPManager
 
 class PlayerLeave : Listener {
     @EventHandler
@@ -13,5 +14,9 @@ class PlayerLeave : Listener {
         val player: Player = event.player
         event.quitMessage = "" + ChatColor.RED + "${player.name} has left the server!"
         BuildManager.builders.remove(event.player)
+
+        if (KitPvPManager.get.players.contains(player)) {
+            //Implement Punishment for leaving
+        }
     }
 }

@@ -7,7 +7,7 @@ import thunderCore.ThunderCore
 
 class AnnouncementMessages: Runnable{
 
-    private val games = "" + ChatColor.GOLD + "The current planned game is Bed Wars.  Once finished, other games will be developed."
+    private val games = "" + ChatColor.GOLD + "The current planned games are KitPVP and Bed Wars.  Once finished, other games will be developed."
 
     private val rules = "" + ChatColor.RED + "Please make sure to read our rules in the discord server!"
 

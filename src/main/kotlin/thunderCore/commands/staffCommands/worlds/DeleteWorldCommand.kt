@@ -41,9 +41,18 @@ class DeleteWorldCommand : CommandExecutor {
             sender.sendMessage("${ChatColor.RED}That is not a world!")
             return true
         }
-        Bukkit.unloadWorld(name, false)
-        if (Objects.requireNonNull(Bukkit.getWorld(name))?.worldFolder?.delete() == true) {
-            sender.sendMessage("${ChatColor.DARK_RED}The world $name was deleted!")
+        val folder = Bukkit.getWorld(name)!!.worldFolder
+        if (Bukkit.unloadWorld(name, false)) {
+            if (folder.delete()) {
+
+
+
+                sender.sendMessage("${ChatColor.DARK_RED}The world $name was deleted!")
+            } else {
+                sender.sendMessage("${ChatColor.RED}The world $name wasn't deleted!")
+            }
+        } else {
+            sender.sendMessage("${ChatColor.RED}The world can't be unloaded")
         }
         return true
     }

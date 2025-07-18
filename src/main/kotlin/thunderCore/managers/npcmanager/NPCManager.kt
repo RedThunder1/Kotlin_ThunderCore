@@ -8,7 +8,7 @@ import java.util.*
 
 class NPCManager: ThunderManager {
 
-    //TODO: Cannot figure out nms' stupid functions yet so I am unable to create working npcs yet so this will be on hold while other features are worked on like game modes.
+    //TODO: Find out how to do this dumb stuff with 1.16.5
     /*
     val npcs: HashMap<String, EntityPlayer> = HashMap()
 

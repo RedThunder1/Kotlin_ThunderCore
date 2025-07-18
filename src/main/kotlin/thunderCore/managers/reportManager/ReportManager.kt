@@ -1,6 +1,8 @@
 package thunderCore.managers.reportManager
 
 import com.google.gson.Gson
+import org.bukkit.Bukkit
+import org.bukkit.ChatColor
 import org.bukkit.entity.Player
 import thunderCore.ThunderCore
 import thunderCore.managers.ThunderManager
@@ -19,6 +21,13 @@ class ReportManager : ThunderManager {
 
     fun createReport(reporter: Player, reported: Player, reason: String, id: UUID) {
         reports.add(ReportRecord(reporter, reported, reason, id))
+
+        for (player in Bukkit.getOnlinePlayers()) {
+            if (ThunderCore.get.isStaff(player)) {
+                player.sendMessage("${ChatColor.RED}${reported.name} has been reported! ${ChatColor.GOLD}For reason: $reason")
+            }
+        }
+
     }
 
     fun removeReport(report: ReportRecord) {

@@ -18,7 +18,7 @@ class ShopGUI {
             val blackGlass = ItemStack(Material.BLACK_STAINED_GLASS_PANE, 1)
             val emptyMeta: ItemMeta = blackGlass.itemMeta!!
             emptyMeta.setDisplayName("-")
-            blackGlass.setItemMeta(emptyMeta)
+            blackGlass.itemMeta = emptyMeta
             inventory.setItem(i, blackGlass)
         }
         var wool: ItemStack? = null
@@ -57,25 +57,25 @@ class ShopGUI {
         //Prices will need to be balanced
         val woolMeta: ItemMeta = wool!!.itemMeta!!
         woolMeta.setDisplayName("Wool (4 Iron)")
-        wool.setItemMeta(woolMeta)
+        wool.itemMeta = woolMeta
         inventory.setItem(1, wool)
 
         val glassMeta: ItemMeta = glass!!.itemMeta!!
         glassMeta.setDisplayName("Glass (6 Iron)")
-        glass.setItemMeta(glassMeta)
+        glass.itemMeta = glassMeta
         inventory.setItem(4, glass)
         player.openInventory(inventory)
 
         val wood = ItemStack(Material.OAK_WOOD, 8)
         val woodMeta: ItemMeta = wood.itemMeta!!
         woodMeta.setDisplayName("Wood (8 Iron)")
-        wood.setItemMeta(woodMeta)
+        wood.itemMeta = woodMeta
         inventory.setItem(2, wood)
 
         val endStone = ItemStack(Material.END_STONE, 8)
         val endStoneMeta: ItemMeta = endStone.itemMeta!!
         endStoneMeta.setDisplayName("EndStone (4 Gold)")
-        endStone.setItemMeta(endStoneMeta)
+        endStone.itemMeta = endStoneMeta
         inventory.setItem(3, endStone)
 
     }

@@ -13,10 +13,10 @@ import org.bukkit.event.block.BlockPlaceEvent
 import org.bukkit.event.entity.CreatureSpawnEvent
 import org.bukkit.event.entity.EntityDamageByEntityEvent
 import org.bukkit.event.entity.EntityDamageEvent
+import org.bukkit.event.entity.EntityPickupItemEvent
 import org.bukkit.event.entity.PlayerDeathEvent
 import org.bukkit.event.player.PlayerChangedWorldEvent
 import org.bukkit.event.player.PlayerItemDamageEvent
-import org.bukkit.event.player.PlayerPickupItemEvent
 import org.bukkit.scheduler.BukkitRunnable
 import thunderCore.ThunderCore
 import thunderCore.commands.staffCommands.buildCommand.BuildManager
@@ -66,11 +66,14 @@ class WorldProtection : Listener {
     }
 
     @EventHandler
-    fun pickUp(event: PlayerPickupItemEvent) {
-        val world: World = event.player.world
-        if (isWorldProtected(world)) {
-            if (!(BypassManager.bypassing.contains(event.player))) {
-                event.isCancelled = true
+    fun pickUp(event: EntityPickupItemEvent) {
+        if (event.entity is Player) {
+            val player: Player = event.entity as Player
+            val world: World = player.world
+            if (isWorldProtected(world)) {
+                if (!(BypassManager.bypassing.contains(player))) {
+                    event.isCancelled = true
+                }
             }
         }
     }
@@ -90,6 +93,11 @@ class WorldProtection : Listener {
         if (!isWorldProtected(world)) {
             return
         }
+
+        if (event.cause == EntityDamageEvent.DamageCause.FALL && event.entity.world.name == "kitpvp") {
+            event.isCancelled = true
+        }
+
         if (event.cause == EntityDamageEvent.DamageCause.VOID) {
             object : BukkitRunnable() {
                 override fun run() {

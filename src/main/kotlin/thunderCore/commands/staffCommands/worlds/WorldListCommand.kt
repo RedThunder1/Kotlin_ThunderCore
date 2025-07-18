@@ -22,9 +22,9 @@ class WorldListCommand: CommandExecutor {
         }
         player.sendMessage("${ChatColor.GOLD}_______Worlds_______")
         for (world in Bukkit.getWorlds()) {
-            val msg = "${ChatColor.GOLD}| ${world.name}"
+            var msg = "${ChatColor.GOLD}| ${world.name}"
             if (player.world == world) {
-                msg + "${ChatColor.GREEN} <-- Here"
+                msg += "${ChatColor.GREEN} <-- Here"
             }
             player.sendMessage(msg)
         }

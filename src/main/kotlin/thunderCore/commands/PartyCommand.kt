@@ -18,7 +18,7 @@ class PartyCommand : CommandExecutor {
             return true
         }
         val player = sender.player!!
-        val party: PartyForm? = PartyManager.get.getPartyByLeader(player)
+        val party: PartyForm? = PartyManager.get.getPartyByMember(player)
         when (args[0]) {
             "invite" -> {
                 if (args[1].isEmpty()) {
@@ -35,34 +35,50 @@ class PartyCommand : CommandExecutor {
 
             "kick" -> {
                 if (party == null) {
-                    player.sendMessage("" + ChatColor.RED + "You cannot kick a player as you are either not in a party or not the leader!")
+                    player.sendMessage("" + ChatColor.RED + "You cannot kick a player as you are either not in a party!")
                     return true
                 }
+
+                if (party.leader != player) {
+                    player.sendMessage("${ChatColor.RED}You must be the party leader to kick a player!")
+                    return true
+                }
+
                 if (args[1].isEmpty()) {
                     player.sendMessage("" + ChatColor.RED + "You must provide a player to Kick!")
                     return false
                 }
+
                 if (Bukkit.getPlayer(args[1]) == null) {
                     player.sendMessage("" + ChatColor.RED + "That is not a player!")
                     return true
                 }
+
                 val kicked: Player = Bukkit.getPlayer(args[1])!!
                 if (party.members.isEmpty()) {
                     player.sendMessage("" + ChatColor.RED + "There are no players to kick!")
                 }
+
                 if (!(party.members.contains(kicked))) {
                     player.sendMessage("" + ChatColor.RED + "That player is not in your party!")
                     return true
                 }
+
                 party.members.remove(kicked)
                 kicked.sendMessage("" + ChatColor.RED + "You were kicked from the server!")
             }
 
             "disband" -> {
                 if (party == null) {
-                    player.sendMessage("" + ChatColor.RED + "You cannot disband a party as you are either not in one or not the leader!")
+                    player.sendMessage("" + ChatColor.RED + "You cannot disband a party as you are not in one!")
                     return true
                 }
+
+                if (party.leader != player) {
+                    player.sendMessage("${ChatColor.RED}You must be the party leader to disband the party!")
+                    return true
+                }
+
                 player.sendMessage("" + ChatColor.RED + "The party has been disbanded")
                 if (party.members.isEmpty()) {
                     for (p in party.members) {
@@ -74,27 +90,28 @@ class PartyCommand : CommandExecutor {
 
             "leave" -> {
                 if (party == null) {
-                    val party2 = PartyManager.get.getPartyByMember(player)
-                    if (party2 == null) {
-                        player.sendMessage("" + ChatColor.RED + "You are not in a party!")
-                        return true
-                    }
-                    player.sendMessage("" + ChatColor.RED + "You have left the party!")
-                    party2.members.remove(player)
-                    if (party2.members.isNotEmpty()) {
-                        for (players in party2.members) {
-                            players.sendMessage("${ChatColor.RED}${player.name} has left the party!")
-                        }
+                    player.sendMessage("" + ChatColor.RED + "You are not in a party!")
+                    return true
+                }
+
+                player.sendMessage("" + ChatColor.RED + "You have left the party!")
+                party.members.remove(player)
+                if (party.members.isNotEmpty()) {
+                    for (players in party.members) {
+                        players.sendMessage("${ChatColor.RED}${player.name} has left the party!")
                     }
                     return true
                 }
+
+
 
                 if (party.members.isEmpty()) {
                     player.sendMessage("${ChatColor.RED}You have disbanded the party!")
                     PartyManager.get.removeParty(party)
                     return true
                 }
-                val newLeader = party.members.firstOrNull()!!
+
+                val newLeader = party.members.first()
                 party.members.remove(newLeader)
                 party.leader = newLeader
                 newLeader.sendMessage("${ChatColor.RED}${player.name} has left the party!  You are the new party leader")
@@ -113,6 +130,7 @@ class PartyCommand : CommandExecutor {
                     player.sendMessage("${ChatColor.RED}You have not been invited to a party!")
                     return true
                 }
+
                 invitedPartyForm.members.add(sender)
                 invitedPartyForm.invited.remove(sender)
                 for (p in invitedPartyForm.members) {
@@ -122,13 +140,18 @@ class PartyCommand : CommandExecutor {
             }
 
             "deny" -> {
+                if (party == null) {
+                    player.sendMessage("" + ChatColor.RED + "You are not in a party!")
+                    return true
+                }
+
                 val invitedPartyForm: PartyForm? = PartyManager.get.checkInvited(sender)
                 if (invitedPartyForm == null) {
                     sender.sendMessage("${ChatColor.GREEN}You have not been invited to a party!")
                     return true
                 }
 
-                //Remove player from party form
+                party.invited.remove(sender)
                 return true
             }
 
