@@ -19,6 +19,12 @@ class PartyCommand : CommandExecutor {
         }
         val player = sender.player!!
         val party: PartyForm? = PartyManager.get.getPartyByMember(player)
+
+        if (args.isEmpty()) {
+            player.sendMessage("" + ChatColor.RED + "You must provide a sub command! Use /party help for list of commands!")
+            return true
+        }
+
         when (args[0]) {
             "invite" -> {
                 if (args[1].isEmpty()) {
@@ -27,6 +33,10 @@ class PartyCommand : CommandExecutor {
                 }
                 if (Bukkit.getPlayer(args[1]) == null) {
                     player.sendMessage("" + ChatColor.RED + "That is not a player!")
+                    return true
+                }
+                if (Bukkit.getPlayer(args[1]) == player) {
+                    player.sendMessage("" + ChatColor.RED + "You can't invite yourself!")
                     return true
                 }
                 val invited: Player = Bukkit.getPlayer(args[1])!!

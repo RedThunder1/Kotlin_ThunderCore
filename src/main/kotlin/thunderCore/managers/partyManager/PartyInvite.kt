@@ -17,7 +17,7 @@ class PartyInvite {
     }
 
     fun invitePlayer(inviter: Player, invited: Player) {
-        invited.sendMessage("" + ChatColor.GOLD + "You have been invited to a party by ${inviter.name}! " + accept + ChatColor.GOLD + " || " + deny)
+        invited.spigot().sendMessage(TextComponent("" + ChatColor.GOLD + "You have been invited to a party by ${inviter.name}! " + accept + ChatColor.GOLD + " || " + deny))
         var party = PartyManager.get.getPartyByLeader(inviter)
         if (party == null) {
             val invitedList: ArrayList<Player> = ArrayList()

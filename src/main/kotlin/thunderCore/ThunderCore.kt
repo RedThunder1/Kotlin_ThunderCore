@@ -41,7 +41,7 @@ import thunderCore.utilities.Time
 class ThunderCore: JavaPlugin() {
 
     private var console = server.consoleSender
-    private val thunderName: String = "" + ChatColor.YELLOW + "THUNDER" + ChatColor.AQUA + "MC" + ChatColor.RESET
+    private val thunderName: String = "" + ChatColor.YELLOW + "THUNDERMC" + ChatColor.RESET
 
     companion object {
         lateinit var get: ThunderCore
