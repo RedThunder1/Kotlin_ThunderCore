@@ -78,12 +78,13 @@ class FriendsCommand : CommandExecutor {
                 }
                 //Eventually I want to have this formatted into pages but for now this will work
                 for (friend in fakePlayer.friends) {
-                    val status: String = if (friend.isOnline) {
+
+                    val status: String = if (Bukkit.getPlayer(friend)?.isOnline == true) {
                         "${ChatColor.GREEN}ONLINE"
                     } else {
                         "${ChatColor.RED}OFFLINE"
                     }
-                    player.sendMessage("${ChatColor.RED}${friend.name}: $status")
+                    player.sendMessage("${ChatColor.RED}${friend}: $status")
                 }
             }
             "help"-> {

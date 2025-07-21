@@ -19,7 +19,8 @@ class ViewReportsCommand: CommandExecutor {
             return true
         }
 
-        ViewReportsGUI.get.reportsGui(sender)
+        var gui = ViewReportsGUI()
+        gui.reportsGui(sender)
 
         return true
     }

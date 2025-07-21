@@ -1,18 +1,14 @@
 package thunderCore.managers.playerManager
 
-import com.google.gson.Gson
 import org.bukkit.ChatColor
 import org.bukkit.entity.Player
 import thunderCore.ThunderCore
 import thunderCore.managers.ThunderManager
-import thunderCore.managers.fileManager.FileManager
-import java.io.File
-import java.lang.NullPointerException
+import thunderCore.managers.sqlmanager.SQLManager
 import java.util.*
 import kotlin.collections.ArrayList
 
 class PlayerManager: ThunderManager {
-    private val gson = Gson()
     private val playerRanks: ArrayList<Ranks> = ArrayList()
     var fakePlayers: ArrayList<FakePlayer> = ArrayList()
     private val subPerms: ArrayList<String> = ArrayList()
@@ -100,9 +96,9 @@ class PlayerManager: ThunderManager {
         return null
     }
 
-    fun createFakePlayer(player: Player, rank: String?, subperms: List<String>?) {
+    fun createFakePlayer(player: Player, rank: String?, subperms: List<String>) {
+        fakePlayers.add(FakePlayer(player.uniqueId, getRankByName(rank)!!, subperms , ArrayList(), 0, muted = false, inGame = false))
         ThunderCore.get.greenMsg("Created a fake player!")
-        fakePlayers.add(FakePlayer(getRankByName(rank)!!, player.uniqueId, subperms , ArrayList(), 0, muted = false, inGame = false))
     }
 
     fun checkSubPerm(string: String): Boolean {
@@ -130,22 +126,16 @@ class PlayerManager: ThunderManager {
 
     override fun load() {
         try {
-            val folder = File("ThunderCore/FakePlayers/")
-            val listOfFiles = folder.listFiles()
-            for (file in Objects.requireNonNull<Array<File>>(listOfFiles)) {
-                val fileContent: String? = FileManager.get.readFile(file)
-                fakePlayers.add(gson.fromJson(fileContent, FakePlayer::class.java))
-            }
-        } catch (e: NullPointerException) {
-            ThunderCore.get.yellowMsg("THERE ARE NO PLAYER FILES!")
+            SQLManager.get.getFakePlayers()
+        } catch (e: Exception) {
+            e.printStackTrace()
         }
         ThunderCore.get.greenMsg("Ranks loaded!")
     }
 
     override fun save() {
-        for (fakePlayer in fakePlayers) {
-            val id: String = fakePlayer.uuid.toString()
-            FileManager.get.writeFile(File("ThunderCore/FakePlayers/$id.json"), gson.toJson(fakePlayer))
+        for (fakeplayer in fakePlayers) {
+            SQLManager.get.saveFakePlayer(fakeplayer.uuid)
         }
         ThunderCore.get.greenMsg("Saved Player Ranks!")
     }

@@ -8,6 +8,8 @@ description: Core Plugin for my server ThunderMC!
 commands:
   lobby:
     usage: </lobby>
+    aliases:
+      - "hub"
     description: Command for players to teleport to lobby.
   ban:
     usage: <ipban/ban (player) (time d|h|m) (reason)>
@@ -55,7 +57,17 @@ commands:
     usage: </worldlist>
     aliases:
       - "wl"
-    description: Allows staff members to view all worlds
+    description: Allows staff members to view all worlds.
+  worldload:
+    usage: </worldload (name)>
+    aliases:
+      - "wlo"
+    description: Allows staff to load worlds.
+  worldunload:
+    usage: </worldunload (name)>
+    aliases:
+      - "wu"
+    description: Allows staff to unload worlds.
   setrank:
     usage: </setrank (player) (rank)>
     description: Allows staff to set player ranks.

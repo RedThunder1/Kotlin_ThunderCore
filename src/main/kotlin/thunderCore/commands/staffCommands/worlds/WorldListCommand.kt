@@ -1,5 +1,9 @@
 package thunderCore.commands.staffCommands.worlds
 
+import net.md_5.bungee.api.chat.ClickEvent
+import net.md_5.bungee.api.chat.ComponentBuilder
+import net.md_5.bungee.api.chat.HoverEvent
+import net.md_5.bungee.api.chat.TextComponent
 import org.bukkit.Bukkit
 import org.bukkit.ChatColor
 import org.bukkit.command.Command
@@ -22,11 +26,13 @@ class WorldListCommand: CommandExecutor {
         }
         player.sendMessage("${ChatColor.GOLD}_______Worlds_______")
         for (world in Bukkit.getWorlds()) {
-            var msg = "${ChatColor.GOLD}| ${world.name}"
+            var msg = TextComponent("${ChatColor.GOLD}| ${world.name}")
+            msg.clickEvent = ClickEvent(ClickEvent.Action.RUN_COMMAND, "/wtp ${world.name}")
+            msg.hoverEvent = HoverEvent(HoverEvent.Action.SHOW_TEXT, ComponentBuilder("" + ChatColor.GOLD + "Join world").create())
             if (player.world == world) {
-                msg += "${ChatColor.GREEN} <-- Here"
+                msg.addExtra("${ChatColor.GREEN} <-- Here")
             }
-            player.sendMessage(msg)
+            player.spigot().sendMessage(msg)
         }
         return true
     }

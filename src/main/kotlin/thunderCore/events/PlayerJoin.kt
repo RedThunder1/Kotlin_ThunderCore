@@ -9,6 +9,7 @@ import org.bukkit.event.EventHandler
 import org.bukkit.event.Listener
 import org.bukkit.event.player.PlayerJoinEvent
 import thunderCore.managers.playerManager.PlayerManager
+import java.util.Collections
 
 class PlayerJoin : Listener {
     private var lobbyWorld: World = Bukkit.getWorld("lobby")!!
@@ -26,7 +27,7 @@ class PlayerJoin : Listener {
         player.foodLevel = 20
         player.saturation = 20F
         if (PlayerManager.get.getFakePlayer(player) == null) {
-            PlayerManager.get.createFakePlayer(event.player, "member", null)
+            PlayerManager.get.createFakePlayer(event.player, "member", Collections.emptyList())
         }
         val rank = PlayerManager.get.getPlayerRank(player)
         val prefix = rank!!.prefix

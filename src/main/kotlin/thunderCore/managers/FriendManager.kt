@@ -42,9 +42,9 @@ class FriendManager: ThunderManager {
             added.sendMessage("" + ChatColor.RED + "You have not gotten a request from ${adder.name}")
             return
         }
-        PlayerManager.get.getFakePlayer(adder)!!.friends.add(added)
+        PlayerManager.get.getFakePlayer(adder)!!.friends.add(added.name)
         adder.sendMessage("" + ChatColor.GREEN + "You are now friends with ${added.name}!")
-        PlayerManager.get.getFakePlayer(added)!!.friends.add(adder)
+        PlayerManager.get.getFakePlayer(added)!!.friends.add(adder.name)
         added.sendMessage("" + ChatColor.GREEN + "You are now friends with ${adder.name}!")
     }
 
@@ -60,11 +60,15 @@ class FriendManager: ThunderManager {
     }
 
     fun removeFriend(player: Player, remove: Player) {
-        if (PlayerManager.get.getFakePlayer(player)!!.friends.contains(remove)) {
-            PlayerManager.get.getFakePlayer(player)!!.friends.remove(remove)
-            PlayerManager.get.getFakePlayer(remove)!!.friends.remove(player)
+        val fakeplayer = PlayerManager.get.getFakePlayer(player)!!
+        if (fakeplayer.friends.isEmpty()) {
+            player.sendMessage("" + ChatColor.RED + "You have no one to unfriend!")
+            return
+        }
+        if (fakeplayer.friends.contains(remove.name)) {
+            fakeplayer.friends.remove(remove.name)
+            PlayerManager.get.getFakePlayer(remove)!!.friends.remove(player.name)
             player.sendMessage("" + ChatColor.RED + "You are no longer friends with ${remove.name}!")
-            remove.sendMessage("" + ChatColor.RED + "You are no longer friends with ${player.name}!")
         }
     }
 

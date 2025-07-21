@@ -17,7 +17,9 @@ import thunderCore.commands.staffCommands.buildCommand.BuildCommand
 import thunderCore.commands.staffCommands.bypassCommand.BypassCommand
 import thunderCore.commands.staffCommands.worlds.CreateWorldCommand
 import thunderCore.commands.staffCommands.worlds.DeleteWorldCommand
+import thunderCore.commands.staffCommands.worlds.LoadWorldCommand
 import thunderCore.commands.staffCommands.worlds.TpWorldCommand
+import thunderCore.commands.staffCommands.worlds.UnloadWorldCommand
 import thunderCore.commands.staffCommands.worlds.WorldListCommand
 import thunderCore.events.ChatListener
 import thunderCore.events.PlayerJoin
@@ -35,6 +37,7 @@ import thunderCore.managers.partyManager.PartyManager
 import thunderCore.managers.playerManager.FakePlayer
 import thunderCore.managers.playerManager.PlayerManager
 import thunderCore.managers.reportManager.ReportManager
+import thunderCore.managers.sqlmanager.SQLManager
 import thunderCore.utilities.AnnouncementMessages
 import thunderCore.utilities.Time
 
@@ -58,6 +61,8 @@ class ThunderCore: JavaPlugin() {
     //      Party system
     //          Have party members join games with leader
     //          Members can't start games
+    //      CORE:
+    //          Clean up my sloppy code, Theres multiple instances of my lazy ass not properly handling errors
     // Secondary:
     //      Implement subperms into commands
     //      Test for bugs once a server is set up
@@ -90,6 +95,7 @@ class ThunderCore: JavaPlugin() {
     }
 
     private fun loadManagers() {
+        managers.add(SQLManager())
         managers.add(PlayerManager())
         managers.add(ReportManager())
         managers.add(FriendManager())
@@ -99,6 +105,7 @@ class ThunderCore: JavaPlugin() {
         managers.add(BedWarsManager())
         managers.add(NPCManager())
         managers.add(FloatingTextManager())
+
 
         greenMsg("Managers have been INITIALIZED")
         for (thunderManager in managers) {
@@ -161,6 +168,10 @@ class ThunderCore: JavaPlugin() {
         getCommand("worldtp")!!.aliases = listOf("wtp")
         getCommand("worldlist")!!.setExecutor(WorldListCommand())
         getCommand("worldlist")!!.aliases = listOf("wl")
+        getCommand("worldload")!!.setExecutor(LoadWorldCommand())
+        getCommand("worldload")!!.aliases = listOf("wlo")
+        getCommand("worldunload")!!.setExecutor(UnloadWorldCommand())
+        getCommand("worldunload")!!.aliases = listOf("wu")
         getCommand("setrank")!!.setExecutor(SetRankCommand())
         getCommand("sudo")!!.setExecutor(SudoCommand())
         getCommand("kits")!!.setExecutor(KitsCommand())

@@ -10,10 +10,6 @@ import thunderCore.ThunderCore
 import thunderCore.managers.reportManager.ReportManager
 
 class ViewReportsGUI {
-    companion object {
-        lateinit var get: ViewReportsGUI
-    }
-    init { get = this }
     fun reportsGui(player: Player) {
         val inventory: Inventory = ThunderCore.get.server.createInventory(null, 54, "${ChatColor.BOLD}${ChatColor.RED}Reports Menu")
         for (report in ReportManager.get.reports) {
