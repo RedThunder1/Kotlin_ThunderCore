@@ -135,7 +135,7 @@ class PlayerManager: ThunderManager {
 
     override fun save() {
         for (fakeplayer in fakePlayers) {
-            SQLManager.get.saveFakePlayer(fakeplayer.uuid)
+            SQLManager.get.saveFakePlayer(fakeplayer)
         }
         ThunderCore.get.greenMsg("Saved Player Ranks!")
     }

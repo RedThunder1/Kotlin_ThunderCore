@@ -59,26 +59,22 @@ class SQLManager: ThunderManager {
         }
     }
 
-    fun saveFakePlayer(uuid: UUID) {
-        val fakePlayer = PlayerManager.get.getFakePlayer(Bukkit.getPlayer(uuid)!!)
-        if (fakePlayer != null) {
+    fun saveFakePlayer(fakePlayer: FakePlayer) {
+        try {
             connectToSQL()
             val conn = dataSource.connection
-            try {
-                val ps = conn.prepareStatement("REPlACE INTO fakeplayers(UUID, `Rank`, SubPerms, Friends, Coins, Muted, inGame) VALUES(?, ?, ?, ?, ?, ?, ?)")
-                ps.setString(1 ,fakePlayer.uuid.toString())
-                ps.setString(2, fakePlayer.rank.name)
-                ps.setString(3, fakePlayer.subperms.toString())
-                ps.setString(4, fakePlayer.friends.toString())
-                ps.setInt(5, fakePlayer.coins)
-                ps.setBoolean(6, fakePlayer.muted)
-                ps.setBoolean(7, fakePlayer.inGame)
-                ps.execute()
-            } catch (e: Exception) {
-                ThunderCore.get.redMsg("THERE WAS AN ERROR SAVING PLAYER!")
-                e.printStackTrace()
-            }
+            val ps = conn.prepareStatement("REPlACE INTO fakeplayers(UUID, `Rank`, SubPerms, Friends, Coins, Muted, inGame) VALUES(?, ?, ?, ?, ?, ?, ?)")
+            ps.setString(1 ,fakePlayer.uuid.toString())
+            ps.setString(2, fakePlayer.rank.name)
+            ps.setString(3, fakePlayer.subperms.toString())
+            ps.setString(4, fakePlayer.friends.toString())
+            ps.setInt(5, fakePlayer.coins)
+            ps.setBoolean(6, fakePlayer.muted)
+            ps.setBoolean(7, fakePlayer.inGame)
+            ps.execute()
+        } catch (e: Exception) {
+            ThunderCore.get.redMsg("THERE WAS AN ERROR SAVING PLAYER!")
+            e.printStackTrace()
         }
     }
-
 }
